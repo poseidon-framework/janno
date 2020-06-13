@@ -46,14 +46,28 @@ a2j <- function(
     Note = NA
   )
   
-  janno$Individual_ID = anno$instance_id
-  janno$Collection_ID = anno$master_id
-  janno$Skeletal_Element = anno$skeletal_element
-  
+  janno$Individual_ID = anno %c% "instance_id"
+  janno$Collection_ID = anno %c% "master_id"
+  janno$Skeletal_Element = anno %c% "skeletal_element"
+  janno$Country = anno %c% "country"
+  janno$Location = anno %c% "location"
+  janno$Site = anno %c% "site"
+  janno$Latitude = anno %cr% "lat"
+  janno$Longitude = anno %cr% "long"
   
   anno2janno::colname_reference$janno[]
    
   
   janno <- anno
   writeLines(janno, con = out_janno_path)
+}
+
+# copy from anno without changes
+`%c%` <- function(anno, variable) {
+  if (variable %in% colnames(anno)) { anno[[variable]] } else { NA }
+}
+
+# copy and round to 5 decimals
+`%cr%` <- function(anno, variable) {
+  if (variable %in% colnames(anno)) { round(anno[[variable]], 5) } else { NA }
 }
