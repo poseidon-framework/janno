@@ -20,9 +20,12 @@ a2j <- function(
     Site = NA,
     Latitude = NA,
     Longitude = NA,
-    Average_Date = NA,
-    Date_Earlier = NA,
-    Date_Later = NA,
+    Date_C14_Labnr = NA,
+    Date_Uncal_BP = NA,
+    Date_Uncal_Dev = NA,
+    Date_Cal_BC_Median = NA,
+    Date_Cal_BC_Start = NA,
+    Date_Cal_BC_Stop = NA,
     Date_Type = NA,
     No_of_Libraries = NA,
     Data_Type = NA,
@@ -54,6 +57,7 @@ a2j <- function(
   janno$Site = anno %c% "site"
   janno$Latitude = anno %cr% "lat"
   janno$Longitude = anno %cr% "long"
+  
   
   anno2janno::colname_reference$janno[]
    
