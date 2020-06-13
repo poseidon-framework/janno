@@ -5,5 +5,5 @@
 #' @format A data.frame
 #'
 #'
-#' @name anno_janno_varaible_name_reference
+#' @name colname_reference
 NULL

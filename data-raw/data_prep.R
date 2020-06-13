@@ -1,3 +1,3 @@
-anno_janno_variable_name_reference <- readr::read_csv("data-raw/anno_janno_variable_name_reference.csv")
+colname_reference <- readr::read_csv("data-raw/anno_janno_variable_name_reference.csv")
 
-usethis::use_data(anno_janno_variable_name_reference)
+usethis::use_data(colname_reference)
