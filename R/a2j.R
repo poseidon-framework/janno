@@ -9,13 +9,47 @@ a2j <- function(
   out_janno_path = file.path(dirname(in_anno_path), gsub(".anno", ".janno", basename(in_anno_path)))
 ) {
   
-  anno <- readr::read_tsv("testdata/1240K.anno.mod2", na = c("..", "n/a"))
+  anno <- readr::read_tsv("testdata/1240K.anno.mod2", na = c("..", "n/a")) %>% janitor::clean_names()
   
-  anno_clean_colnames <- anno %>% janitor::clean_names()
-  anno_keep <- anno_clean_colnames[, colnames(anno_clean_colnames) %in% anno2janno::colname_reference$anno]
-  colnames(anno_keep) <- sapply(colnames(anno_keep), function(x) { 
-    anno2janno::colname_reference$janno[anno2janno::colname_reference$anno == x] 
-  }) 
+  janno <- tibble::tibble(
+    Individual_ID = rep(NA, nrow(anno)),
+    Collection_ID = NA,
+    Skeletal_Element = NA,
+    Country = NA,
+    Location = NA,
+    Site = NA,
+    Latitude = NA,
+    Longitude = NA,
+    Average_Date = NA,
+    Date_Earlier = NA,
+    Date_Later = NA,
+    Date_Type = NA,
+    No_of_Libraries = NA,
+    Data_Type = NA,
+    Genotype_Ploidy = NA,
+    Group_Name = NA,
+    Genetic_Sex = NA,
+    Nr_autosomal_SNPs = NA,
+    Coverage_1240K = NA,
+    MT_Haplogroup = NA,
+    Y_Haplogroup = NA,
+    Percent_endogenous  = NA,
+    UDG  = NA,
+    Library_Built = NA,
+    Damage = NA,
+    Xcontam = NA, 
+    Xcontam_stderr = NA,
+    mtContam = NA,
+    mtContam_stderr = NA,
+    Primary_Contact = NA,
+    Publication_status = NA,
+    Note = NA
+  )
+  
+  janno$Individual_ID = anno$instance_id
+  janno$Collection_ID = anno$master_id
+  janno$Skeletal_Element = anno$skeletal_element
+  
   
   anno2janno::colname_reference$janno[]
    
