@@ -6,11 +6,14 @@
 #' @export
 a2j <- function(
   in_anno_path, 
-  out_janno_path = file.path(dirname(in_anno_path), gsub(".anno", ".janno", basename(in_anno_path)))
+  out_janno_path = file.path(dirname(in_anno_path), gsub(".anno", ".janno", basename(in_anno_path))),
+  to_data_frame = F
 ) {
   
+  #### read anno file ####
   anno <- readr::read_tsv("testdata/1240K.anno.mod2", na = c("..", "n/a")) %>% janitor::clean_names()
   
+  #### construct janno file sceleton ####
   janno <- tibble::tibble(
     # IDs
     Individual_ID = rep(NA, nrow(anno)),
@@ -55,6 +58,7 @@ a2j <- function(
     Note = NA
   )
   
+  #### try to fill janno from anno ####
   # IDs
   janno$Individual_ID <- anno %c% "instance_id"
   janno$Collection_ID <- anno %c% "master_id"
@@ -88,12 +92,12 @@ a2j <- function(
   janno$Genotype_Ploidy <- anno %ploidy_from_id% "instance_id"
   janno$Group_Name <- anno %c% "group_label"
   janno$Genetic_Sex <- anno %sex_simplification% "sex"
-  janno$Nr_autosomal_SNPs <- NA
-  janno$Coverage_1240K <- NA
-  janno$MT_Haplogroup <- NA
-  janno$Y_Haplogroup <- NA
-  janno$Percent_endogenous  <- NA
-  janno$UDG  <- NA
+  janno$Nr_autosomal_SNPs <- anno %c% "sn_ps_hit_on_autosomes"
+  janno$Coverage_1240K <- anno %c% "coverage"
+  janno$MT_Haplogroup <- anno %c% "mt_dna"
+  janno$Y_Haplogroup <- anno %c% "y_chrom_calls"
+  janno$Percent_endogenous <- NA
+  janno$UDG <- NA
   janno$Library_Built <- NA
   janno$Damage <- NA
   janno$Xcontam <- NA
@@ -106,7 +110,27 @@ a2j <- function(
   Publication_status <- NA
   Note <- NA
   
-  writeLines(janno, con = out_janno_path)
+  #### user messages ####
+  empty_cols <- sapply(janno, function(x) { all(is.na(x)) })
+  names_empty_cols <- names(empty_cols)[empty_cols]
+  message(c(paste(
+    "The following columns of the resulting janno file are empty.",
+    "That may be because the input anno file simply does not contain any information about these variables,",
+    "but it's also possible that the anno file does contain info in a column with",
+    "another name unknown to the anno2janno package.",
+    "anno files are not well standardized.", 
+    "Please check and decide if you want to apply the necessary parsing operation yourself."
+    ), 
+    "\n\n",
+    "Missing columns:\n", paste(names_empty_cols, collapse = ", ")
+  ))
+  
+  #### return resulting janno file/table #### 
+  if (to_data_frame) {
+    return(janno)
+  } else {
+    writeLines(janno, con = out_janno_path)
+  }
 }
 
 # copy from anno without changes
