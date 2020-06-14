@@ -84,10 +84,10 @@ a2j <- function(
    
   # aDNA info
   janno$No_of_Libraries <- anno %c% "no_libraries"
-  janno$Data_Type <- janno$Individual_ID %>% data_type_from_id()
-  janno$Genotype_Ploidy <- janno$Individual_ID %>% ploidy_from_id()
+  janno$Data_Type <- anno %data_type_from_id% "instance_id"
+  janno$Genotype_Ploidy <- anno %ploidy_from_id% "instance_id"
   janno$Group_Name <- anno %c% "group_label"
-  janno$Genetic_Sex <- anno$sex %>% sex_simplification()
+  janno$Genetic_Sex <- anno %sex_simplification% "sex"
   janno$Nr_autosomal_SNPs <- NA
   janno$Coverage_1240K <- NA
   janno$MT_Haplogroup <- NA
@@ -119,19 +119,19 @@ a2j <- function(
   if (variable %in% colnames(anno)) { round(anno[[variable]], 5) } else { NA }
 }
 
-# data type
-data_type_from_id <- function(x) {
-  ifelse(grepl(".SG$|.DG$", x), "shotgun" , NA)
+# determine data type from id
+`%data_type_from_id%` <- function(anno, variable) {
+  if (variable %in% colnames(anno)) { ifelse(grepl(".SG$|.DG$", anno[[variable]]), "shotgun" , NA) } else { NA }
 }
 
 # ploidy
-ploidy_from_id <- function(x) {
-  ifelse(grepl(".DG$", x) , "diploid" , "haploid")
+`%ploidy_from_id%` <- function(anno, variable) {
+  if (variable %in% colnames(anno)) { ifelse(grepl(".DG$", anno[[variable]]) , "diploid" , "haploid") } else { NA }
 }
 
 # genetic sex
-sex_simplification <- function(x) {
-  ifelse(!grepl("F|M|U", x), "U" , x)
+`%sex_simplification%` <- function(anno, variable) {
+  if (variable %in% colnames(anno)) { ifelse(!grepl("F|M|U", anno[[variable]]), "U" , anno[[variable]]) } else { NA }
 }
 
 # age string parsing
