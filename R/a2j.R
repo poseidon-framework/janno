@@ -12,8 +12,10 @@ a2j <- function(
   anno <- readr::read_tsv("testdata/1240K.anno.mod2", na = c("..", "n/a")) %>% janitor::clean_names()
   
   janno <- tibble::tibble(
+    # IDs
     Individual_ID = rep(NA, nrow(anno)),
     Collection_ID = NA,
+    # sample info
     Skeletal_Element = NA,
     # spatial location
     Country = NA,
@@ -29,6 +31,7 @@ a2j <- function(
     Date_BC_Stop = NA,
     Date_Type = NA,
     Date_BC_Simple_Mean = NA,
+    # aDNA info
     No_of_Libraries = NA,
     Data_Type = NA,
     Genotype_Ploidy = NA,
@@ -46,32 +49,63 @@ a2j <- function(
     Xcontam_stderr = NA,
     mtContam = NA,
     mtContam_stderr = NA,
+    # meta info
     Primary_Contact = NA,
     Publication_status = NA,
     Note = NA
   )
   
+  # IDs
   janno$Individual_ID <- anno %c% "instance_id"
   janno$Collection_ID <- anno %c% "master_id"
+  
+  # sample info
   janno$Skeletal_Element <- anno %c% "skeletal_element"
+  
+  # spatial location
   janno$Country <- anno %c% "country"
   janno$Location <- anno %c% "location"
   janno$Site <- anno %c% "site"
   janno$Latitude <- anno %cr% "lat"
   janno$Longitude <- anno %cr% "long"
   
-  # splitting age string
-  age_table <- split_age_string(anno[["date_one_of_two_formats_format_1_95_4_percent_ci_calibrated_radiocarbon_age_conventional_radiocarbon_age_b_lab_number_e_g_5983_5747_cal_bce_6980_50_b_b_beta_226472_format_2_archaeological_context_date_b_e_g_2500_1700_bce"]])
-  janno$Date_C14_Labnr <- age_table$Date_C14_Labnr
-  janno$Date_C14_Uncal_BP <- age_table$Date_C14_Uncal_BP
-  janno$Date_C14_Uncal_BP_Dev <- age_table$Date_C14_Uncal_BP_Dev
-  janno$Date_BC_Start <- age_table$Date_BC_Start
-  janno$Date_BC_Stop <- age_table$Date_BC_Stop
-  janno$Date_Type <- age_table$Date_Type
-  janno$Date_BC_Simple_Mean <- (janno$Date_BC_Start + janno$Date_BC_Stop)/2
+  # temporal location
+  age_string_variable <- "date_one_of_two_formats_format_1_95_4_percent_ci_calibrated_radiocarbon_age_conventional_radiocarbon_age_b_lab_number_e_g_5983_5747_cal_bce_6980_50_b_b_beta_226472_format_2_archaeological_context_date_b_e_g_2500_1700_bce"
+  if (age_string_variable %in% colnames(anno)) { 
+    age_table <- split_age_string(anno[[age_string_variable]]) # split function
+    janno$Date_C14_Labnr <- age_table$Date_C14_Labnr
+    janno$Date_C14_Uncal_BP <- age_table$Date_C14_Uncal_BP
+    janno$Date_C14_Uncal_BP_Dev <- age_table$Date_C14_Uncal_BP_Dev
+    janno$Date_BC_Start <- age_table$Date_BC_Start
+    janno$Date_BC_Stop <- age_table$Date_BC_Stop
+    janno$Date_Type <- age_table$Date_Type
+    janno$Date_BC_Simple_Mean <- (janno$Date_BC_Start + janno$Date_BC_Stop)/2
+  }
    
+  # aDNA info
+  janno$No_of_Libraries <- anno %c% "no_libraries"
+  janno$Data_Type <- janno$Individual_ID %>% data_type_from_id()
+  janno$Genotype_Ploidy <- janno$Individual_ID %>% ploidy_from_id()
+  janno$Group_Name <- anno %c% "group_label"
+  janno$Genetic_Sex <- anno$sex %>% sex_simplification()
+  janno$Nr_autosomal_SNPs <- NA
+  janno$Coverage_1240K <- NA
+  janno$MT_Haplogroup <- NA
+  janno$Y_Haplogroup <- NA
+  janno$Percent_endogenous  <- NA
+  janno$UDG  <- NA
+  janno$Library_Built <- NA
+  janno$Damage <- NA
+  janno$Xcontam <- NA
+  janno$Xcontam_stderr <- NA
+  janno$mtContam <- NA
+  janno$mtContam_stderr <- NA
   
-  janno <- anno
+  # meta info
+  Primary_Contact <- NA
+  Publication_status <- NA
+  Note <- NA
+  
   writeLines(janno, con = out_janno_path)
 }
 
@@ -83,6 +117,21 @@ a2j <- function(
 # copy and round to 5 decimals
 `%cr%` <- function(anno, variable) {
   if (variable %in% colnames(anno)) { round(anno[[variable]], 5) } else { NA }
+}
+
+# data type
+data_type_from_id <- function(x) {
+  ifelse(grepl(".SG$|.DG$", x), "shotgun" , NA)
+}
+
+# ploidy
+ploidy_from_id <- function(x) {
+  ifelse(grepl(".DG$", x) , "diploid" , "haploid")
+}
+
+# genetic sex
+sex_simplification <- function(x) {
+  ifelse(!grepl("F|M|U", x), "U" , x)
 }
 
 # age string parsing
