@@ -29,7 +29,7 @@ a2j <- function(
     # temporal location
     Date_C14_Labnr = NA,
     Date_C14_Uncal_BP = NA,
-    Date_C14_Uncal_Dev = NA,
+    Date_C14_Uncal_BP_Dev = NA,
     Date_BC_Start = NA,
     Date_BC_Stop = NA,
     Date_Type = NA,
@@ -70,8 +70,8 @@ a2j <- function(
   janno$Country <- anno %c% "country"
   janno$Location <- anno %c% "location"
   janno$Site <- anno %c% "site"
-  janno$Latitude <- anno %cr% "lat"
-  janno$Longitude <- anno %cr% "long"
+  janno$Latitude <- anno %round_to_5% "lat"
+  janno$Longitude <- anno %round_to_5% "long"
   
   # temporal location
   age_string_variable <- "date_one_of_two_formats_format_1_95_4_percent_ci_calibrated_radiocarbon_age_conventional_radiocarbon_age_b_lab_number_e_g_5983_5747_cal_bce_6980_50_b_b_beta_226472_format_2_archaeological_context_date_b_e_g_2500_1700_bce"
@@ -96,19 +96,19 @@ a2j <- function(
   janno$Coverage_1240K <- anno %c% "coverage"
   janno$MT_Haplogroup <- anno %c% "mt_dna"
   janno$Y_Haplogroup <- anno %c% "y_chrom_calls"
-  janno$Percent_endogenous <- NA
-  janno$UDG <- NA
-  janno$Library_Built <- NA
-  janno$Damage <- NA
-  janno$Xcontam <- NA
-  janno$Xcontam_stderr <- NA
-  janno$mtContam <- NA
-  janno$mtContam_stderr <- NA
+  janno$Percent_endogenous <- anno %fraction_to_rounded_percent% "percent_endogenous_in_shotgun_sequencing_for_the_best_library"
+  janno$UDG <- anno %clean_UDG% "udg_treatment_minus_untreated_half_treated_except_in_last_nucleotides_plus_treated_over_all_nucleotides"
+  janno$Library_Built <- anno %library_type_from_UDG_id% "udg_treatment_minus_untreated_half_treated_except_in_last_nucleotides_plus_treated_over_all_nucleotides"
+  janno$Damage <- anno %c% "damage_restrict"
+  janno$Xcontam <- anno %c% "xcontam_point_estimate_if_male_and_200_sn_ps"
+  janno$Xcontam_stderr <- anno %c% "xcontam_z_score_if_male_and_200_sn_ps"
+  janno$mtContam <- NA # does not exist in anno files
+  janno$mtContam_stderr <- NA # does not exist in anno files
   
   # meta info
-  Primary_Contact <- NA
-  Publication_status <- NA
-  Note <- NA
+  janno$Primary_Contact <- NA # does not exist in anno files
+  janno$Publication_status <- anno %extract_publication_name% "publication_or_publication_plans"
+  janno$Note <- anno %publication_info_to_note% "publication_or_publication_plans"
   
   #### user messages ####
   empty_cols <- sapply(janno, function(x) { all(is.na(x)) })
@@ -139,7 +139,7 @@ a2j <- function(
 }
 
 # copy and round to 5 decimals
-`%cr%` <- function(anno, variable) {
+`%round_to_5%` <- function(anno, variable) {
   if (variable %in% colnames(anno)) { round(anno[[variable]], 5) } else { NA }
 }
 
@@ -156,6 +156,43 @@ a2j <- function(
 # genetic sex
 `%sex_simplification%` <- function(anno, variable) {
   if (variable %in% colnames(anno)) { ifelse(!grepl("F|M|U", anno[[variable]]), "U" , anno[[variable]]) } else { NA }
+}
+
+# percent endogenous
+`%fraction_to_rounded_percent%` <- function(anno, variable) {
+  if (variable %in% colnames(anno)) { round(anno[[variable]] * 100, 2) } else { NA }
+}
+
+# UDG treatment
+`%clean_UDG%` <- function(anno, variable) {
+  if (variable %in% colnames(anno)) { 
+    new_UDG <- ifelse(length(unique(unlist(stringr::str_split(anno[[variable]], ",")))) > 1, "mixed", unique(unlist(stringr::str_split(anno[[variable]], ","))))
+    # in case multiple libraries with different UDG treatment were merged
+    new_UDG <- gsub("^ss.", "" , new_UDG) 
+    return(new_UDG)
+  } else { NA }
+}
+
+# how was the library build?
+`%library_type_from_UDG_id%` <- function(anno, variable) {
+  if (variable %in% colnames(anno)) { ifelse(grepl("^ss.", anno[[variable]]), "ss" , NA) } else { NA }
+}
+
+# extract publication info
+`%extract_publication_name%` <- function(anno, variable) {
+  if (variable %in% colnames(anno)) { 
+    sapply(stringr::str_split(anno[[variable]], " "), function(x) { x[1] }) 
+  } else { NA }
+}
+
+# publication info to node
+`%publication_info_to_note%` <- function(anno, variable) {
+  if (variable %in% colnames(anno)) { 
+    sapply(
+      lapply(stringr::str_split(anno[[variable]], " "), function(x) { x[-1] }),
+      function(x) { paste(x, collapse = " ") }
+    )
+  } else { NA }
 }
 
 # age string parsing
