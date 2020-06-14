@@ -1,7 +1,7 @@
-#' Title
+#' Convert an anno file to a janno file
 #'
-#' @param in_anno_path test
-#' @param out_janno_path test
+#' @param in_anno_path character. Path to a anno file
+#' @param out_janno_path chacrater. Path were the resulting janno file should be stored (default: same path as input)
 #'
 #' @export
 a2j <- function(
@@ -11,7 +11,7 @@ a2j <- function(
 ) {
   
   #### read anno file ####
-  anno <- readr::read_tsv("testdata/1240K.anno.mod2", na = c("..", "n/a")) %>% janitor::clean_names()
+  anno <- readr::read_tsv(in_anno_path, na = c("..", "n/a")) %>% janitor::clean_names()
   
   #### construct janno file sceleton ####
   janno <- tibble::tibble(
@@ -114,7 +114,7 @@ a2j <- function(
   empty_cols <- sapply(janno, function(x) { all(is.na(x)) })
   names_empty_cols <- names(empty_cols)[empty_cols]
   message(c(paste(
-    "The following columns of the resulting janno file are empty.",
+    "\nThe following columns of the resulting janno file are empty.",
     "That may be because the input anno file simply does not contain any information about these variables,",
     "but it's also possible that the anno file does contain info in a column with",
     "another name unknown to the anno2janno package.",

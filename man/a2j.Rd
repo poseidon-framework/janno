@@ -2,19 +2,20 @@
 % Please edit documentation in R/a2j.R
 \name{a2j}
 \alias{a2j}
-\title{Title}
+\title{Convert an anno file to a janno file}
 \usage{
 a2j(
   in_anno_path,
   out_janno_path = file.path(dirname(in_anno_path), gsub(".anno", ".janno",
-    basename(in_anno_path)))
+    basename(in_anno_path))),
+  to_data_frame = F
 )
 }
 \arguments{
-\item{in_anno_path}{test}
+\item{in_anno_path}{character. Path to a anno file}
 
-\item{out_janno_path}{test}
+\item{out_janno_path}{chacrater. Path were the resulting janno file should be stored (default: same path as input)}
 }
 \description{
-Title
+Convert an anno file to a janno file
 }
