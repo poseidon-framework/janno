@@ -26,7 +26,11 @@ if (arguments$log_directory == "./poseidon2_tmp_and_log/current_date_random_stri
   )
 }
 
-
+# create log directory
+if (!dir.exists(arguments$log_directory)) {
+  dir.create(arguments$log_directory, recursive = T)
+}
+  
 # if (arguments$convert) {
 #   anno2janno::convert_module(
 #     format = arguments$format,
