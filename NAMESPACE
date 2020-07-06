@@ -2,7 +2,6 @@
 
 export(a2j)
 export(convert_module)
-export(j2a)
 export(merge_module)
 export(random_alphanumeric_string)
 importFrom(magrittr,"%>%")
