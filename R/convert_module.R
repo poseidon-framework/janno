@@ -27,8 +27,8 @@ convert_ped2eig <- function(input_package, output_directory, log_directory) {
 }
 
 convert_start_ped2eig_run <- function(par_file, log_directory) {
-  cat("Run conversion...\n=> ")
-  system(paste(
+  cat("You can trigger the conversion now with\n$ ")
+  cat(paste(
     'sbatch -p short -c 1 --mem=2000 -J poseidon_convert',
     '-o', file.path(log_directory, 'poseidon2_%j.out'),
     '-e', file.path(log_directory, 'poseidon2_%j.err'),

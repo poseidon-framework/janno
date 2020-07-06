@@ -18,8 +18,8 @@ merge_module <- function(input_file, output_directory, log_directory) {
 }
 
 plink_merge <- function(plink_merge_file, plink_order_file, output_directory, output_files_name, log_directory) {
-  cat("Merge genome data with plink...\n=> ")
-  system(paste(
+  cat("You can trigger the merging now with\n$ ")
+  cat(paste(
     'sbatch -p short -c 4 --mem=10000 -J poseidon2_merge',
     '-o', file.path(log_directory, 'poseidon2_%j.out'),
     '-e', file.path(log_directory, 'poseidon2_%j.err'),
