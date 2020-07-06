@@ -5,7 +5,7 @@
 Utility functions for the poseidon2 data format. All input directories have to adhere to the poseidon2 package file structure as documented here: /projects1/poseidon/poseidon2.package.manager/README.md
 
 Usage:
-  poseidon2 convert <format> <input_package> <output_directory> [--log_directory=DIR]
+  poseidon2 convert <output_format> <input_package> <output_directory> [--log_directory=DIR]
   poseidon2 merge <input_file> <output_directory> [--log_directory=DIR]
 
 Options:
@@ -31,16 +31,14 @@ if (!dir.exists(arguments$log_directory)) {
   dir.create(arguments$log_directory, recursive = T)
 }
   
-# if (arguments$convert) {
-#   anno2janno::convert_module(
-#     format = arguments$format,
-#     input_package = arguments$input_package,
-#     output_directory = arguments$output_directory,
-#     log_directory = arguments$log_directory
-#   )
-# } else 
-
-if (arguments$merge) {
+if (arguments$convert) {
+  anno2janno::convert_module(
+    output_format = arguments$output_format,
+    input_package = arguments$input_package,
+    output_directory = arguments$output_directory,
+    log_directory = arguments$log_directory
+  )
+} else if (arguments$merge) {
   anno2janno::merge_module(
     input_file = arguments$input_file,
     output_directory = arguments$output_directory,
