@@ -18,7 +18,7 @@ merge_module <- function(input_file, output_directory, log_directory) {
 }
 
 plink_merge <- function(plink_merge_file, plink_order_file, output_directory, output_files_name, log_directory) {
-  cat("You can trigger the merging now with\n$ ")
+  cat("\nYou can trigger the merging now with\n=> ")
   cat(paste(
     'sbatch -p short -c 4 --mem=10000 -J poseidon2_merge',
     '-o', file.path(log_directory, 'poseidon2_%j.out'),
@@ -33,7 +33,7 @@ plink_merge <- function(plink_merge_file, plink_order_file, output_directory, ou
       '--out', file.path(output_directory, output_files_name),
       '&& mv', paste0(file.path(output_directory, output_files_name), '.log'), file.path(log_directory, 'plink.log'),
     '"'
-  ))
+  ), "\n")
 }
 
 merge_create_order_file_from_fam_files <- function(list_of_packages, log_directory) {
