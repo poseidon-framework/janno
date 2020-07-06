@@ -1,9 +1,4 @@
-#' Title
-#'
-#' @param input_file 
-#' @param output_directory 
-#' @param log_directory 
-#'
+#' @rdname cli_modules
 #' @export
 merge_module <- function(input_file, output_directory, log_directory) {
   merge_start_message(input_file, output_directory, log_directory)

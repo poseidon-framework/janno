@@ -1,10 +1,4 @@
-#' Title
-#'
-#' @param output_format 
-#' @param input_package 
-#' @param output_directory 
-#' @param log_directory 
-#'
+#' @rdname cli_modules
 #' @export
 convert_module <- function(output_format, input_package, output_directory, log_directory) {
   convert_start_message(output_format, input_package, output_directory, log_directory)
