@@ -16,7 +16,16 @@ Options:
 ' -> doc
 
 arguments <- docopt::docopt(doc, version = 'Poseidon 2.0.1\n')
-print(arguments)
+#print(arguments)
+
+# implements log_directory default
+if (arguments$log_directory == "./poseidon2_tmp_and_log/current_date_random_string") {
+  arguments$log_directory <- file.path(
+    "./poseidon2_tmp_and_log",
+    paste0(format(Sys.time(),'%Y-%m-%d_%H-%M'), "_", anno2janno::random_alphanumeric_string())
+  )
+}
+
 
 # if (arguments$convert) {
 #   anno2janno::convert_module(
