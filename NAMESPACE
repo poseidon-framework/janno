@@ -2,5 +2,7 @@
 
 export(a2j)
 export(j2a)
+export(merge_module)
+export(random_alphanumeric_string)
 importFrom(magrittr,"%>%")
 importFrom(rlang,.data)
