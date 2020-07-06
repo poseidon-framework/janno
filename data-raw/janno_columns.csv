@@ -1,0 +1,36 @@
+janno_column_name	column_type	choice_options
+Individual_ID	String	
+Collection_ID	String	
+Source_Tissue	String list	
+Country	String	
+Location	String	
+Site	String	
+Latitude	Float	
+Longitude	Float	
+Date_C14_Labnr	String list	
+Date_C14_Uncal_BP	Non-negative Integer list	
+Date_C14_Uncal_BP_Err	Non-negative Integer list	
+Date_BC_Median	Integer	
+Date_BC_Start	Integer	
+Date_BC_End	Integer	
+Date_Type	String choice	C14,contextual,modern
+No_of_Libraries	Integer	
+Data_Type	String choice	Shotgun,1240K,OtherCapture,ReferenceGenome
+Genotype_Ploidy	String choice	diploid,haploid
+Group_Name	String list	
+Genetic_Sex	Char choice	F,M,U
+Nr_autosomal_SNPs	Integer	
+Coverage_1240K	Float	
+MT_Haplogroup	String	
+Y_Haplogroup	String	
+Endogenous	Float	
+UDG 	String choice	minus,half,plus,mixed
+Library_Built	String choice	ds,ss,other
+Damage 	Float	
+Xcontam 	Float	
+Xcontam_stderr	Float	
+mtContam	Float	
+mtContam_stderr	Float	
+Primary_Contact	String	
+Publication_status	String	
+Note	String	
