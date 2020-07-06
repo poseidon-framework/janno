@@ -25,11 +25,13 @@ print(arguments)
 #     output_directory = arguments$output_directory,
 #     log_directory = arguments$log_directory
 #   )
-# } else if (arguments$merge) {
-#   anno2janno::merge_module(
-#     input_file = arguments$input_file,
-#     output_directory = arguments$output_directory,
-#     log_directory = arguments$log_directory
-#   )
-# }
+# } else 
+
+if (arguments$merge) {
+  anno2janno::merge_module(
+    input_file = arguments$input_file,
+    output_directory = arguments$output_directory,
+    log_directory = arguments$log_directory
+  )
+}
 
