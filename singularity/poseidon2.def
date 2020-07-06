@@ -1,0 +1,7 @@
+Bootstrap: docker
+From: rocker/tidyverse:4.0.1
+
+%post
+  R --slave -e 'remotes::install_github("poseidon-framework/anno2janno", dependencies = TRUE)'
+  R --slave -e 'anno2janno::quick_install(".")'
+  
