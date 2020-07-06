@@ -3,6 +3,7 @@
 export(a2j)
 export(convert_module)
 export(merge_module)
+export(quick_install)
 export(random_alphanumeric_string)
 importFrom(magrittr,"%>%")
 importFrom(rlang,.data)
