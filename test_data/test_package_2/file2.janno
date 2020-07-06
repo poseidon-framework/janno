@@ -1,0 +1,7 @@
+Individual_ID	Collection_ID	Skeletal_Element	Country	Location	Site	Latitude	Longitude	Average_Date	Date_Earlier	Date_Later	Date_Type	No_of_Libraries	Data_Type	Genotype_Ploidy	Group_Name	Genetic_Sex	Nr_autosomal_SNPs	Coverage_1240K	MT_Haplogroup	Y_Haplogroup	%endogenous	UDG	Damage	Xcontam	Xcontam_stderr	mtContam	mtContam_stderr	Primary_Contact	Publication_status	Note
+indB	Bill_Finger_14	petrous	Gotham	Arkham	n/a	19.39	30.03	80	90	70	C14	3	1240K	haploid	popB	M	n/a	n/a	n/a	n/a	n/a	n/a	n/a	n/a	n/a	n/a	n/a	n/a	DC	n/a
+indA	Bill_Finger_74	petrous	Gotham	Arkham	n/a	19.39	30.03	80	90	70	C14	3	1240K	haploid	popA	F	n/a	n/a	n/a	n/a	n/a	n/a	n/a	n/a	n/a	n/a	n/a	n/a	DC	n/a
+indT	Bill_Finger_8	petrous	Gotham	Arkham	n/a	19.39	30.03	80	90	70	C14	3	1240K	haploid	popT	F	n/a	n/a	n/a	n/a	n/a	n/a	n/a	n/a	n/a	n/a	n/a	n/a	DC	n/a
+indM	Bill_Finger_18	petrous	Gotham	Arkham	n/a	19.39	30.03	80	90	70	C14	3	1240K	haploid	popM	M	n/a	n/a	n/a	n/a	n/a	n/a	n/a	n/a	n/a	n/a	n/a	n/a	DC	n/a
+inda	Bill_Finger_68	petrous	Gotham	Arkham	n/a	19.39	30.03	80	90	70	C14	3	1240K	haploid	popA	F	n/a	n/a	n/a	n/a	n/a	n/a	n/a	n/a	n/a	n/a	n/a	n/a	DC	n/a
+indN	Bill_Finger_1	petrous	Gotham	Arkham	n/a	19.39	30.03	80	90	70	C14	3	1240K	haploid	popN	M	n/a	n/a	n/a	n/a	n/a	n/a	n/a	n/a	n/a	n/a	n/a	n/a	DC	n/a
