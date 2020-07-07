@@ -17,12 +17,18 @@ convert_module <- function(output_format, input_package, output_directory, log_d
 
 convert_ped2eig <- function(input_package, output_directory, log_directory) {
   cat("Converting plink files to eigenstrat format...\n")
+  # copy janno file
+  janno_file <- list.files(input_package, pattern = ".janno", full.names = T)
+  file.copy(janno_file, file.path(output_directory, basename(janno_file)))
+  # find genetic data files
   bed_file <- list.files(input_package, pattern = ".bed", full.names = T)
   bim_file <- list.files(input_package, pattern = ".bim", full.names = T)
   fam_file <- list.files(input_package, pattern = ".fam", full.names = T)
   return_file_name <- sub(".bed", "", basename(bed_file))
+  # create .pedind and .par file
   pedind_file <- convert_create_pedind_file(fam_file, log_directory)
   par_file <- convert_create_par_file(bed_file, bim_file, pedind_file, output_directory, return_file_name, log_directory)
+  # prepare conversion command
   convert_start_ped2eig_run(par_file, log_directory)
 }
 
