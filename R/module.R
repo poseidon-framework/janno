@@ -5,6 +5,7 @@
 #' @param log_directory character. Path to directory for log files and temporary data
 #' @param output_format character. Output format of conversion (e.g. eigenstrat)
 #' @param input_package character. Path to input poseidon2 package
+#' @param input_janno_file_or_packages character. Path to input janno file or poseidon2 package
 #' 
 #' @name cli_modules
 NULL

@@ -7,6 +7,7 @@ Utility functions for the poseidon2 data format. All input directories have to a
 Usage:
   poseidon2 convert <output_format> <input_package> <output_directory> [--log_directory=DIR]
   poseidon2 merge <input_file> <output_directory> [--log_directory=DIR]
+  poseidon2 validate <input_janno_file_or_packages>...
 
 Options:
   -h --help             Show this screen.
@@ -44,5 +45,8 @@ if (arguments$convert) {
     output_directory = arguments$output_directory,
     log_directory = arguments$log_directory
   )
+} else if (arguments$validate) {
+  poseidon2::validate_module(
+    input_janno_file_or_packages = arguments$input_janno_file_or_packages
+  )
 }
-
