@@ -37,7 +37,17 @@ validate_janno <- function(input_janno) {
   } else {
     stop("The janno file does not exist")
   }
-  # is it a valid tsv file?
+  # does it contain tab separated columns?
+  input_janno_linewise <- readr::read_lines(input_janno, n_max = 50)
+  if (all(grepl(".*\\t.*\\t.*\\t.*", input_janno_linewise))) {
+    cat("=> The janno file seems to be a valid tab separated file\n")
+  } else {
+    stop("The janno file can't be a valid .tsv file with at least 4 columns")
+  }
+  # read file
+  character_janno <- readr::read_tsv(input_janno, col_types = readr::cols(.default = "c"))
+  # are the necessary columns present
+  colnames(character_janno)
   
 }
 
