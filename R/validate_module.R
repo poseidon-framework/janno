@@ -30,9 +30,47 @@ janno_or_package <- function(input_janno_file_or_packages) {
 }
 
 validate_janno <- function(input_janno) {
+  cat(input_janno, "\n")
+  # does it exist?
+  if (file.exists(input_janno)) {
+    cat("=> The janno file exists\n")
+  } else {
+    stop("The janno file does not exist")
+  }
+  # is it a valid tsv file?
   
 }
 
 validate_package <- function(input_package) {
-  
+  cat(input_package, "\n")
+  # does it exist?
+  if (dir.exists(input_package)) {
+    cat("=> The directory exists\n")
+  } else {
+    stop("The directory does not exist")
+  }
+  # does it contain the necessary files once?
+  necessary_files <- list.files(input_package, pattern = ".janno|.bed|.bim|.fam")
+  extensions_necessary_files <- tools::file_ext(necessary_files)
+  if (all(extensions_necessary_files == c("bed", "bim", "fam", "janno"))) {
+    cat("=> The package contains the necessary files .bed, .bim, .fam and .janno exactly once\n")
+  } else {
+    stop("Necessary files (.bed, .bim, .fam and .janno) are missing or multiple of these are present")
+  }
+  # are other files present?
+  all_files <- list.files(input_package)
+  if (any(!all_files %in% necessary_files)) {
+    cat("=> There are other files present as well:", paste(all_files[!all_files %in% necessary_files], collapse = ", "), "\n")
+  }
+  # check .janno file
+  validate_janno(list.files(input_package, pattern = ".janno", full.names = T))
+  cat("\n")
 }
+
+
+
+
+
+
+
+
