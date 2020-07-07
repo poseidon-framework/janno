@@ -1,4 +1,4 @@
 #!/bin/bash
 
-singularity exec /projects/poseidon/poseidon2/singularity/poseidon2.sif /poseidon2.R "$@"
+singularity exec --bind=/projects1 /projects1/singularity_scratch/cache/poseidon2.sif /poseidon2.R "$@"
 
