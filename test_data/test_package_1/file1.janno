@@ -1,5 +1,5 @@
-Individual_ID	Collection_ID	Skeletal_Element	Country	Location	Site	Latitude	Longitude	Average_Date	Date_Earlier	Date_Later	Date_Type	No_of_Libraries	Data_Type	Genotype_Ploidy	Group_Name	Genetic_Sex	Nr_autosomal_SNPs	Coverage_1240K	MT_Haplogroup	Y_Haplogroup	%endogenous	UDG	Damage	Xcontam	Xcontam_stderr	mtContam	mtContam_stderr	Primary_Contact	Publication_status	Note
-ind_m	pik_25	tooth	xyz	n/a	n/a	12.45	-60.57	1125	1250	1000	contextual	1	1240K	haploid	popM	M	n/a	n/a	n/a	n/a	n/a	n/a	n/a	n/a	n/a	n/a	n/a	n/a	n/a	n/a
-ind_o	pik_968	tooth	xyz	n/a	n/a	12.45	-60.57	1125	1250	1000	contextual	1	1240K	haploid	popO	F	n/a	n/a	n/a	n/a	n/a	n/a	n/a	n/a	n/a	n/a	n/a	n/a	n/a	n/a
-ind_l	pik_137	tooth	xyz	n/a	n/a	56.75	-60.57	1125	1250	1000	contextual	1	1240K	haploid	popL	U	n/a	n/a	n/a	n/a	n/a	n/a	n/a	n/a	n/a	n/a	n/a	n/a	n/a	n/a
-ind_e	pik_16	tooth	xyz	n/a	n/a	56.75	-60.57	1125	1250	1000	contextual	1	1240K	haploid	popE	M	n/a	n/a	n/a	n/a	n/a	n/a	n/a	n/a	n/a	n/a	n/a	n/a	n/a	n/a
+Individual_ID	Collection_ID	Source_Tissue	Country	Location	Site	Latitude	Longitude	Date_C14_Labnr	Date_C14_Uncal_BP	Date_C14_Uncal_BP_Err	Date_BC_Median	Date_BC_Start	Date_BC_End	Date_Type	No_of_Libraries	Data_Type	Genotype_Ploidy	Group_Name	Genetic_Sex	Library_Built	Nr_autosomal_SNPs	Coverage_1240K	MT_Haplogroup	Y_Haplogroup	Endogenous	UDG	Damage	Xcontam	Xcontam_stderr	mtContam	mtContam_stderr	Primary_Contact	Publication_status	Note
+ind_m	pik_25	tooth	xyz	n/a	n/a	12.45	-60.57				1125	1250	1000	contextual	1	1240K	haploid	popM	M	n/a	n/a	n/a	n/a	n/a	n/a	n/a	n/a	n/a	n/a	n/a	n/a	n/a	n/a	n/a
+ind_o	pik_968	tooth	xyz	n/a	n/a	12.45	-60.57				1125	1250	1000	contextual	1	1240K	haploid	popO	F	n/a	n/a	n/a	n/a	n/a	n/a	n/a	n/a	n/a	n/a	n/a	n/a	n/a	n/a	n/a
+ind_l	pik_137	tooth	xyz	n/a	n/a	56.75	-60.57				1125	1250	1000	contextual	1	1240K	haploid	popL	U	n/a	n/a	n/a	n/a	n/a	n/a	n/a	n/a	n/a	n/a	n/a	n/a	n/a	n/a	n/a
+ind_e	pik_16	tooth	xyz	n/a	n/a	56.75	-60.57				1125	1250	1000	contextual	1	1240K	haploid	popE	M	n/a	n/a	n/a	n/a	n/a	n/a	n/a	n/a	n/a	n/a	n/a	n/a	n/a	n/a	n/a
