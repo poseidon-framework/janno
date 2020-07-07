@@ -34,15 +34,15 @@ convert_ped2eig <- function(input_package, output_directory, log_directory) {
 
 convert_start_ped2eig_run <- function(par_file, log_directory) {
   cat("\nYou can trigger the actual conversion now with\n=> ")
-  cat(paste(
-    'sbatch -p short -c 1 --mem=2000 -J poseidon_convert',
-    '-o', file.path(log_directory, 'poseidon2_%j.out'),
-    '-e', file.path(log_directory, 'poseidon2_%j.err'),
+  cat(paste0(
+    'sbatch -p short -c 1 --mem=2000 -J poseidon_convert ',
+    '-o ', file.path(log_directory, 'poseidon2_%j.out '),
+    '-e ', file.path(log_directory, 'poseidon2_%j.err '),
     '--wrap=',
     '"',
-    'convertf',
-    '-p', par_file,
-    '>', file.path(log_directory, "convert.log"),
+    'convertf ',
+    '-p ', par_file,
+    ' > ', file.path(log_directory, "convert.log"),
     '"'
   ), "\n")
 }
@@ -72,17 +72,21 @@ convert_create_pedind_file <- function(fam_file, log_directory) {
   fam_table <- suppressMessages(readr::read_delim(fam_file, delim = " ", col_names = F))
   pedind_file <- file.path(log_directory, "for_conversion.pedind")
   readr::write_delim(fam_table[,c(1:5, 1)], path = pedind_file, delim = " ", col_names = F)
+  cat("=>", pedind_file, "\n")
   return(pedind_file)
 }
 
 convert_start_message <- function(output_format, input_package, output_directory, log_directory) {
   cat(
-    "convert => Converts data in poseidon directories\n",
     "\n",
-    "Output format:", output_format, "\n",
-    "Input package:", input_package, "\n",
-    "Output directory:", output_directory, "\n",
-    "Log file directory:", log_directory, "\n",
+    "*********************************************\n",
+    "convert => Converts data in poseidon packages\n",
+    "*********************************************\n",
+    "\n",
+    "Output format:\t\t", output_format, "\n",
+    "Input package:\t\t", input_package, "\n",
+    "Output directory:\t", output_directory, "\n",
+    "Log file directory:\t", log_directory, "\n",
     "\n"
   )
 }

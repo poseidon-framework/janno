@@ -19,19 +19,19 @@ merge_module <- function(input_file, output_directory, log_directory) {
 
 plink_merge <- function(plink_merge_file, plink_order_file, output_directory, output_files_name, log_directory) {
   cat("\nYou can trigger the merging now with\n=> ")
-  cat(paste(
-    'sbatch -p short -c 4 --mem=10000 -J poseidon2_merge',
-    '-o', file.path(log_directory, 'poseidon2_%j.out'),
-    '-e', file.path(log_directory, 'poseidon2_%j.err'),
+  cat(paste0(
+    'sbatch -p short -c 4 --mem=10000 -J poseidon2_merge ',
+    '-o ', file.path(log_directory, 'poseidon2_%j.out '),
+    '-e ', file.path(log_directory, 'poseidon2_%j.err '),
     '--wrap=',
     '"',
-      'plink',
-      '--merge-list', plink_merge_file,
-      '--make-bed', 
-      '--indiv-sort', plink_order_file,
-      '--keep-allele-order',
-      '--out', file.path(output_directory, output_files_name),
-      '&& mv', paste0(file.path(output_directory, output_files_name), '.log'), file.path(log_directory, 'plink.log'),
+      'plink ',
+      '--merge-list ', plink_merge_file,
+      ' --make-bed ', 
+      '--indiv-sort ', plink_order_file,
+      ' --keep-allele-order ',
+      '--out ', file.path(output_directory, output_files_name),
+      ' && mv ', paste0(file.path(output_directory, output_files_name), '.log'), ' ', file.path(log_directory, 'plink.log'),
     '"'
   ), "\n")
 }
@@ -77,11 +77,14 @@ merge_print_packages <- function(list_of_packages) {
 
 merge_start_message <- function(input_file, output_directory, log_directory) {
   cat(
-    "merge => Merges multiple poseidon directories\n",
     "\n",
-    "Input file with package list:", input_file, "\n",
-    "Output directory:", output_directory, "\n",
-    "Log file directory:", log_directory, "\n",
+    "******************************************\n",
+    "merge => Merges multiple poseidon packages\n",
+    "******************************************\n",
+    "\n",
+    "Input file with package list:\t", input_file, "\n",
+    "Output directory:\t\t", output_directory, "\n",
+    "Log file directory:\t\t", log_directory, "\n",
     "\n"
   )
 }
