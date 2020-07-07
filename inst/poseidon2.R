@@ -1,8 +1,15 @@
 #!/usr/bin/env Rscript
 
 'poseidon2
+                 _   _         ___ 
+ ___ ___ ___ ___|_|_| |___ ___|_  |
+| . | . |_ -| -_| | . | . |   |  _|
+|  _|___|___|___|_|___|___|_|_|___|
+|_| 
 
-Utility functions for the poseidon2 data format. All input directories have to adhere to the poseidon2 package file structure as documented here: /projects1/poseidon/poseidon2.package.manager/README.md
+Utility functions for the poseidon2 data format. 
+All input directories have to adhere to the poseidon2 package 
+file structure as documented here: /projects1/poseidon/poseidon2.package.manager/README.md
 
 Usage:
   poseidon2 convert <output_format> <input_package> <output_directory> [--log_directory=DIR]
