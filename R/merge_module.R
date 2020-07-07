@@ -4,6 +4,7 @@ merge_module <- function(input_file, output_directory, log_directory) {
   merge_start_message(input_file, output_directory, log_directory)
   list_of_packages <- merge_read_package_list(input_file)
   merge_print_packages(list_of_packages)
+  #check_if_packages_are_there()
   #validate_module(list_of_packages)
   if (dir.exists(output_directory)) {
     stop("output directory already exists")
@@ -45,6 +46,7 @@ merge_create_order_file_from_fam_files <- function(list_of_packages, log_directo
   concat_first_two_columns <- do.call(rbind, list_of_fam_tables)[,1:2]
   plink_order_file <- file.path(log_directory, "poseidon2_merge_plink_order_file.txt")
   readr::write_tsv(concat_first_two_columns, path = plink_order_file, col_names = FALSE)
+  cat("=>", plink_order_file, "\n")
   return(plink_order_file)
 }
 
@@ -55,7 +57,9 @@ merge_concat_janno_files <- function(list_of_packages, output_directory, output_
     suppressMessages(readr::read_tsv(janno))
   })
   new_janno <- do.call(rbind, list_of_janno_tables)
-  readr::write_tsv(new_janno, path = paste0(file.path(output_directory, output_files_name), ".janno"))
+  new_janno_file <- paste0(file.path(output_directory, output_files_name), ".janno")
+  readr::write_tsv(new_janno, path = new_janno_file)
+  cat("=>", new_janno_file, "\n")
 }
 
 merge_create_plink_merge_input_file <- function(list_of_packages, log_directory) {
@@ -66,12 +70,13 @@ merge_create_plink_merge_input_file <- function(list_of_packages, log_directory)
   }, USE.NAMES = F)
   plink_merge_file <- file.path(log_directory, "poseidon2_merge_plink_input_file.txt")
   writeLines(list_of_file_tripels, con = plink_merge_file)
+  cat("=>", plink_merge_file, "\n")
   return(plink_merge_file)
 }
 
 merge_print_packages <- function(list_of_packages) {
-  cat("Packages to be merged:\n\n")
-  cat(paste(list_of_packages, collapse = "\n"))
+  cat("Packages to be merged:\n")
+  cat(paste(paste("=>", list_of_packages), collapse = "\n"))
   cat("\n\n")
 }
 

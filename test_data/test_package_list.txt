@@ -1,5 +1,5 @@
-test_data/test_package_1
+../test_data/test_package_1
 # this is a comment and a following empty line
 
-test_data/test_package_2
+../test_data/test_package_2
 # and another comment
