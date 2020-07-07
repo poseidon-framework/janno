@@ -45,7 +45,7 @@ merge_create_order_file_from_fam_files <- function(list_of_packages, log_directo
   })
   concat_first_two_columns <- do.call(rbind, list_of_fam_tables)[,1:2]
   plink_order_file <- file.path(log_directory, "poseidon2_merge_plink_order_file.txt")
-  readr::write_tsv(concat_first_two_columns, path = plink_order_file, col_names = FALSE)
+  readr::write_delim(concat_first_two_columns, path = plink_order_file, delim = " ", col_names = FALSE)
   cat("=>", plink_order_file, "\n")
   return(plink_order_file)
 }
