@@ -47,7 +47,15 @@ validate_janno <- function(input_janno) {
   # read file
   character_janno <- readr::read_tsv(input_janno, col_types = readr::cols(.default = "c"))
   # are the necessary columns present
-  colnames(character_janno)
+  if (all(janno_column_names %in% colnames(character_janno))) {
+    cat("=> The janno file has all necessary columns\n")
+  } else {
+    stop(
+      "The janno file lacks the following columns: ", 
+      paste(janno_column_names[!(janno_column_names %in% colnames(character_janno))], collapse = ", ")
+    )
+  }
+  
   
 }
 
