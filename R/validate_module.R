@@ -56,6 +56,7 @@ validate_janno <- function(input_janno) {
     )
   }
   # do the columns have the right type
+  cat("=> Cell content check\n")
   for (cur_col in colnames(character_janno)) {
     expected_type <- hash::values(janno_column_name_column_type, cur_col)
     check_function <- type_string_to_check_function(expected_type)
@@ -75,6 +76,7 @@ validate_janno <- function(input_janno) {
       }
     }
   }
+  cat("\n")
 }
 
 type_string_to_check_function <- function(x) {
@@ -104,11 +106,8 @@ is_valid_string_list <- function(x, cur_col, cur_row) {
 }
 
 is_valid_char_choice <- function(x, cur_col, cur_row, choices) {
-  if (!nchar(x == 1)) {
-    cat(cur_col, ":", cur_row, "=> Not a string of length one")
-  }
   if (!(x %in% choices)) {
-    cat(cur_col, ":", cur_row, "=> Not in", paste(choices, collapse = ", "))
+    cat("/!\\ ->", cur_col, ":", cur_row, "=> Not in", paste(choices, collapse = ", "))
   }
 }
 
