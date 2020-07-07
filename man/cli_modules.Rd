@@ -11,15 +11,15 @@ convert_module(output_format, input_package, output_directory, log_directory)
 merge_module(input_file, output_directory, log_directory)
 }
 \arguments{
-\item{output_format}{}
+\item{output_format}{character. Output format of conversion (e.g. eigenstrat)}
 
-\item{input_package}{}
+\item{input_package}{character. Path to input poseidon2 package}
 
-\item{output_directory}{}
+\item{output_directory}{character. Path to output directory}
 
-\item{log_directory}{}
+\item{log_directory}{character. Path to directory for log files and temporary data}
 
-\item{input_file}{}
+\item{input_file}{character. Path to input file}
 }
 \description{
 poseidon2 command line interface module functions

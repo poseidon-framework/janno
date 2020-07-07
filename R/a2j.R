@@ -2,6 +2,7 @@
 #'
 #' @param in_anno_path character. Path to a anno file
 #' @param out_janno_path chacrater. Path were the resulting janno file should be stored (default: same path as input)
+#' @param to_data_frame logical. Write to file (FALSE) or return a data.fram (TRUE)
 #'
 #' @export
 a2j <- function(

@@ -2,13 +2,15 @@
 % Please edit documentation in R/helper_functions.R
 \name{random_alphanumeric_string}
 \alias{random_alphanumeric_string}
-\title{Title}
+\title{Get a random alphanumeric string}
 \usage{
 random_alphanumeric_string(n = 1, l = 7)
 }
 \arguments{
-\item{n}{}
+\item{n}{integer. Number of random strings}
+
+\item{l}{integer. Length of random strings (number of characters)}
 }
 \description{
-Title
+Get a random alphanumeric string
 }

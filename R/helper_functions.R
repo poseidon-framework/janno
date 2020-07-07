@@ -1,6 +1,7 @@
-#' Title
+#' Get a random alphanumeric string
 #'
-#' @param n 
+#' @param n integer. Number of random strings
+#' @param l integer. Length of random strings (number of characters)
 #'
 #' @export
 random_alphanumeric_string <- function(n = 1, l = 7) {

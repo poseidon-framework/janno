@@ -3,3 +3,4 @@
 ^LICENSE\.md$
 ^test_data$
 ^singularity$
+^data-raw$

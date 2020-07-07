@@ -15,6 +15,8 @@ a2j(
 \item{in_anno_path}{character. Path to a anno file}
 
 \item{out_janno_path}{chacrater. Path were the resulting janno file should be stored (default: same path as input)}
+
+\item{to_data_frame}{logical. Write to file (FALSE) or return a data.fram (TRUE)}
 }
 \description{
 Convert an anno file to a janno file
