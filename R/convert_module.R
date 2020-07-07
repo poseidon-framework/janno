@@ -87,6 +87,7 @@ convert_start_message <- function(output_format, input_package, output_directory
     "Input package:\t\t", input_package, "\n",
     "Output directory:\t", output_directory, "\n",
     "Log file directory:\t", log_directory, "\n",
-    "\n"
+    "\n",
+    sep = ""
   )
 }

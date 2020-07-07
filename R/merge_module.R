@@ -90,7 +90,8 @@ merge_start_message <- function(input_file, output_directory, log_directory) {
     "Input file with package list:\t", input_file, "\n",
     "Output directory:\t\t", output_directory, "\n",
     "Log file directory:\t\t", log_directory, "\n",
-    "\n"
+    "\n",
+    sep = ""
   )
 }
 
