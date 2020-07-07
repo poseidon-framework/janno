@@ -22,7 +22,7 @@ arguments <- docopt::docopt(doc, version = 'Poseidon 2.0.1\n')
 if (arguments$log_directory == "./poseidon2_tmp_and_log/current_date_random_string") {
   arguments$log_directory <- file.path(
     "./poseidon2_tmp_and_log",
-    paste0(format(Sys.time(),'%Y-%m-%d_%H-%M'), "_", anno2janno::random_alphanumeric_string())
+    paste0(format(Sys.time(),'%Y-%m-%d_%H-%M'), "_", poseidon2::random_alphanumeric_string())
   )
 }
 
@@ -32,14 +32,14 @@ if (!dir.exists(arguments$log_directory)) {
 }
   
 if (arguments$convert) {
-  anno2janno::convert_module(
+  poseidon2::convert_module(
     output_format = arguments$output_format,
     input_package = arguments$input_package,
     output_directory = arguments$output_directory,
     log_directory = arguments$log_directory
   )
 } else if (arguments$merge) {
-  anno2janno::merge_module(
+  poseidon2::merge_module(
     input_file = arguments$input_file,
     output_directory = arguments$output_directory,
     log_directory = arguments$log_directory

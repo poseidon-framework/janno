@@ -117,7 +117,7 @@ a2j <- function(
     "\nThe following columns of the resulting janno file are empty.",
     "That may be because the input anno file simply does not contain any information about these variables,",
     "but it's also possible that the anno file does contain info in a column with",
-    "another name unknown to the anno2janno package.",
+    "another name unknown to the poseidon2 package.",
     "anno files are not well standardized.", 
     "Please check and decide if you want to apply the necessary parsing operation yourself."
     ), 

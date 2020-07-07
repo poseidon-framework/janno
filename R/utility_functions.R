@@ -5,7 +5,7 @@
 #' @export
 quick_install <- function(path = "~")  {
   
-  path_to_script <- system.file("poseidon2.R", package = "anno2janno")
+  path_to_script <- system.file("poseidon2.R", package = "poseidon2")
   
   file.copy(
     from = path_to_script,
