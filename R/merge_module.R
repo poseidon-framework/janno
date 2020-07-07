@@ -29,7 +29,7 @@ plink_merge <- function(plink_merge_file, plink_order_file, output_directory, ou
       'plink ',
       '--merge-list ', plink_merge_file,
       ' --make-bed ', 
-      '--indiv-sort ', plink_order_file,
+      '--indiv-sort f ', plink_order_file,
       ' --keep-allele-order ',
       '--out ', file.path(output_directory, output_files_name),
       ' && mv ', paste0(file.path(output_directory, output_files_name), '.log'), ' ', file.path(log_directory, 'plink.log'),
