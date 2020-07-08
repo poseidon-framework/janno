@@ -142,18 +142,32 @@ is_valid_char_choice <- function(x, cur_col, cur_row, choices) {
 }
 
 is_valid_integer <- function(x, cur_col, cur_row) {
-  if ( !grepl("^[0-9]+$", x) ) {
+  if ( !grepl("^[0-9]+$", x) | is.na(suppressWarnings(as.integer(x))) ) {
     cat("/!\\ ->", cur_col, ":", cur_row, "=> Value not a valid integer number")
     cat("\n")
   }
 }
 
 is_valid_non_negative_integer_list <- function(x, cur_col, cur_row) {
-  
+  if ( grepl(",", x) ) {
+    cat("/!\\ ->", cur_col, ":", cur_row, "=> The separator for integer lists is ; and not ,")
+    cat("\n")
+  }
+  if ( !grepl("^[0-9;]+$", x) ) {
+    cat("/!\\ ->", cur_col, ":", cur_row, "=> Not a valid non-negative integer list")
+    cat("\n")
+  }
+  if( grepl(".*;?\\s+.*|.*\\s+;?.*", x) ) {
+    cat("/!\\ ->", cur_col, ":", cur_row, "=> Superfluous white space around separator ;")
+    cat("\n")
+  }
 }
 
 is_valid_float <- function(x, cur_col, cur_row) {
-  
+  if ( !grepl("^[0-9\\.-]+$", x) | is.na(suppressWarnings(as.numeric(x))) ) {
+    cat("/!\\ ->", cur_col, ":", cur_row, "=> Value not a valid floating point number")
+    cat("\n")
+  }
 }
 
 validate_package <- function(input_package) {
