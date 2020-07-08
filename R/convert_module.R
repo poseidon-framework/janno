@@ -79,17 +79,9 @@ convert_create_pedind_file <- function(fam_file, log_directory) {
 }
 
 convert_start_message <- function(output_format, input_package, output_directory, log_directory) {
-  cat(
-    "\n",
-    "*********************************************\n",
-    "convert => Converts data in poseidon packages\n",
-    "*********************************************\n",
-    "\n",
-    "Output format:\t\t", output_format, "\n",
-    "Input package:\t\t", input_package, "\n",
-    "Output directory:\t", output_directory, "\n",
-    "Log file directory:\t", log_directory, "\n",
-    "\n",
-    sep = ""
-  )
+  cli::cli_h1("convert => Converts data in poseidon packages")
+  cli::cli_alert(paste0("Output format:\t", output_format))
+  cli::cli_alert(paste0("Input package:\t", input_package))
+  cli::cli_alert(paste0("Output directory:\t", output_directory))
+  cli::cli_alert(paste0("Log file directory:\t", log_directory))
 }
