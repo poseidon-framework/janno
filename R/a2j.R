@@ -45,7 +45,7 @@ a2j <- function(
     Coverage_1240K = NA,
     MT_Haplogroup = NA,
     Y_Haplogroup = NA,
-    Percent_endogenous  = NA,
+    Endogenous  = NA,
     UDG  = NA,
     Library_Built = NA,
     Damage = NA,
@@ -97,7 +97,7 @@ a2j <- function(
   janno$Coverage_1240K <- anno %c% "coverage"
   janno$MT_Haplogroup <- anno %c% "mt_dna"
   janno$Y_Haplogroup <- anno %c% "y_chrom_calls"
-  janno$Percent_endogenous <- anno %fraction_to_rounded_percent% "percent_endogenous_in_shotgun_sequencing_for_the_best_library"
+  janno$Endogenous <- anno %fraction_to_rounded_percent% "Endogenous_in_shotgun_sequencing_for_the_best_library"
   janno$UDG <- anno %clean_UDG% "udg_treatment_minus_untreated_half_treated_except_in_last_nucleotides_plus_treated_over_all_nucleotides"
   janno$Library_Built <- anno %library_type_from_UDG_id% "udg_treatment_minus_untreated_half_treated_except_in_last_nucleotides_plus_treated_over_all_nucleotides"
   janno$Damage <- anno %c% "damage_restrict"
