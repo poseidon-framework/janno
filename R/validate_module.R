@@ -57,26 +57,41 @@ validate_janno <- function(input_janno) {
   }
   # do the columns have the right type
   cat("=> Cell content check\n")
+  # loop through each column
   for (cur_col in colnames(character_janno)) {
+    # get column background information
     expected_type <- hash::values(janno_column_name_column_type, cur_col)
     check_function <- type_string_to_check_function(expected_type)
-    # with defined set of choices
-    if (cur_col %in% hash::keys(janno_column_name_choices)) {
+    with_choices <- cur_col %in% janno_choice_columns
+    if (with_choices) {
       expected_choices <- unlist(strsplit(
         hash::values(janno_column_name_choices, cur_col),
         ","
       ))
-      for (cur_row in 1:nrow(character_janno)) {
-        check_function(character_janno[[cur_col]][cur_row], cur_col, cur_row, expected_choices)
+    }
+    mandatory <- cur_col %in% janno_mandatory_columns
+    # loop through each cell
+    for (cur_row in 1:nrow(character_janno)) {
+      cur_cell <- character_janno[[cur_col]][cur_row]
+      # special case: n/a
+      if (cur_cell == "n/a") {
+        if (mandatory) {
+          cat("/!\\ ->", cur_col, ":", cur_row, "=> n/a in a mandatory column")
+          cat("\n")
+        } else {
+          next
+        }
       }
-    # without
-    } else {
-      for (cur_row in 1:nrow(character_janno)) {
-        check_function(character_janno[[cur_col]][cur_row], cur_col, cur_row)
+      # normal case: values
+      if (with_choices) {
+      # with defined set of choices
+        check_function(cur_cell, cur_col, cur_row, expected_choices)
+      # without
+      } else {
+        check_function(cur_cell, cur_col, cur_row)
       }
     }
   }
-  cat("\n")
 }
 
 type_string_to_check_function <- function(x) {
@@ -98,7 +113,10 @@ is_valid_string <- function(x, cur_col, cur_row) {
 }
 
 is_valid_string_choice <- function(x, cur_col, cur_row, choices) {
-  
+  if (!(x %in% choices)) {
+    cat("/!\\ ->", cur_col, ":", cur_row, "=> Value not in", paste(choices, collapse = ", "))
+    cat("\n")
+  }
 }
 
 is_valid_string_list <- function(x, cur_col, cur_row) {
@@ -107,7 +125,8 @@ is_valid_string_list <- function(x, cur_col, cur_row) {
 
 is_valid_char_choice <- function(x, cur_col, cur_row, choices) {
   if (!(x %in% choices)) {
-    cat("/!\\ ->", cur_col, ":", cur_row, "=> Not in", paste(choices, collapse = ", "))
+    cat("/!\\ ->", cur_col, ":", cur_row, "=> Value not in", paste(choices, collapse = ", "))
+    cat("\n")
   }
 }
 
