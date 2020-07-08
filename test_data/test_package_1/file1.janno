@@ -2,4 +2,4 @@ Individual_ID	Collection_ID	Source_Tissue	Country	Location	Site	Latitude	Longitu
 ind_m	pik_25	tooth	xyz	n/a	n/a	12.45	-60.57	UX_12345,HU_5646	3000;3500	50;100	1125	1250	1000	C14	1	1240K	haploid	popM	M	n/a	n/a	n/a	n/a	n/a	n/a	n/a	n/a	n/a	n/a	n/a	n/a	n/a	n/a	n/a
 ind_o	pik_968	tooth	xyz	n/a	n/a	12.45	-60.5h7	n/a	3000; 3500	n/a	1125.5	1250	1000	contextual	1	1240K	haploid	popO	FM	n/a	n/a	n/a	n/a	n/a	n/a	n/a	n/a	n/a	n/a	n/a	n/a	n/a	n/a	n/a
 n/a	pik_137	tooth	xyz	n/a	n/a	56.7+5	-60.57	SD_12345; AF_5646	3000;-3500	n/a		1250	10000	C14	1	1240K	haploid	popL	U	n/a	n/a	n/a	n/a	n/a	n/a	n/a	n/a	n/a	n/a	n/a	n/a	n/a	n/a	n/a
-ind_e	pik_16	tooth	xyz	n/a	n/a	56.75	-60.57	n/a	3000,3500	n/a	1125	H1250	1000	Birne	1	1240K	haploid	popE	M	n/a	n/a	n/a	n/a	n/a	n/a	n/a	n/a	n/a	n/a	n/a	n/a	n/a	n/a	n/a
+ind_e	pik_16	tooth	xyz	n/a	n/a	5600.75	-60.57	n/a	3000,3500	n/a	1125	H1250	1000	Birne	1	1240K	haploid	popE	M	n/a	n/a	n/a	n/a	n/a	n/a	n/a	n/a	n/a	n/a	n/a	n/a	n/a	n/a	n/a

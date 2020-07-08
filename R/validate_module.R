@@ -155,30 +155,38 @@ is_valid_char_choice <- function(x, cur_col, cur_row, choices) {
 }
 
 is_valid_integer <- function(x, cur_col, cur_row, expected_range = c(-Inf, Inf)) {
-  if ( !grepl("^[0-9]+$", x) | is.na(suppressWarnings(as.integer(x))) ) {
+  if ( !grepl("^[0-9-]+$", x) | is.na(suppressWarnings(as.integer(x))) ) {
     cat("/!\\ ->", cur_col, ":", cur_row, "=> Value not a valid integer number")
     cat("\n")
   } else {
     x_integer <- as.integer(x)
-    if ( !(x_integer >= expected_range[1] & x_integer <= expected_range[2]) ) {
+    if ( !are_in_range(x_integer, expected_range) ) {
       cat("/!\\ ->", cur_col, ":", cur_row, "=> Value not in range", expected_range[1], "to", expected_range[2])
       cat("\n")
     }
   }
 }
 
+are_in_range <- function(x, expected_range) {
+  all(x >= expected_range[1] & x <= expected_range[2])
+}
+
 is_valid_integer_list <- function(x, cur_col, cur_row, expected_range = c(-Inf, Inf)) {
   if ( grepl(",", x) ) {
     cat("/!\\ ->", cur_col, ":", cur_row, "=> The separator for integer lists is ; and not ,")
     cat("\n")
-  }
-  if ( !grepl("^[0-9;]+$", x) ) {
-    cat("/!\\ ->", cur_col, ":", cur_row, "=> Not a valid non-negative integer list")
+  } else if ( !grepl("^[0-9;-]+$", x) ) {
+    cat("/!\\ ->", cur_col, ":", cur_row, "=> Contains symbols that do not belong here")
     cat("\n")
-  }
-  if( grepl(".*;?\\s+.*|.*\\s+;?.*", x) ) {
+  } else if( grepl(".*;?\\s+.*|.*\\s+;?.*", x) ) {
     cat("/!\\ ->", cur_col, ":", cur_row, "=> Superfluous white space around separator ;")
     cat("\n")
+  } else {
+    x_integer <- as.integer(unlist(strsplit(x, ";")))
+    if ( !are_in_range(x_integer, expected_range) ) {
+      cat("/!\\ ->", cur_col, ":", cur_row, "=> One or multiple values not in range", expected_range[1], "to", expected_range[2])
+      cat("\n")
+    }
   }
 }
 
@@ -186,6 +194,12 @@ is_valid_float <- function(x, cur_col, cur_row, expected_range = c(-Inf, Inf)) {
   if ( !grepl("^[0-9\\.-]+$", x) | is.na(suppressWarnings(as.numeric(x))) ) {
     cat("/!\\ ->", cur_col, ":", cur_row, "=> Value not a valid floating point number")
     cat("\n")
+  } else {
+    x_numeric <- as.numeric(x)
+    if ( !are_in_range(x_numeric, expected_range) ) {
+      cat("/!\\ ->", cur_col, ":", cur_row, "=> Value not in range", expected_range[1], "to", expected_range[2])
+      cat("\n")
+    }
   }
 }
 
