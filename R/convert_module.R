@@ -16,7 +16,7 @@ convert_module <- function(output_format, input_package, output_directory, log_d
 }
 
 convert_ped2eig <- function(input_package, output_directory, log_directory) {
-  cat("Converting plink files to eigenstrat format...\n")
+  cli::cli_alert_info("Converting plink files to eigenstrat format...")
   # copy janno file
   janno_file <- list.files(input_package, pattern = ".janno", full.names = T)
   file.copy(janno_file, file.path(output_directory, basename(janno_file)))
@@ -33,7 +33,8 @@ convert_ped2eig <- function(input_package, output_directory, log_directory) {
 }
 
 convert_start_ped2eig_run <- function(par_file, log_directory) {
-  cat("\nYou can trigger the actual conversion now with\n=> ")
+  cat("\n")
+  cli::cli_alert_info("You can trigger the actual conversion now with")
   cat(paste0(
     'sbatch -p short -c 1 --mem=2000 -J poseidon_convert ',
     '-o ', file.path(log_directory, 'poseidon2_%j.out '),
@@ -44,11 +45,12 @@ convert_start_ped2eig_run <- function(par_file, log_directory) {
     '-p ', par_file,
     ' > ', file.path(log_directory, "convert.log"),
     '"'
-  ), "\n")
+  ))
+  cat("\n")
 }
 
 convert_create_par_file <- function(bed_file, bim_file, pedind_file, output_directory, return_file_name, log_directory) {
-  cat("Create .par file...\n")
+  cli::cli_alert_info("Create .par file...")
   par_file <- file.path(log_directory, "convertf.par")
   writeLines(
     c(
@@ -63,16 +65,16 @@ convert_create_par_file <- function(bed_file, bim_file, pedind_file, output_dire
     ),
     con = par_file
   )
-  cat("=>", par_file, "\n")
+  cli::cli_alert_success(par_file)
   return(par_file)
 }
 
 convert_create_pedind_file <- function(fam_file, log_directory) {
-  cat("Create .pedind file...\n")
+  cli::cli_alert_info("Create .pedind file...")
   fam_table <- suppressMessages(readr::read_delim(fam_file, delim = " ", col_names = F))
   pedind_file <- file.path(log_directory, "for_conversion.pedind")
   readr::write_delim(fam_table[,c(1:5, 1)], path = pedind_file, delim = " ", col_names = F)
-  cat("=>", pedind_file, "\n")
+  cli::cli_alert_success(pedind_file)
   return(pedind_file)
 }
 
