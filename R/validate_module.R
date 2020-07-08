@@ -13,16 +13,7 @@ validate_module <- function(input_janno_file_or_packages) {
 }
 
 validate_start_message <- function(input_janno_file_or_packages, type) {
-  cat(
-    "\n",
-    "*******************************************************\n",
-    "validate => Validates janno files and poseidon packages\n",
-    "*******************************************************\n",
-    "\n",
-    paste(type, input_janno_file_or_packages, sep = "\t=> ", collapse = "\n"),
-    "\n\n",
-    sep = ""
-  )
+  cli::cli_h1("validate => Validates janno files and poseidon packages")
 }
 
 janno_or_package <- function(input_janno_file_or_packages) {
@@ -30,7 +21,7 @@ janno_or_package <- function(input_janno_file_or_packages) {
 }
 
 validate_janno <- function(input_janno) {
-  cli::cli_alert_info(input_janno)
+  cli::cli_rule(left = input_janno)
   # does it exist?
   if (file.exists(input_janno)) {
     cli::cli_alert_success("The janno file exists")
@@ -193,7 +184,7 @@ is_valid_float <- function(x, cur_col, cur_row, expected_range = c(-Inf, Inf)) {
 }
 
 validate_package <- function(input_package) {
-  cli::cli_alert_info(input_package)
+  cli::cli_rule(left = input_package)
   # does it exist?
   if (dir.exists(input_package)) {
     cli::cli_alert_success("The directory exists")
@@ -217,7 +208,6 @@ validate_package <- function(input_package) {
   }
   # check .janno file
   validate_janno(list.files(input_package, pattern = ".janno", full.names = T))
-  cat("\n")
 }
 
 
