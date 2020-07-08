@@ -19,7 +19,8 @@ merge_module <- function(input_file, output_directory, log_directory) {
 }
 
 plink_merge <- function(plink_merge_file, plink_order_file, output_directory, output_files_name, log_directory) {
-  cat("\nYou can trigger the merging now with\n=> ")
+  cat("\n")
+  cli::cli_alert_info("You can trigger the merging now with")
   cat(paste0(
     'sbatch -p short -c 4 --mem=10000 -J poseidon2_merge ',
     '-o ', file.path(log_directory, 'poseidon2_%j.out '),
@@ -34,11 +35,12 @@ plink_merge <- function(plink_merge_file, plink_order_file, output_directory, ou
       '--out ', file.path(output_directory, output_files_name),
       ' && mv ', paste0(file.path(output_directory, output_files_name), '.log'), ' ', file.path(log_directory, 'plink.log'),
     '"'
-  ), "\n")
+  ))
+  cat("\n")
 }
 
 merge_create_order_file_from_fam_files <- function(list_of_packages, log_directory) {
-  cat("Merge fam files to get order file...\n")
+  cli::cli_alert_info("Merge fam files to get order file...")
   list_of_fam_files <- list.files(list_of_packages, pattern = ".fam", full.names = T)
   list_of_fam_tables <- lapply(list_of_fam_files, function(fam) {
     suppressMessages(readr::read_delim(fam, delim = " ", col_names = F))
@@ -46,12 +48,12 @@ merge_create_order_file_from_fam_files <- function(list_of_packages, log_directo
   concat_first_two_columns <- do.call(rbind, list_of_fam_tables)[,1:2]
   plink_order_file <- file.path(log_directory, "poseidon2_merge_plink_order_file.txt")
   readr::write_delim(concat_first_two_columns, path = plink_order_file, delim = " ", col_names = FALSE)
-  cat("=>", plink_order_file, "\n")
+  cli::cli_alert_success(plink_order_file)
   return(plink_order_file)
 }
 
 merge_concat_janno_files <- function(list_of_packages, output_directory, output_files_name) {
-  cat("Merge janno files...\n")
+  cli::cli_alert_info("Merge janno files...")
   list_of_janno_files <- list.files(list_of_packages, pattern = ".janno", full.names = T)
   list_of_janno_tables <- lapply(list_of_janno_files, function(janno) {
     suppressMessages(readr::read_tsv(janno))
@@ -59,18 +61,18 @@ merge_concat_janno_files <- function(list_of_packages, output_directory, output_
   new_janno <- do.call(rbind, list_of_janno_tables)
   new_janno_file <- paste0(file.path(output_directory, output_files_name), ".janno")
   readr::write_tsv(new_janno, path = new_janno_file)
-  cat("=>", new_janno_file, "\n")
+  cli::cli_alert_success(new_janno_file)
 }
 
 merge_create_plink_merge_input_file <- function(list_of_packages, log_directory) {
-  cat("Creating input file for plink merge...\n")
+  cli::cli_alert_info("Creating input file for plink merge...")
   list_of_file_tripels <- sapply(list_of_packages, function(package) {
     file_list <- list.files(package, pattern = ".bed|.bim|.fam", full.names = T)
     paste(file_list, collapse = " ")
   }, USE.NAMES = F)
   plink_merge_file <- file.path(log_directory, "poseidon2_merge_plink_input_file.txt")
   writeLines(list_of_file_tripels, con = plink_merge_file)
-  cat("=>", plink_merge_file, "\n")
+  cli::cli_alert_success(plink_merge_file)
   return(plink_merge_file)
 }
 
