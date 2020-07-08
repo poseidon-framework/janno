@@ -30,33 +30,36 @@ janno_or_package <- function(input_janno_file_or_packages) {
 }
 
 validate_janno <- function(input_janno) {
-  cat(input_janno, "\n")
+  cli::cli_alert_info(input_janno)
   # does it exist?
   if (file.exists(input_janno)) {
-    cat("=> The janno file exists\n")
+    cli::cli_alert_success("The janno file exists")
   } else {
-    stop("The janno file does not exist")
+    cli::cli_alert_danger("The janno file does not exist")
+    return(1)
   }
   # does it contain tab separated columns?
   input_janno_linewise <- readr::read_lines(input_janno, n_max = 50)
   if (all(grepl(".*\\t.*\\t.*\\t.*", input_janno_linewise))) {
-    cat("=> The janno file seems to be a valid tab separated file\n")
+    cli::cli_alert_success("The janno file seems to be a valid tab separated file")
   } else {
-    stop("The janno file can't be a valid .tsv file with at least 4 columns")
+    cli::cli_alert_danger("The janno file is nota a valid tab separated file with")
+    return(1)
   }
   # read file
   character_janno <- readr::read_tsv(input_janno, col_types = readr::cols(.default = "c"))
   # are the necessary columns present
   if (all(janno_column_names %in% colnames(character_janno))) {
-    cat("=> The janno file has all necessary columns\n")
+    cli::cli_alert_success("The janno file has all necessary columns")
   } else {
-    stop(
+    cli::cli_alert_danger(paste(
       "The janno file lacks the following columns: ", 
       paste(janno_column_names[!(janno_column_names %in% colnames(character_janno))], collapse = ", ")
-    )
+    ))
+    return(1)
   }
   # do the columns have the right type
-  cat("=> Cell content check\n")
+  cli::cli_alert_info("Cell content check")
   # loop through each column
   for (cur_col in colnames(character_janno)) {
     # get column background information
@@ -83,14 +86,12 @@ validate_janno <- function(input_janno) {
       ## general checks ##
       # special case: NA or ""
       if (is.na(cur_cell) | cur_cell == "") {
-        cat("/!\\ ->", cur_col, ":", cur_row, "=> Empty cells are not allowed, please fill with n/a")
-        cat("\n")
+        cli::cli_alert_danger(paste(cur_row, ":", cur_col, "=> Empty cells are not allowed, please fill with n/a"))
         next
       # special case: n/a
       } else if (cur_cell == "n/a") {
         if (mandatory) {
-          cat("/!\\ ->", cur_col, ":", cur_row, "=> n/a in a mandatory column")
-          cat("\n")
+          cli::cli_alert_danger(paste(cur_row, ":", cur_col, "=> n/a in a mandatory column"))
           next
         } else {
           next
@@ -131,38 +132,32 @@ is_valid_string <- function(x, cur_col, cur_row) {
 
 is_valid_string_choice <- function(x, cur_col, cur_row, choices) {
   if (!(x %in% choices)) {
-    cat("/!\\ ->", cur_col, ":", cur_row, "=> Value not in", paste(choices, collapse = ", "))
-    cat("\n")
+    cli::cli_alert_danger(paste(cur_row, ":", cur_col, "=> Value not in", paste(choices, collapse = ", ")))
   }
 }
 
 is_valid_string_list <- function(x, cur_col, cur_row) {
   if ( grepl(",", x) ) {
-    cat("/!\\ ->", cur_col, ":", cur_row, "=> The separator for string lists is ; and not ,")
-    cat("\n")
+    cli::cli_alert_danger(paste(cur_row, ":", cur_col, "=> The separator for string lists is ; and not ,"))
   }
   if( grepl(".*;?\\s+.*|.*\\s+;?.*", x) ) {
-    cat("/!\\ ->", cur_col, ":", cur_row, "=> Superfluous white space around separator ;")
-    cat("\n")
+    cli::cli_alert_danger(paste(cur_row, ":", cur_col, "=> Superfluous white space around separator ;"))
   }
 }
 
 is_valid_char_choice <- function(x, cur_col, cur_row, choices) {
   if (!(x %in% choices)) {
-    cat("/!\\ ->", cur_col, ":", cur_row, "=> Value not in", paste(choices, collapse = ", "))
-    cat("\n")
+    cli::cli_alert_danger(paste(cur_row, ":", cur_col, "=> Value not in", paste(choices, collapse = ", ")))
   }
 }
 
 is_valid_integer <- function(x, cur_col, cur_row, expected_range = c(-Inf, Inf)) {
   if ( !grepl("^[0-9-]+$", x) | is.na(suppressWarnings(as.integer(x))) ) {
-    cat("/!\\ ->", cur_col, ":", cur_row, "=> Value not a valid integer number")
-    cat("\n")
+    cli::cli_alert_danger(paste(cur_row, ":", cur_col, "=> Value not a valid integer number"))
   } else {
     x_integer <- as.integer(x)
     if ( !are_in_range(x_integer, expected_range) ) {
-      cat("/!\\ ->", cur_col, ":", cur_row, "=> Value not in range", expected_range[1], "to", expected_range[2])
-      cat("\n")
+      cli::cli_alert_danger(paste(cur_row, ":", cur_col, "=> Value not in range", expected_range[1], "to", expected_range[2]))
     }
   }
 }
@@ -173,56 +168,52 @@ are_in_range <- function(x, expected_range) {
 
 is_valid_integer_list <- function(x, cur_col, cur_row, expected_range = c(-Inf, Inf)) {
   if ( grepl(",", x) ) {
-    cat("/!\\ ->", cur_col, ":", cur_row, "=> The separator for integer lists is ; and not ,")
-    cat("\n")
+    cli::cli_alert_danger(paste(cur_row, ":", cur_col, "=> The separator for integer lists is ; and not ,"))
   } else if ( !grepl("^[0-9;-]+$", x) ) {
-    cat("/!\\ ->", cur_col, ":", cur_row, "=> Contains symbols that do not belong here")
-    cat("\n")
+    cli::cli_alert_danger(paste(cur_row, ":", cur_col, "=> Contains symbols that do not belong here"))
   } else if( grepl(".*;?\\s+.*|.*\\s+;?.*", x) ) {
-    cat("/!\\ ->", cur_col, ":", cur_row, "=> Superfluous white space around separator ;")
-    cat("\n")
+    cli::cli_alert_danger(paste(cur_row, ":", cur_col, "=> Superfluous white space around separator ;"))
   } else {
     x_integer <- as.integer(unlist(strsplit(x, ";")))
     if ( !are_in_range(x_integer, expected_range) ) {
-      cat("/!\\ ->", cur_col, ":", cur_row, "=> One or multiple values not in range", expected_range[1], "to", expected_range[2])
-      cat("\n")
+      cli::cli_alert_danger(paste(cur_row, ":", cur_col, "=> One or multiple values not in range", expected_range[1], "to", expected_range[2]))
     }
   }
 }
 
 is_valid_float <- function(x, cur_col, cur_row, expected_range = c(-Inf, Inf)) {
   if ( !grepl("^[0-9\\.-]+$", x) | is.na(suppressWarnings(as.numeric(x))) ) {
-    cat("/!\\ ->", cur_col, ":", cur_row, "=> Value not a valid floating point number")
-    cat("\n")
+    cli::cli_alert_danger(paste(cur_row, ":", cur_col, "=> Value not a valid floating point number"))
   } else {
     x_numeric <- as.numeric(x)
     if ( !are_in_range(x_numeric, expected_range) ) {
-      cat("/!\\ ->", cur_col, ":", cur_row, "=> Value not in range", expected_range[1], "to", expected_range[2])
-      cat("\n")
+      cli::cli_alert_danger(paste(cur_row, ":", cur_col, "=> Value not in range", expected_range[1], "to", expected_range[2]))
     }
   }
 }
 
 validate_package <- function(input_package) {
-  cat(input_package, "\n")
+  cli::cli_alert_info(input_package)
   # does it exist?
   if (dir.exists(input_package)) {
-    cat("=> The directory exists\n")
+    cli::cli_alert_success("The directory exists")
   } else {
-    stop("The directory does not exist")
+    cli::cli_alert_danger("The directory does not exist")
+    return(1)
   }
   # does it contain the necessary files once?
   necessary_files <- list.files(input_package, pattern = ".janno|.bed|.bim|.fam")
   extensions_necessary_files <- tools::file_ext(necessary_files)
   if (all(extensions_necessary_files == c("bed", "bim", "fam", "janno"))) {
-    cat("=> The package contains the necessary files .bed, .bim, .fam and .janno exactly once\n")
+    cli::cli_alert_success("The package contains the necessary files .bed, .bim, .fam and .janno exactly once")
   } else {
-    stop("Necessary files (.bed, .bim, .fam and .janno) are missing or multiple of these are present")
+    cli::cli_alert_danger("Necessary files (.bed, .bim, .fam and .janno) are missing or multiple of these are present")
+    return(1)
   }
   # are other files present?
   all_files <- list.files(input_package)
   if (any(!all_files %in% necessary_files)) {
-    cat("=> There are other files present as well:", paste(all_files[!all_files %in% necessary_files], collapse = ", "), "\n")
+    cli::cli_alert_warning(paste("There are other files present as well:", paste(all_files[!all_files %in% necessary_files], collapse = ", ")))
   }
   # check .janno file
   validate_janno(list.files(input_package, pattern = ".janno", full.names = T))
