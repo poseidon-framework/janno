@@ -73,8 +73,12 @@ validate_janno <- function(input_janno) {
     # loop through each cell
     for (cur_row in 1:nrow(character_janno)) {
       cur_cell <- character_janno[[cur_col]][cur_row]
+      # special case: NA or ""
+      if (is.na(cur_cell) | cur_cell == "") {
+        cat("/!\\ ->", cur_col, ":", cur_row, "=> Empty cells are not allowed, please fill with n/a")
+        cat("\n")
       # special case: n/a
-      if (cur_cell == "n/a") {
+      } else if (cur_cell == "n/a") {
         if (mandatory) {
           cat("/!\\ ->", cur_col, ":", cur_row, "=> n/a in a mandatory column")
           cat("\n")
@@ -120,7 +124,14 @@ is_valid_string_choice <- function(x, cur_col, cur_row, choices) {
 }
 
 is_valid_string_list <- function(x, cur_col, cur_row) {
-  
+  if ( grepl(",", x) ) {
+    cat("/!\\ ->", cur_col, ":", cur_row, "=> The separator for string lists is ; and not ,")
+    cat("\n")
+  }
+  if( grepl(".*;?\\s+.*|.*\\s+;?.*", x) ) {
+    cat("/!\\ ->", cur_col, ":", cur_row, "=> Superfluous white space around separator ;")
+    cat("\n")
+  }
 }
 
 is_valid_char_choice <- function(x, cur_col, cur_row, choices) {
@@ -131,7 +142,10 @@ is_valid_char_choice <- function(x, cur_col, cur_row, choices) {
 }
 
 is_valid_integer <- function(x, cur_col, cur_row) {
-  
+  if ( !grepl("^[0-9]+$", x) ) {
+    cat("/!\\ ->", cur_col, ":", cur_row, "=> Value not a valid integer number")
+    cat("\n")
+  }
 }
 
 is_valid_non_negative_integer_list <- function(x, cur_col, cur_row) {
