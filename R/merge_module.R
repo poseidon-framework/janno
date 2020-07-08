@@ -77,24 +77,15 @@ merge_create_plink_merge_input_file <- function(list_of_packages, log_directory)
 }
 
 merge_print_packages <- function(list_of_packages) {
-  cat("Packages to be merged:\n")
-  cat(paste(paste("=>", list_of_packages), collapse = "\n"))
-  cat("\n\n")
+  cli::cli_alert_info("Packages to be merged:")
+  sapply(list_of_packages, function(x) { cli::cli_alert(x) })
 }
 
 merge_start_message <- function(input_file, output_directory, log_directory) {
-  cat(
-    "\n",
-    "******************************************\n",
-    "merge => Merges multiple poseidon packages\n",
-    "******************************************\n",
-    "\n",
-    "Input file with package list:\t", input_file, "\n",
-    "Output directory:\t\t", output_directory, "\n",
-    "Log file directory:\t\t", log_directory, "\n",
-    "\n",
-    sep = ""
-  )
+  cli::cli_h1("merge => Merges multiple poseidon packages")
+  cli::cli_alert(paste0("Package list:\t\t", input_file))
+  cli::cli_alert(paste0("Output directory:\t", output_directory))
+  cli::cli_alert(paste0("Log file directory:\t", log_directory))
 }
 
 merge_read_package_list <- function(input_file) {
