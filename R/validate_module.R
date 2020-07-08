@@ -73,6 +73,7 @@ validate_janno <- function(input_janno) {
     # loop through each cell
     for (cur_row in 1:nrow(character_janno)) {
       cur_cell <- character_janno[[cur_col]][cur_row]
+      ## general checks ##
       # special case: NA or ""
       if (is.na(cur_cell) | cur_cell == "") {
         cat("/!\\ ->", cur_col, ":", cur_row, "=> Empty cells are not allowed, please fill with n/a")
@@ -86,14 +87,8 @@ validate_janno <- function(input_janno) {
           next
         }
       }
-      # normal case: values
-      if (with_choices) {
-      # with defined set of choices
-        check_function(cur_cell, cur_col, cur_row, expected_choices)
-      # without
-      } else {
-        check_function(cur_cell, cur_col, cur_row)
-      }
+      ## column type checks ##
+      check_function(cur_cell, cur_col, cur_row, expected_choices)
     }
   }
 }
@@ -112,18 +107,18 @@ type_string_to_check_function <- function(x) {
   )
 }
 
-is_valid_string <- function(x, cur_col, cur_row) {
+is_valid_string <- function(x, cur_col, cur_row, ...) {
   
 }
 
-is_valid_string_choice <- function(x, cur_col, cur_row, choices) {
+is_valid_string_choice <- function(x, cur_col, cur_row, choices, ...) {
   if (!(x %in% choices)) {
     cat("/!\\ ->", cur_col, ":", cur_row, "=> Value not in", paste(choices, collapse = ", "))
     cat("\n")
   }
 }
 
-is_valid_string_list <- function(x, cur_col, cur_row) {
+is_valid_string_list <- function(x, cur_col, cur_row, ...) {
   if ( grepl(",", x) ) {
     cat("/!\\ ->", cur_col, ":", cur_row, "=> The separator for string lists is ; and not ,")
     cat("\n")
@@ -134,21 +129,21 @@ is_valid_string_list <- function(x, cur_col, cur_row) {
   }
 }
 
-is_valid_char_choice <- function(x, cur_col, cur_row, choices) {
+is_valid_char_choice <- function(x, cur_col, cur_row, choices, ...) {
   if (!(x %in% choices)) {
     cat("/!\\ ->", cur_col, ":", cur_row, "=> Value not in", paste(choices, collapse = ", "))
     cat("\n")
   }
 }
 
-is_valid_integer <- function(x, cur_col, cur_row) {
+is_valid_integer <- function(x, cur_col, cur_row, ...) {
   if ( !grepl("^[0-9]+$", x) | is.na(suppressWarnings(as.integer(x))) ) {
     cat("/!\\ ->", cur_col, ":", cur_row, "=> Value not a valid integer number")
     cat("\n")
   }
 }
 
-is_valid_non_negative_integer_list <- function(x, cur_col, cur_row) {
+is_valid_non_negative_integer_list <- function(x, cur_col, cur_row, ...) {
   if ( grepl(",", x) ) {
     cat("/!\\ ->", cur_col, ":", cur_row, "=> The separator for integer lists is ; and not ,")
     cat("\n")
@@ -163,7 +158,7 @@ is_valid_non_negative_integer_list <- function(x, cur_col, cur_row) {
   }
 }
 
-is_valid_float <- function(x, cur_col, cur_row) {
+is_valid_float <- function(x, cur_col, cur_row, ...) {
   if ( !grepl("^[0-9\\.-]+$", x) | is.na(suppressWarnings(as.numeric(x))) ) {
     cat("/!\\ ->", cur_col, ":", cur_row, "=> Value not a valid floating point number")
     cat("\n")
