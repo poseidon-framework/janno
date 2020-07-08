@@ -62,14 +62,21 @@ validate_janno <- function(input_janno) {
     # get column background information
     expected_type <- hash::values(janno_column_name_column_type, cur_col)
     check_function <- type_string_to_check_function(expected_type)
+    mandatory <- cur_col %in% janno_mandatory_columns
     with_choices <- cur_col %in% janno_choice_columns
     if (with_choices) {
       expected_choices <- unlist(strsplit(
         hash::values(janno_column_name_choices, cur_col),
-        ","
+        ";"
       ))
     }
-    mandatory <- cur_col %in% janno_mandatory_columns
+    with_range <- cur_col %in% janno_range_columns
+    if (with_range) {
+      expected_range <- c(
+        hash::values(janno_column_name_range_lower, cur_col),
+        hash::values(janno_column_name_range_upper, cur_col)
+      )
+    }
     # loop through each cell
     for (cur_row in 1:nrow(character_janno)) {
       cur_cell <- character_janno[[cur_col]][cur_row]
@@ -78,21 +85,25 @@ validate_janno <- function(input_janno) {
       if (is.na(cur_cell) | cur_cell == "") {
         cat("/!\\ ->", cur_col, ":", cur_row, "=> Empty cells are not allowed, please fill with n/a")
         cat("\n")
+        next
       # special case: n/a
       } else if (cur_cell == "n/a") {
         if (mandatory) {
           cat("/!\\ ->", cur_col, ":", cur_row, "=> n/a in a mandatory column")
           cat("\n")
+          next
         } else {
           next
         }
       }
       ## column type checks ##
-      # normal case: values
-      if (with_choices) {
       # with defined set of choices
+      if (with_choices) {
         check_function(cur_cell, cur_col, cur_row, expected_choices)
-      # without
+      # with range
+      } else if (with_range) {
+        check_function(cur_cell, cur_col, cur_row, expected_range)
+      # without anything
       } else {
         check_function(cur_cell, cur_col, cur_row)
       }
@@ -108,7 +119,7 @@ type_string_to_check_function <- function(x) {
     "String list" = is_valid_string_list,
     "Char choice" = is_valid_char_choice,
     "Integer" = is_valid_integer, 
-    "Non-negative Integer list" = is_valid_non_negative_integer_list,
+    "Integer list" = is_valid_integer_list,
     "Float" = is_valid_float,
     NA
   )
@@ -143,14 +154,20 @@ is_valid_char_choice <- function(x, cur_col, cur_row, choices) {
   }
 }
 
-is_valid_integer <- function(x, cur_col, cur_row) {
+is_valid_integer <- function(x, cur_col, cur_row, expected_range = c(-Inf, Inf)) {
   if ( !grepl("^[0-9]+$", x) | is.na(suppressWarnings(as.integer(x))) ) {
     cat("/!\\ ->", cur_col, ":", cur_row, "=> Value not a valid integer number")
     cat("\n")
+  } else {
+    x_integer <- as.integer(x)
+    if ( !(x_integer >= expected_range[1] & x_integer <= expected_range[2]) ) {
+      cat("/!\\ ->", cur_col, ":", cur_row, "=> Value not in range", expected_range[1], "to", expected_range[2])
+      cat("\n")
+    }
   }
 }
 
-is_valid_non_negative_integer_list <- function(x, cur_col, cur_row) {
+is_valid_integer_list <- function(x, cur_col, cur_row, expected_range = c(-Inf, Inf)) {
   if ( grepl(",", x) ) {
     cat("/!\\ ->", cur_col, ":", cur_row, "=> The separator for integer lists is ; and not ,")
     cat("\n")
@@ -165,7 +182,7 @@ is_valid_non_negative_integer_list <- function(x, cur_col, cur_row) {
   }
 }
 
-is_valid_float <- function(x, cur_col, cur_row) {
+is_valid_float <- function(x, cur_col, cur_row, expected_range = c(-Inf, Inf)) {
   if ( !grepl("^[0-9\\.-]+$", x) | is.na(suppressWarnings(as.numeric(x))) ) {
     cat("/!\\ ->", cur_col, ":", cur_row, "=> Value not a valid floating point number")
     cat("\n")
