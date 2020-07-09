@@ -1,0 +1,194 @@
+{
+  "@context": ["http://www.w3.org/ns/csvw"],
+  "dc:description": "Genetic data published in Schiffels et al. 2016",
+  "dc:conformsTo": "http://w3id.org/poseidon/v2.1/terms.rdf.jsonld#PackageInfo",
+  "dc:title": "Schiffels_2016",
+  "dc:contributor": {
+    "dc:name" : "Stephan Schiffels",
+    "dc:email" : "stephan.schiffels@institute.org"
+  },
+  "dc:modified": {"@value": "2020-02-28", "@type": "date"},
+  "dc:license" : "CC-BY",
+  "dc:source" : "sources.bib",
+  "dc:references" : {
+    "@type" : "http://w3id.org/poseidon/v2.1/terms.rdf.jsonld#GenotypeFileSpecification",
+    "@value" : {
+      "http://w3id.org/poseidon/terms.rdf.jsonld#GenotypeDataFormat" : "PLINK",
+      "http://w3id.org/poseidon/terms.rdf.jsonld#GenotypeGenoFile" : "Schiffels_2016.bed",
+      "http://w3id.org/poseidon/terms.rdf.jsonld#GenotypeSnpFile" : "Schiffels_2016.bim",
+      "http://w3id.org/poseidon/terms.rdf.jsonld#GenotypeIndFile" : "Schiffels_2016.fam"
+    }
+  },
+  "tables": [{
+    "url" : "Schiffels_2016.janno",
+    "tableSchema" : {
+      "columns" : [{
+        "name": "Individual_ID",
+        "datatype": "string",
+        "dc:description": "from Pandora or external labs, in most cases Individual, but can also be Sample or Library depending on the granularity of the project. This doesn't follow a strict format but should just be a unique string that identifies the individual within the wider Poseidon v2 dataset. It can be Pandora IDs or Boston IDs or others.	Examples: NYI001	RK1001	I0063",
+        "required": true
+      }, {
+        "name": "Collection_ID",
+        "datatype": "string",
+        "dc:description": "Archaeological_ID as in Pandora, ideally, or other datasets. Spaces allowed. For modern samples, report additional collection_ID or 'n/a'. Examples:	Sk224	kurgan 2, grave 1	n/a"
+      }, {
+        "name": "Source_Tissue",
+        "datatype": "string",
+        "separator": ",",
+        "dc:description": "comma-separated (no spaces) in case libraries from multiple skeletal/tissue/source elements have been merged. Examples:	Petrous,Tooth	Coprolite"
+      }, {
+        "name": "Country",
+        "datatype": "string",
+        "dc:description": "present-day political country. Example: Turkey",
+      }, {
+        "name": "Location",
+        "datatype": "string",
+        "dc:description": "City or village nearby the site. Examples: Berlin"
+      }, {
+        "name": "Site",
+        "datatype": "string",
+        "dc:description": "Site name as in Pandora, spaces allowed. Examples:	Magdalenenberg, Rasshevatskij"
+      }, {
+        "name": "Latitude",
+        "datatype": "double",
+        "dc:description": "Decimal points: Dots. Examples: 50.42256, -0.777259"
+      }, {
+        "name": "Longitude",
+        "datatype": "double",
+        "dc:description": "Decimal points: Dots. Examples: 2.12300 -91.142578"
+      }, {
+        "name": "Date_C14_Labnr",
+        "datatype": "string",
+        "separator": ",",
+        "dc:description": "Lab nr of C14 lab. Leave blank if no C14. Examples: MAMS-45801, OxA-15315"
+      }, {
+        "name": "Date_C14_Uncal_BP",
+        "datatype": "nonNegativeInteger",
+        "dc:description": "Uncalibrated years BP (as in before 1950AD), as reported by C14 labs. Leave blank if no C14"
+      }, {
+        "name": "Date_C14_Uncal_BP_Err",
+        "datatype": "nonNegativeInteger",
+        "dc:description": "Error in years as reported by the lab. Leave blank if no C14."
+      }, {		
+        "name": "Date_BC_Median",
+        "datatype": "NonNegativeInteger",
+        "dc:description": "Calibrated median date for C14-dates, or simple mid-points for archaeological intervals. Put 2000 for modern"
+      }, {
+        "name": "Date_BC_Start",
+        "datatype": "NonNegativeInteger",
+        "dc:description": "Lower (older) bound for the age. Negative numbers for BC, positive numbers for AD. Put 2000 for modern"
+      }, {
+        "name": "Date_BC_End",
+        "datatype": "NonNegativeInteger",
+        "dc:description": "Upper (more recent) bound for the age. Negative numbers for BC, positive numbers for AD. Put 2000 for modern"
+      }, {
+        "name": "Date_Type",
+        "datatype": {
+          "base": "string",
+          "format": "C14|contextual|modern"
+        },
+        "dc:description": "Should either be 'C14' if directly from the individual, or 'contextual' if based on archaeology or other C14 dates from the site, or 'modern' for present-day individuals"
+      }, {
+        "name": "No_of_Libraries",
+        "datatype": "nonNegativeInteger",
+        "dc:description": "Number of libraries"
+      }, {
+        "name": "Data_Type",
+        "datatype": {
+          "base": "string",
+          "format": "Shotgun|1240K|OtherCapture|ReferenceGenome"
+        },
+        "dc:description": "Capture or shotgun type"
+      }, {
+        "name": "Genotype_Ploidy",
+        "datatype": {
+          "base": "string",
+          "format": "diploid|haploid"
+        },
+        "dc:description": "type of genotyping ploidy data."
+      }, {
+        "name": "Group_Name",
+        "datatype": "string",
+        "separator": ",",
+        "dc:description": "Multiple entries possible to accommodate different labels. Generally follow Eisenmann rule + underscore flags, e.g. to annotate relatives or outliers or low coverage	Anatolia_N	Germany_Bell_Beaker"
+      }, {
+        "name": "Genetic_Sex",
+        "datatype": {
+          "base": "string",
+          "format": "F|M|U"
+        },
+        "dc:description": "Should either be 'F', 'M' or 'U'. Eigenstrat and Plink formats only support these three. Edge cases (XXY, XYY, X0) are undefined and should be grouped as F, M or U, with a note added"
+      }, {
+        "name": "Nr_autosomal_SNPs",
+        "datatype": "nonNegativeInteger",
+        "dc:description": "Number of autosomal SNPs covered for 1240K capture or SG data pulldown"
+      }, {
+        "name": "Coverage_1240K",
+        "datatype": "float",
+        "dc:description": "Average X-fold coverage across 1240K SNP sites after quality filtering (internal data). NOT the % SNPs of 1.2M possible!"
+      }, {
+        "name": "MT_Haplogroup",
+        "datatype": "string",
+        "dc:description": "Mitochondrial haplogroup after Phylotree.org as reported by Haplofind or Haplogrep, can be N/A."
+      }, {
+        "name": "Y_Haplogroup",
+        "datatype": "string",
+        "dc:description": "Y-chromosome haplogroup (can be N/A) reported as published. For internal data, please follow syntax in Example 3, i.e. main branch + most terminal derived Y-SNP."
+      }, {
+        "name": "Endogenous",
+        "datatype": "float",
+        "dc:description": "% endogenous DNA for the SG libraries, as estimated by EAGER for the best library (in percent). Not on target and no quality filter."
+      }, {
+        "name": "UDG",
+        "datatype": {
+          "base": "string",
+          "format": "minus|half|plus|mixed"
+        },
+        "dc:description": "minus, half, plus, or mixed (in case multiple libraries with different UDG treatment were merged)"
+      }, {
+        "name": "Library_Built",
+        "datatype": {
+          "base": "string",
+          "format": "ds|ss|other"
+        },
+        "dc:description": "ds or ss or other (ds=double stranded, ss=single stranded)"
+      }, {
+        "name": "Damage",
+        "datatype": "float",
+        "dc:description": "% Damage on 5' end for the main shotgun library used for sequencing and/or capture."
+      }, {
+        "name": "Xcontam",
+        "datatype": "float",
+        "dc:description": "Please provide value between 0 and 1. If male for captured library (N/A for females)"
+      }, {
+        "name": "Xcontam_stderr",
+        "datatype": "float",
+        "dc:description": "Standard error of ANGSD X contamination estimate"
+      }, {
+        "name": "mtContam",
+        "datatype": "float",
+        "dc:description": "Mitochondrial contamination rate as estimated by ContamMix and/or Schmutzi"
+      }, {
+        "name": "mtContam_stderr",
+        "datatype": "float",
+        "dc:description": "Standard error of ContamMix/Schmutzi estimate"
+      }, {
+        "name": "Primary_Contact",
+        "datatype": "string",
+        "dc:description": "Project lead or first author. Spaces allowed"
+      }, {
+        "name": "Publication_status",
+        "datatype": "string",
+        "dc:description": "'AuthorYearJournal' or 'unpublished'"
+      }, {
+        "name": "Note",
+        "datatype": "string",
+        "dc:description": "wildcard comments. e.g. note down aneuploidies"
+      }, {
+        "name": "Restricted",
+        "datatype": "boolean",
+        "dc:description": "whether the genotype data for this individual are restricted in access."
+      }]
+    }
+  }]
+}
