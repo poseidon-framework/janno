@@ -220,13 +220,13 @@ split_age_string <- function(x) {
   
   # parse uncalibrated c14 age info
   res$Date_C14_Labnr[c14_age_ids] <- stringr::str_extract_all(x[c14_age_ids], "[A-Z,a-z]{2,7}-[0-9]*") %>% sapply(., function(y) { paste(y, collapse = ";") } )
-  uncal_dates <- stringr::str_extract_all(x[c14_age_ids], "[0-9]{1,5}±[0-9]{1,4}")
+  uncal_dates <- stringr::str_extract_all(x[c14_age_ids], "[0-9]{1,5}\u00B1[0-9]{1,4}")
   res$Date_C14_Uncal_BP[c14_age_ids] <- sapply(uncal_dates, function(z) { 
-    sapply(strsplit(z, "±"), function(a) { a[1] } ) %>% 
+    sapply(strsplit(z, "\u00B1"), function(a) { a[1] } ) %>% 
       paste(collapse = ";") 
   } )
   res$Date_C14_Uncal_BP_Dev[c14_age_ids] <- sapply(uncal_dates, function(z) { 
-    sapply(strsplit(z, "±"), function(a) { a[2] } ) %>% 
+    sapply(strsplit(z, "\u00B1"), function(a) { a[2] } ) %>% 
       paste(collapse = ";") 
   } )
   
