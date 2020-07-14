@@ -4,3 +4,5 @@
 ^test_data$
 ^singularity$
 ^data-raw$
+^\.travis\.yml$
+^discussion$
