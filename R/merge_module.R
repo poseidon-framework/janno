@@ -12,13 +12,40 @@ merge_module <- function(input_file, output_directory, log_directory) {
     dir.create(output_directory, recursive = T)
   }
   output_files_name <- "poseidon2_merged"
+  merge_create_new_POSEIDON_yml(output_files_name, output_directory)
   merge_concat_janno_files(list_of_packages, output_directory, output_files_name)
-  plink_merge_file <- merge_create_plink_merge_input_file(list_of_packages, log_directory)
-  plink_order_file <- merge_create_order_file_from_fam_files(list_of_packages, log_directory)
-  plink_merge(plink_merge_file, plink_order_file, output_directory, output_files_name, log_directory)
+  merge_create_plink_merge_input_file(list_of_packages, log_directory) -> plink_merge_file
+  merge_create_order_file_from_fam_files(list_of_packages, log_directory) -> plink_order_file
+  merge_plink_merge(plink_merge_file, plink_order_file, output_directory, output_files_name, log_directory)
 }
 
-plink_merge <- function(plink_merge_file, plink_order_file, output_directory, output_files_name, log_directory) {
+merge_create_new_POSEIDON_yml <- function(output_files_name, output_directory) {
+  cli::cli_alert_info("Create new POSEIDON.yml file...")
+  new_poseidon_yml <- file.path(output_directory, "POSEIDON.yml")
+  writeLines(
+    c(
+      "poseidonVersion:",
+      "title:",
+      "description:",
+      "contributor:",
+      "  name:",
+      "  email:",
+      paste0("lastModified: ", Sys.Date()),
+      "bibFile: LITERATURE.bib",
+      "genotypeData:",
+      "  format: PLINK",
+      paste0("  genoFile: ", output_files_name, ".bed"),
+      paste0("  snpFile: ", output_files_name, ".bim"),
+      paste0("  indFile: ", output_files_name, ".fam"),
+      paste0("jannoFile:", output_files_name, ".janno")
+    ),
+    con = new_poseidon_yml
+  )
+  cli::cli_alert_success(new_poseidon_yml)
+  cli::cli_alert_warning("Don't forget to edit it!")
+}
+
+merge_plink_merge <- function(plink_merge_file, plink_order_file, output_directory, output_files_name, log_directory) {
   cat("\n")
   cli::cli_alert_info("You can trigger the merging now with")
   cat(paste0(
