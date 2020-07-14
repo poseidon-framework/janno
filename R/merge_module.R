@@ -51,7 +51,7 @@ merge_create_new_POSEIDON_yml_file <- function(output_files_name, output_directo
       paste0("  genoFile: ", output_files_name, ".bed"),
       paste0("  snpFile: ", output_files_name, ".bim"),
       paste0("  indFile: ", output_files_name, ".fam"),
-      paste0("jannoFile:", output_files_name, ".janno")
+      paste0("jannoFile: ", output_files_name, ".janno")
     ),
     con = new_poseidon_yml
   )
