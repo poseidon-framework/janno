@@ -1,8 +1,14 @@
 #' @rdname cli_modules
 #' @export
 validate_module <- function(input_janno_file_or_packages) {
-  type <- janno_or_package(input_janno_file_or_packages)
+  # input check and prep
+  checkmate::assert_character(input_janno_file_or_packages,any.missing = FALSE, all.missing = FALSE, min.len = 1)
+  validate_janno_or_package(input_janno_file_or_packages) -> type
+  checkmate::assert_file_exists(input_janno_file_or_packages[type == "janno"], access = "r", extension = ".janno")
+  checkmate::assert_directory_exists(input_janno_file_or_packages[type == "package"])
+  # start message
   validate_start_message(input_janno_file_or_packages, type)
+  # select validation submodule
   for (i in 1:length(input_janno_file_or_packages)) {
     if (type[i] == "janno") {
       validate_janno(input_janno_file_or_packages[i])
@@ -16,7 +22,7 @@ validate_start_message <- function(input_janno_file_or_packages, type) {
   cli::cli_h1("validate => Validates janno files and poseidon packages")
 }
 
-janno_or_package <- function(input_janno_file_or_packages) {
+validate_janno_or_package <- function(input_janno_file_or_packages) {
   ifelse(grepl(".janno", input_janno_file_or_packages), "janno", "package")
 }
 

@@ -1,18 +1,30 @@
 #' @rdname cli_modules
 #' @export
 convert_module <- function(output_format, input_package, output_directory, log_directory) {
-  convert_start_message(output_format, input_package, output_directory, log_directory)
-  #validate_module(list_of_packages)
+  # input check and prep
+  checkmate::assert_choice(output_format, choices = c("eigenstrat"))
+  checkmate::assert_directory_exists(input_package, access = "r")
+  checkmate::assert_directory_exists(log_directory, access = "rw")
+  #validate_module(input_package)
   if (dir.exists(output_directory)) {
     stop("output directory already exists")
   } else {
     dir.create(output_directory, recursive = T)
   }
+  checkmate::assert_directory_exists(output_directory, access = "rw")
+  # start message
+  convert_start_message(output_format, input_package, output_directory, log_directory)
+  # select conversion submodule
   if (output_format == "eigenstrat") {
     convert_ped2eig(input_package, output_directory, log_directory)
   } else {
     stop("Unknown output format.")
   }
+}
+
+convert_check_input <- function(output_format, input_package, output_directory, log_directory) {
+
+  
 }
 
 convert_ped2eig <- function(input_package, output_directory, log_directory) {

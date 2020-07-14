@@ -1,16 +1,22 @@
 #' @rdname cli_modules
 #' @export
 merge_module <- function(input_file, output_directory, log_directory) {
-  merge_start_message(input_file, output_directory, log_directory)
-  list_of_packages <- merge_read_package_list(input_file)
-  merge_print_packages(list_of_packages)
-  #check_if_packages_are_there()
+  # input check and prep
+  checkmate::assert_file_exists(input_file, access = "r")
+  merge_read_package_list(input_file) -> list_of_packages
+  checkmate::assert_directory_exists(list_of_packages, access = "r")
+  checkmate::assert_directory_exists(log_directory, access = "rw")
   #validate_module(list_of_packages)
   if (dir.exists(output_directory)) {
     stop("output directory already exists")
   } else {
     dir.create(output_directory, recursive = T)
   }
+  checkmate::assert_directory_exists(output_directory, access = "rw")
+  # start message
+  merge_start_message(input_file, output_directory, log_directory)
+  merge_print_packages(list_of_packages)
+  # process merge
   output_files_name <- "poseidon2_merged"
   merge_create_new_POSEIDON_yml_file(output_files_name, output_directory)
   merge_concat_janno_files(list_of_packages, output_directory, output_files_name)
