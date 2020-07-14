@@ -12,14 +12,28 @@ merge_module <- function(input_file, output_directory, log_directory) {
     dir.create(output_directory, recursive = T)
   }
   output_files_name <- "poseidon2_merged"
-  merge_create_new_POSEIDON_yml(output_files_name, output_directory)
+  merge_create_new_POSEIDON_yml_file(output_files_name, output_directory)
   merge_concat_janno_files(list_of_packages, output_directory, output_files_name)
+  merge_concat_LITERATURE_bib_files(list_of_packages, output_directory)
   merge_create_plink_merge_input_file(list_of_packages, log_directory) -> plink_merge_file
   merge_create_order_file_from_fam_files(list_of_packages, log_directory) -> plink_order_file
   merge_plink_merge(plink_merge_file, plink_order_file, output_directory, output_files_name, log_directory)
 }
 
-merge_create_new_POSEIDON_yml <- function(output_files_name, output_directory) {
+merge_concat_LITERATURE_bib_files <- function(list_of_packages, output_directory) {
+  cli::cli_alert_info("Concat LITERATURE.bib files...")
+  list_of_bib_files <- list.files(list_of_packages, pattern = "*.bib", full.names = T)
+  if (length(list_of_bib_files) == 0) {
+    cli::cli_alert_info("No *.bib files found")
+    return()
+  }
+  new_bib_file <- file.path(output_directory, "LITERATURE.bib")
+  bib_files_read <- lapply(list_of_bib_files, function(x) {readLines(x)} )
+  writeLines(unlist(bib_files_read), con = new_bib_file)
+  cli::cli_alert_success(new_bib_file)
+}
+
+merge_create_new_POSEIDON_yml_file <- function(output_files_name, output_directory) {
   cli::cli_alert_info("Create new POSEIDON.yml file...")
   new_poseidon_yml <- file.path(output_directory, "POSEIDON.yml")
   writeLines(
