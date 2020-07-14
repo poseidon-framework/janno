@@ -12,7 +12,7 @@ A CLI tool for merging, convertion and validation of poseidon2 packages.
 
 ```
 if(!require('remotes')) install.packages('remotes')
-remotes::install_github('sidora-tools/sidora.cli')
+remotes::install_github('poseidon-framework/poseidon2')
 ```
 
 2. Install the script in your user directory with `poseidon2::quick_install()` within R
