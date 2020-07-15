@@ -212,7 +212,8 @@ validate_package <- function(input_package) {
     return(1)
   }
   # validate POSEIDON.yml
-  if ( !validate_POSEIDON_yml(list.files(input_package, pattern = "POSEIDON\\.yml", full.names = T)) ) {
+  validate_POSEIDON_yml(list.files(input_package, pattern = "POSEIDON\\.yml", full.names = T)) -> read_success
+  if ( is.logical(read_success) && !read_success ) {
     return(1)
   }
   # does it contain the other necessary files once?
@@ -241,6 +242,7 @@ validate_package <- function(input_package) {
 }
 
 #### validate POSEIDON.yml files ####
+
 validate_POSEIDON_yml <- function(input_POSEIDON_yml) {
   # check if file can be read by yaml::read_yaml
   pyml <- tryCatch(
@@ -257,18 +259,44 @@ validate_POSEIDON_yml <- function(input_POSEIDON_yml) {
     return(pyml)
   }
   has_the_necessary_elements(names(pyml))
+  is_valid_poseidon_version(pyml$poseidonVersion)
+  is_valid_string(pyml$title)
+  is_valid_string(pyml$description)
+  is_valid_string(pyml$contributor$name)
+  is_valid_email(pyml$contributor$email)
+}
+
+is_valid_email <- function(x) {
+  if ( !grepl("\\<[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,}\\>", as.character(x), ignore.case = TRUE) ) {
+    cli::cli_alert_danger("Not a valid email adress for the contributor")
+  }
+}
+
+is_valid_poseidon_version <- function(x) {
+  if ( !grepl("[2]{1}\\.[0-9]+\\.[0-9]+", x) ) {
+    cli::cli_alert_danger("Not a valid POSEIDON v.2 version number")
+  }
 }
 
 has_the_necessary_elements <- function(
   x,
   mandatory_elements = c(
-    "poseidonVersion", "title", "description", "contributor", 
+    "poseidonVersion", "title", "contributor", 
     "lastModified", "genotypeData", "jannoFile"
   ),
-  optional_elements = c("bibFile")
+  optional_elements = c("description", "bibFile")
 ) {
   if ( !all(mandatory_elements %in% x) ) {
-    
+    cli::cli_alert_danger(paste(
+      "The following mandatory elements of the POSEIDON.yml are missing:",
+      paste(mandatory_elements[!mandatory_elements %in% x], collapse = ", ")
+    ))
+  }
+  if ( !all(optional_elements %in% x) ) {
+    cli::cli_alert_info(paste(
+      "The following optional elements of the POSEIDON.yml are missing:",
+      paste(optional_elements[!optional_elements %in% x], collapse = ", ")
+    ))
   }
 }
 
