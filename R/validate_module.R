@@ -9,7 +9,7 @@ validate_module <- function(input_janno_file_or_packages) {
   } else if ("package" %in% type) {
     checkmate::assert_directory_exists(input_janno_file_or_packages[type == "package"])
   }
-  # start message+
+  # start message
   validate_start_message(input_janno_file_or_packages, type)
   # select validation submodule
   for (i in 1:length(input_janno_file_or_packages)) {
@@ -28,6 +28,8 @@ validate_start_message <- function(input_janno_file_or_packages, type) {
 validate_janno_or_package <- function(input_janno_file_or_packages) {
   ifelse(grepl(".janno", input_janno_file_or_packages), "janno", "package")
 }
+
+#### janno file validation ####
 
 validate_janno <- function(input_janno) {
   cli::cli_rule(left = input_janno)
@@ -176,7 +178,11 @@ is_valid_integer_list <- function(x, cur_col, cur_row, expected_range = c(-Inf, 
   } else {
     x_integer <- as.integer(unlist(strsplit(x, ";")))
     if ( !are_in_range(x_integer, expected_range) ) {
-      cli::cli_alert_danger(paste(cur_row, ":", cur_col, "=> One or multiple values not in range", expected_range[1], "to", expected_range[2]))
+      cli::cli_alert_danger(paste(
+          cur_row, ":", cur_col, "=> One or multiple values not in range", 
+          expected_range[1], "to", expected_range[2]
+        )
+      )
     }
   }
 }
@@ -187,10 +193,14 @@ is_valid_float <- function(x, cur_col, cur_row, expected_range = c(-Inf, Inf)) {
   } else {
     x_numeric <- as.numeric(x)
     if ( !are_in_range(x_numeric, expected_range) ) {
-      cli::cli_alert_danger(paste(cur_row, ":", cur_col, "=> Value not in range", expected_range[1], "to", expected_range[2]))
+      cli::cli_alert_danger(
+        paste(cur_row, ":", cur_col, "=> Value not in range", expected_range[1], "to", expected_range[2])
+      )
     }
   }
 }
+
+#### validate poseidon package ####
 
 validate_package <- function(input_package) {
   cli::cli_rule(left = input_package)
@@ -204,16 +214,23 @@ validate_package <- function(input_package) {
   # does it contain the necessary files once?
   necessary_files <- list.files(input_package, pattern = ".janno|.bed|.bim|.fam")
   extensions_necessary_files <- tools::file_ext(necessary_files)
-  if (all(extensions_necessary_files == c("bed", "bim", "fam", "janno"))) {
-    cli::cli_alert_success("The package contains the necessary files .bed, .bim, .fam and .janno exactly once")
+  if (all(extensions_necessary_files == c(".yml", "bed", "bim", "fam", "janno"))) {
+    cli::cli_alert_success(
+      "The package contains the necessary files POSEIDON.yml, .bed, .bim, .fam and .janno exactly once"
+    )
   } else {
-    cli::cli_alert_danger("Necessary files (.bed, .bim, .fam and .janno) are missing or multiple of these are present")
+    cli::cli_alert_danger(
+      "Necessary files (.bed, .bim, .fam and .janno) are missing or multiple of these are present"
+    )
     return(1)
   }
   # are other files present?
   all_files <- list.files(input_package)
   if (any(!all_files %in% necessary_files)) {
-    cli::cli_alert_warning(paste("There are other files present as well:", paste(all_files[!all_files %in% necessary_files], collapse = ", ")))
+    cli::cli_alert_warning(paste(
+      "There are other files present as well:", 
+      paste(all_files[!all_files %in% necessary_files], collapse = ", ")
+    ))
   }
   # check .janno file
   validate_janno(list.files(input_package, pattern = ".janno", full.names = T))
