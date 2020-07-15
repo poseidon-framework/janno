@@ -57,7 +57,7 @@ validate_janno <- function(input_janno) {
     expected_type <- hash::values(janno_column_name_column_type, cur_col)
     check_function <- type_string_to_check_function(expected_type)
     mandatory <- cur_col %in% janno_mandatory_columns
-    unique <- cur_col %in% janno_unique_columns
+    no_dupli <- cur_col %in% janno_unique_columns
     with_choices <- cur_col %in% janno_choice_columns
     if (with_choices) {
       expected_choices <- unlist(strsplit(
@@ -73,7 +73,7 @@ validate_janno <- function(input_janno) {
       )
     }
     # column wise checks
-    if (cur_col %in% unique) {
+    if (cur_col %in% no_dupli) {
       if (no_duplicates(character_janno, cur_col)) {
         everything_fine_flag <- FALSE
       }
@@ -210,6 +210,7 @@ is_valid_string_list <- function(x, cur_col, cur_row) {
 
 is_valid_integer <- function(x, cur_col, cur_row, expected_range = c(-Inf, Inf)) {
   check_0 <- checkmate::test_integer(x)
+  check_1 <- FALSE
   if ( !check_0 ) {
     cli::cli_alert_danger(paste(cur_row, ":", cur_col, "Value not a valid integer number"))
   } else {
@@ -226,6 +227,7 @@ is_valid_integer <- function(x, cur_col, cur_row, expected_range = c(-Inf, Inf))
 is_valid_integer_list <- function(x, cur_col, cur_row, expected_range = c(-Inf, Inf)) {
   supposed_integers <- unlist(strsplit(x, split = ";"))
   check_0 <- checkmate::test_integer(supposed_integers)
+  check_1 <- FALSE
   if ( !check_0 ) {
     cli::cli_alert_danger(paste(cur_row, ":", cur_col, "One or multiple values not valid integer numbers"))
   } else {
@@ -241,6 +243,7 @@ is_valid_integer_list <- function(x, cur_col, cur_row, expected_range = c(-Inf, 
 
 is_valid_float <- function(x, cur_col, cur_row, expected_range = c(-Inf, Inf)) {
   check_0 <- checkmate::test_double(x)
+  check_1 <- FALSE
   if ( !check_0 ) {
     cli::cli_alert_danger(paste(cur_row, ":", cur_col, "Value not a valid double number"))
   } else {
@@ -251,6 +254,7 @@ is_valid_float <- function(x, cur_col, cur_row, expected_range = c(-Inf, Inf)) {
       ))
     }
   }
+  return(all(check_0, check_1))
 }
 
 #### validate poseidon package ####
@@ -264,6 +268,12 @@ validate_package <- function(input_package) {
   }
   # validate POSEIDON.yml
   POSEIDON_yml_file <- list.files(input_package, pattern = "POSEIDON\\.yml", full.names = T)
+  if ( !checkmate::test_string(POSEIDON_yml_file, min.chars = 1) ) {
+    cli::cli_alert_danger(
+      "No POSEIDON.yml file"
+    )
+    return(1)
+  }
   if ( !can_POSEIDON_yml_be_read(POSEIDON_yml_file) ) {
     return(1)
   }
