@@ -61,7 +61,7 @@ validate_janno <- function(input_janno) {
     with_choices <- cur_col %in% janno_choice_columns
     if (with_choices) {
       expected_choices <- unlist(strsplit(
-        hash::values(janno_column_name_choices, cur_col),
+        hash::values(janno_column_name_choices, cur_col), 
         ";"
       ))
     }
@@ -74,20 +74,22 @@ validate_janno <- function(input_janno) {
     }
     # column wise checks
     if (cur_col %in% unique) {
-      everything_fine_flag <- no_duplicates(character_janno, cur_col)
+      if (no_duplicates(character_janno, cur_col)) {
+        everything_fine_flag <- FALSE
+      }
     }
     # loop through each cell: cell wise checks
     for (cur_row in 1:nrow(character_janno)) {
       cur_cell <- character_janno[[cur_col]][cur_row]
       ## general checks ##
-      # special case: NA or ""
-      if (is.na(cur_cell) | cur_cell == "") {
-        cli::cli_alert_danger(paste(cur_row, ":", cur_col, "Empty cells are not allowed, please fill with n/a"))
+      if (is_empty(cur_cell, cur_col, cur_row)) {
+        everything_fine_flag <- FALSE
         next
       # special case: n/a
-      } else if (cur_cell == "n/a") {
+      } else if (is_na(cur_cell)) {
         if (mandatory) {
           cli::cli_alert_danger(paste(cur_row, ":", cur_col, "n/a in a mandatory column"))
+          everything_fine_flag <- FALSE
           next
         } else {
           next
@@ -96,16 +98,36 @@ validate_janno <- function(input_janno) {
       ## column type checks ##
       # with defined set of choices
       if (with_choices) {
-        check_function(cur_cell, cur_col, cur_row, expected_choices)
+        if ( !check_function(cur_cell, cur_col, cur_row, expected_choices) ) {
+          everything_fine_flag <- FALSE
+        }
       # with range
       } else if (with_range) {
-        check_function(cur_cell, cur_col, cur_row, expected_range)
+        if ( !check_function(cur_cell, cur_col, cur_row, expected_range) ) {
+          everything_fine_flag <- FALSE
+        }
       # without anything
       } else {
-        check_function(cur_cell, cur_col, cur_row)
+        if ( !check_function(cur_cell, cur_col, cur_row) ) {
+          everything_fine_flag <- FALSE
+        }
       }
     }
   }
+}
+
+is_na <- function(x) {
+  x == "n/a"
+}
+
+is_empty <- function(x, cur_col, cur_row) {
+  check <- is.na(x) | x == ""
+  if ( !check ) {
+    cli::cli_alert_danger(paste(
+      cur_row, ":", cur_col, "Empty cells are not allowed, please fill with n/a"
+    ))
+  }
+  return(check)
 }
 
 no_duplicates <- function(x, column) {
@@ -153,24 +175,37 @@ type_string_to_check_function <- function(x) {
 }
 
 is_valid_string <- function(x, cur_col, cur_row) {
-  
+  check <- checkmate::test_string(min.chars = 1)
+  if ( !check ) {
+    cli::cli_alert_danger(paste(cur_row, ":", cur_col, "Not a valid string"))
+  }
+  return(check)
 }
 
 is_valid_string_choice <- function(x, cur_col, cur_row, choices) {
-  if (!(x %in% choices)) {
+  check <- checkmate::test_choice(choices)
+  if (!check ) {
     cli::cli_alert_danger(paste(cur_row, ":", cur_col, "Value not in", paste(choices, collapse = ", ")))
   }
+  return(check)
 }
 
 is_valid_string_list <- function(x, cur_col, cur_row) {
-  if ( grepl(",", x) ) {
+  check_0 <- checkmate::test_string(min.chars = 1)
+  if ( !check_0 ) {
+    cli::cli_alert_danger(paste(cur_row, ":", cur_col, "Not a valid string"))
+  }
+  check_1 <- !grepl(",", x)
+  if ( !check_1 ) {
     cli::cli_alert_danger(paste(cur_row, ":", cur_col, "The separator for string lists is ; and not ,"))
   }
-  if( grepl(".*;?\\s+.*|.*\\s+;?.*", x) ) {
+  check_2 <- !grepl(".*;?\\s+.*|.*\\s+;?.*", x)
+  if( !check2 ) {
     cli::cli_alert_danger(paste(cur_row, ":", cur_col, "Superfluous white space around separator ;"))
   }
+  return(all(c(check_0, check_1, check2)))
 }
-
+####
 is_valid_char_choice <- function(x, cur_col, cur_row, choices) {
   if (!(x %in% choices)) {
     cli::cli_alert_danger(paste(cur_row, ":", cur_col, "Value not in", paste(choices, collapse = ", ")))
