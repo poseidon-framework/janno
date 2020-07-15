@@ -2,7 +2,7 @@
 #' @export
 validate_module <- function(input_janno_file_or_packages) {
   # input check and prep
-  checkmate::assert_character(input_janno_file_or_packages,any.missing = FALSE, all.missing = FALSE, min.len = 1)
+  checkmate::assert_character(input_janno_file_or_packages, any.missing = FALSE, all.missing = FALSE, min.len = 1)
   validate_janno_or_package(input_janno_file_or_packages) -> type
   if ("janno" %in% type) {
     checkmate::assert_file_exists(input_janno_file_or_packages[type == "janno"], access = "r", extension = "janno")
@@ -34,40 +34,30 @@ validate_janno_or_package <- function(input_janno_file_or_packages) {
 validate_janno <- function(input_janno) {
   cli::cli_rule(left = input_janno)
   # does it exist?
-  if (file.exists(input_janno)) {
-    cli::cli_alert_success("The janno file exists")
-  } else {
+  if ( !checkmate::test_file_exists(input_janno) ) {
     cli::cli_alert_danger("The janno file does not exist")
     return(1)
   }
   # does it contain tab separated columns?
-  input_janno_linewise <- readr::read_lines(input_janno, n_max = 50)
-  if (all(grepl(".*\\t.*\\t.*\\t.*", input_janno_linewise))) {
-    cli::cli_alert_success("The janno file seems to be a valid tab separated file")
-  } else {
-    cli::cli_alert_danger("The janno file is nota a valid tab separated file with")
+  if ( !is_tab_separated_file(input_janno) ) {
     return(1)
   }
   # read file
   character_janno <- readr::read_tsv(input_janno, col_types = readr::cols(.default = "c"))
-  # are the necessary columns present
-  if (all(janno_column_names %in% colnames(character_janno))) {
-    cli::cli_alert_success("The janno file has all necessary columns")
-  } else {
-    cli::cli_alert_danger(paste(
-      "The janno file lacks the following columns: ", 
-      paste(janno_column_names[!(janno_column_names %in% colnames(character_janno))], collapse = ", ")
-    ))
+  # are the necessary columns present?
+  if (!has_necessary_columns(character_janno)) {
     return(1)
   }
-  # do the columns have the right type
-  cli::cli_alert_info("Cell content check")
+  # from here onwards check conditions become less mandatory
+  everything_fine_flag <- TRUE
+  # check values in janno file
   # loop through each column
   for (cur_col in colnames(character_janno)) {
     # get column background information
     expected_type <- hash::values(janno_column_name_column_type, cur_col)
     check_function <- type_string_to_check_function(expected_type)
     mandatory <- cur_col %in% janno_mandatory_columns
+    unique <- cur_col %in% janno_unique_columns
     with_choices <- cur_col %in% janno_choice_columns
     if (with_choices) {
       expected_choices <- unlist(strsplit(
@@ -82,7 +72,11 @@ validate_janno <- function(input_janno) {
         hash::values(janno_column_name_range_upper, cur_col)
       )
     }
-    # loop through each cell
+    # column wise checks
+    if (cur_col %in% unique) {
+      everything_fine_flag <- no_duplicates(character_janno, cur_col)
+    }
+    # loop through each cell: cell wise checks
     for (cur_row in 1:nrow(character_janno)) {
       cur_cell <- character_janno[[cur_col]][cur_row]
       ## general checks ##
@@ -112,6 +106,36 @@ validate_janno <- function(input_janno) {
       }
     }
   }
+}
+
+no_duplicates <- function(x, column) {
+  check <- unique(x[[column]])
+  if ( !check ) {
+    cli::cli_alert_danger(paste(
+      "Duplicates are not allowed in column ", column
+    ))
+  }
+  return(check)
+}
+
+has_necessary_columns <- function(x, columns = janno_column_names) {
+  check <- all(columns %in% colnames(x))
+  if ( !check ) {
+    cli::cli_alert_danger(paste(
+      "The janno file lacks the following columns: ", 
+      paste(columns[!(columns %in% colnames(x))], collapse = ", ")
+    ))
+  }
+  return(check)
+}
+
+is_tab_separated_file <- function(x) {
+  input_janno_linewise <- readr::read_lines(x, n_max = 50)
+  check <- all(grepl(".*\\t.*", input_janno_linewise))
+  if ( !check ) {
+    cli::cli_alert_danger("The janno file is nota a valid tab separated file with")
+  }
+  return(check)
 }
 
 type_string_to_check_function <- function(x) {
