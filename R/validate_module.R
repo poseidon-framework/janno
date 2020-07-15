@@ -32,7 +32,7 @@ validate_janno_or_package <- function(input_janno_file_or_packages) {
 #### janno file validation ####
 
 validate_janno <- function(input_janno) {
-  cli::cli_rule(left = input_janno)
+  cli::cli_alert_info(input_janno)
   # does it exist?
   if ( !checkmate::test_file_exists(input_janno) ) {
     cli::cli_alert_danger("The janno file does not exist")
@@ -260,7 +260,7 @@ is_valid_float <- function(x, cur_col, cur_row, expected_range = c(-Inf, Inf)) {
 #### validate poseidon package ####
 
 validate_package <- function(input_package) {
-  cli::cli_rule(left = input_package)
+  cli::cli_alert(input_package)
   # does it exist?
   if ( !checkmate::test_directory_exists(input_package) ) {
     cli::cli_alert_danger("The package directory does not exist")
@@ -268,18 +268,23 @@ validate_package <- function(input_package) {
   }
   # validate POSEIDON.yml
   POSEIDON_yml_file <- list.files(input_package, pattern = "POSEIDON\\.yml", full.names = T)
+  cli::cli_alert_info(POSEIDON_yml_file)
   if ( !checkmate::test_string(POSEIDON_yml_file, min.chars = 1) ) {
     cli::cli_alert_danger(
-      "No POSEIDON.yml file"
+      "Can't find POSEIDON.yml file"
     )
     return(1)
   }
   if ( !can_POSEIDON_yml_be_read(POSEIDON_yml_file) ) {
     return(1)
   }
-  # flag for less mandatory conditions
+  pyml <- yaml::read_yaml(POSEIDON_yml_file)
+  if ( !has_POSEIDON_yml_the_necessary_elements(names(pyml)) ) {
+    return(1)
+  }
+  # flag for less important conditions
   everything_fine_flag <- TRUE
-  if ( !validate_POSEIDON_yml(POSEIDON_yml_file) ) {
+  if ( !validate_POSEIDON_yml(pyml) ) {
     everything_fine_flag <- FALSE
   }
   # does it contain the other necessary files exactly once?
@@ -333,16 +338,11 @@ can_POSEIDON_yml_be_read <- function(x) {
 }
 
 validate_POSEIDON_yml <- function(x) {
-  # read file
-  pyml <- yaml::read_yaml(x)
-  # check stuff
-  return(
-    has_the_necessary_elements(names(pyml)) &
-    is_valid_poseidon_version(pyml$poseidonVersion) &
-    is_valid_string(pyml$title) &
-    is_valid_string(pyml$description) &
-    is_valid_string(pyml$contributor$name) &
-    is_valid_email(pyml$contributor$email)
+ return(
+    is_valid_poseidon_version(x$poseidonVersion) &
+    is_valid_string(x$title) &
+    is_valid_string(x$contributor$name) &
+    is_valid_email(x$contributor$email)
   )
 }
 
@@ -362,29 +362,22 @@ is_valid_poseidon_version <- function(x) {
   return(check)
 }
 
-has_the_necessary_elements <- function(
+has_POSEIDON_yml_the_necessary_elements <- function(
   x,
-  mandatory_elements = c(
+  elements = c(
     "poseidonVersion", "title", "contributor", 
-    "lastModified", "genotypeData", "jannoFile"
-  ),
-  optional_elements = c("description", "bibFile")
+    "lastModified", "genotypeData", "jannoFile",
+    "description", "bibFile"
+  )
 ) {
-  check_0 <- all(mandatory_elements %in% x)
-  if ( !check_0 ) {
+  check <- all(elements %in% x)
+  if ( !check ) {
     cli::cli_alert_danger(paste(
       "The following mandatory elements of the POSEIDON.yml are missing:",
-      paste(mandatory_elements[!mandatory_elements %in% x], collapse = ", ")
+      paste(elements[!elements %in% x], collapse = ", ")
     ))
   }
-  check_1 <- all(optional_elements %in% x)
-  if ( !check_1 ) {
-    cli::cli_alert_info(paste(
-      "The following optional elements of the POSEIDON.yml are missing:",
-      paste(optional_elements[!optional_elements %in% x], collapse = ", ")
-    ))
-  }
-  return(all(check_0, check_1))
+  return(check)
 }
 
 
