@@ -166,7 +166,7 @@ type_string_to_check_function <- function(x) {
     "String" = is_valid_string,
     "String choice" = is_valid_string_choice,
     "String list" = is_valid_string_list,
-    "Char choice" = is_valid_char_choice,
+    "Char choice" = is_valid_string_choice,
     "Integer" = is_valid_integer, 
     "Integer list" = is_valid_integer_list,
     "Float" = is_valid_float,
@@ -195,66 +195,54 @@ is_valid_string_list <- function(x, cur_col, cur_row) {
   if ( !check_0 ) {
     cli::cli_alert_danger(paste(cur_row, ":", cur_col, "Not a valid string"))
   }
-  check_1 <- !grepl(",", x)
-  if ( !check_1 ) {
-    cli::cli_alert_danger(paste(cur_row, ":", cur_col, "The separator for string lists is ; and not ,"))
-  }
-  check_2 <- !grepl(".*;?\\s+.*|.*\\s+;?.*", x)
+  check_1 <- !grepl(".*;?\\s+.*|.*\\s+;?.*", x)
   if( !check2 ) {
     cli::cli_alert_danger(paste(cur_row, ":", cur_col, "Superfluous white space around separator ;"))
   }
-  return(all(c(check_0, check_1, check2)))
-}
-####
-is_valid_char_choice <- function(x, cur_col, cur_row, choices) {
-  if (!(x %in% choices)) {
-    cli::cli_alert_danger(paste(cur_row, ":", cur_col, "Value not in", paste(choices, collapse = ", ")))
-  }
+  return(all(c(check_0, check_1)))
 }
 
 is_valid_integer <- function(x, cur_col, cur_row, expected_range = c(-Inf, Inf)) {
-  if ( !grepl("^[0-9-]+$", x) | is.na(suppressWarnings(as.integer(x))) ) {
+  check_0 <- checkmate::test_integer(x)
+  if ( !check_0 ) {
     cli::cli_alert_danger(paste(cur_row, ":", cur_col, "Value not a valid integer number"))
   } else {
-    x_integer <- as.integer(x)
-    if ( !are_in_range(x_integer, expected_range) ) {
-      cli::cli_alert_danger(paste(cur_row, ":", cur_col, "Value not in range", expected_range[1], "to", expected_range[2]))
+    check_1 <- checkmate::test_integer(x, lower = expected_range[1], upper = expected_range[2])
+    if ( !check_1 ) {
+      cli::cli_alert_danger(paste(
+        cur_row, ":", cur_col, "Value not in range", expected_range[1], "to", expected_range[2]
+      ))
     }
   }
-}
-
-are_in_range <- function(x, expected_range) {
-  all(x >= expected_range[1] & x <= expected_range[2])
+  return(all(check_0, check_1))
 }
 
 is_valid_integer_list <- function(x, cur_col, cur_row, expected_range = c(-Inf, Inf)) {
-  if ( grepl(",", x) ) {
-    cli::cli_alert_danger(paste(cur_row, ":", cur_col, "The separator for integer lists is ; and not ,"))
-  } else if ( !grepl("^[0-9;-]+$", x) ) {
-    cli::cli_alert_danger(paste(cur_row, ":", cur_col, "Contains symbols that do not belong here"))
-  } else if( grepl(".*;?\\s+.*|.*\\s+;?.*", x) ) {
-    cli::cli_alert_danger(paste(cur_row, ":", cur_col, "Superfluous white space around separator ;"))
+  supposed_integers <- unlist(strsplit(x, split = ";"))
+  check_0 <- checkmate::test_integer(supposed_integers)
+  if ( !check_0 ) {
+    cli::cli_alert_danger(paste(cur_row, ":", cur_col, "One or multiple values not valid integer numbers"))
   } else {
-    x_integer <- as.integer(unlist(strsplit(x, ";")))
-    if ( !are_in_range(x_integer, expected_range) ) {
+    check_1 <- checkmate::test_integer(x, lower = expected_range[1], upper = expected_range[2])
+    if ( !check_1 ) {
       cli::cli_alert_danger(paste(
-          cur_row, ":", cur_col, "One or multiple values not in range", 
-          expected_range[1], "to", expected_range[2]
-        )
-      )
+        cur_row, ":", cur_col, "One or multiple values not in range", expected_range[1], "to", expected_range[2]
+      ))
     }
   }
+  return(all(check_0, check_1))
 }
 
 is_valid_float <- function(x, cur_col, cur_row, expected_range = c(-Inf, Inf)) {
-  if ( !grepl("^[0-9\\.-]+$", x) | is.na(suppressWarnings(as.numeric(x))) ) {
-    cli::cli_alert_danger(paste(cur_row, ":", cur_col, "Value not a valid floating point number"))
+  check_0 <- checkmate::test_double(x)
+  if ( !check_0 ) {
+    cli::cli_alert_danger(paste(cur_row, ":", cur_col, "Value not a valid double number"))
   } else {
-    x_numeric <- as.numeric(x)
-    if ( !are_in_range(x_numeric, expected_range) ) {
-      cli::cli_alert_danger(
-        paste(cur_row, ":", cur_col, "Value not in range", expected_range[1], "to", expected_range[2])
-      )
+    check_1 <- checkmate::test_double(x, lower = expected_range[1], upper = expected_range[2])
+    if ( !check_1 ) {
+      cli::cli_alert_danger(paste(
+        cur_row, ":", cur_col, "Value not in range", expected_range[1], "to", expected_range[2]
+      ))
     }
   }
 }
