@@ -116,14 +116,8 @@ validate_janno <- function(input_janno) {
   }
   # final output
   if ( everything_fine_flag ) {
-    cli::cli_alert_success(paste(
-      "Everything seems to be perfectly fine with", input_janno
-    ))
     return(0)
   } else {
-    cli::cli_alert_warning(paste(
-      "There seems to be something fishy with", input_janno
-    ))
     return(2)
   }
 }
@@ -134,7 +128,7 @@ is_na <- function(x) {
 
 is_empty <- function(x, cur_col, cur_row) {
   check <- is.na(x) | x == ""
-  if ( !check ) {
+  if ( check ) {
     cli::cli_alert_danger(paste(
       cur_row, ":", cur_col, "Empty cells are not allowed, please fill with n/a"
     ))
@@ -187,7 +181,7 @@ type_string_to_check_function <- function(x) {
 }
 
 is_valid_string <- function(x, cur_col, cur_row) {
-  check <- checkmate::test_string(min.chars = 1)
+  check <- checkmate::test_string(x, min.chars = 1)
   if ( !check ) {
     cli::cli_alert_danger(paste(cur_row, ":", cur_col, "Not a valid string"))
   }
@@ -195,7 +189,7 @@ is_valid_string <- function(x, cur_col, cur_row) {
 }
 
 is_valid_string_choice <- function(x, cur_col, cur_row, choices) {
-  check <- checkmate::test_choice(choices)
+  check <- checkmate::test_choice(x, choices)
   if (!check ) {
     cli::cli_alert_danger(paste(cur_row, ":", cur_col, "Value not in", paste(choices, collapse = ", ")))
   }
@@ -203,15 +197,15 @@ is_valid_string_choice <- function(x, cur_col, cur_row, choices) {
 }
 
 is_valid_string_list <- function(x, cur_col, cur_row) {
-  check_0 <- checkmate::test_string(min.chars = 1)
+  check_0 <- checkmate::test_string(x, min.chars = 1)
   if ( !check_0 ) {
     cli::cli_alert_danger(paste(cur_row, ":", cur_col, "Not a valid string"))
   }
   check_1 <- !grepl(".*;?\\s+.*|.*\\s+;?.*", x)
-  if( !check2 ) {
+  if( !check_1 ) {
     cli::cli_alert_danger(paste(cur_row, ":", cur_col, "Superfluous white space around separator ;"))
   }
-  return(all(c(check_0, check_1)))
+  return(all(check_0, check_1))
 }
 
 is_valid_integer <- function(x, cur_col, cur_row, expected_range = c(-Inf, Inf)) {
@@ -270,7 +264,7 @@ validate_package <- function(input_package) {
   }
   # validate POSEIDON.yml
   POSEIDON_yml_file <- list.files(input_package, pattern = "POSEIDON\\.yml", full.names = T)
-  if ( !can_POSEIDON_yml_be_read ) {
+  if ( !can_POSEIDON_yml_be_read(POSEIDON_yml_file) ) {
     return(1)
   }
   # flag for less mandatory conditions
@@ -296,10 +290,13 @@ validate_package <- function(input_package) {
   }
   # are other files present?
   all_files <- list.files(input_package)
-  if (any(!all_files %in% c(basename(POSEIDON_yml_file), janno_file, bed_file, bim_file, fam_file))) {
+  additional_files <- all_files[
+    !all_files %in% c(basename(POSEIDON_yml_file), janno_file, bed_file, bim_file, fam_file)
+  ]
+  if (length(additional_files) > 0) {
     cli::cli_alert_warning(paste(
-      "There are other files present as well:", 
-      paste(all_files[!all_files %in% necessary_files], collapse = ", ")
+      "There are supplementary files present in this package:", 
+      paste(additional_files, collapse = ", ")
     ))
   }
   # check .janno file
@@ -316,12 +313,9 @@ validate_package <- function(input_package) {
 
 can_POSEIDON_yml_be_read <- function(x) {
   tryCatch(
-    yaml::read_yaml(input_POSEIDON_yml), 
+    yaml::read_yaml(x), 
     error = function(e) {
-      cli::cli_alert_danger(paste(
-        "Can't read POSEIDON.yml file. More info:\n",
-        e
-      ))
+      cli::cli_alert_danger(paste("Can't read POSEIDON.yml file. More info:\n", e))
       return(FALSE)
     }
   )
@@ -343,15 +337,19 @@ validate_POSEIDON_yml <- function(x) {
 }
 
 is_valid_email <- function(x) {
-  if ( !grepl("\\<[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,}\\>", as.character(x), ignore.case = TRUE) ) {
+  check <- grepl("\\<[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,}\\>", as.character(x), ignore.case = TRUE)
+  if ( !check ) {
     cli::cli_alert_danger("Not a valid email adress for the contributor")
   }
+  return(check)
 }
 
 is_valid_poseidon_version <- function(x) {
-  if ( !grepl("[2]{1}\\.[0-9]+\\.[0-9]+", x) ) {
+  check <- grepl("[2]{1}\\.[0-9]+\\.[0-9]+", x)
+  if ( !check ) {
     cli::cli_alert_danger("Not a valid POSEIDON v.2 version number")
   }
+  return(check)
 }
 
 has_the_necessary_elements <- function(
@@ -362,18 +360,21 @@ has_the_necessary_elements <- function(
   ),
   optional_elements = c("description", "bibFile")
 ) {
-  if ( !all(mandatory_elements %in% x) ) {
+  check_0 <- all(mandatory_elements %in% x)
+  if ( !check_0 ) {
     cli::cli_alert_danger(paste(
       "The following mandatory elements of the POSEIDON.yml are missing:",
       paste(mandatory_elements[!mandatory_elements %in% x], collapse = ", ")
     ))
   }
-  if ( !all(optional_elements %in% x) ) {
+  check_1 <- all(optional_elements %in% x)
+  if ( !check_1 ) {
     cli::cli_alert_info(paste(
       "The following optional elements of the POSEIDON.yml are missing:",
       paste(optional_elements[!optional_elements %in% x], collapse = ", ")
     ))
   }
+  return(all(check_0, check_1))
 }
 
 
