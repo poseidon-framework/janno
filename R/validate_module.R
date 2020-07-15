@@ -161,7 +161,7 @@ is_tab_separated_file <- function(x) {
   input_janno_linewise <- readr::read_lines(x, n_max = 50)
   check <- all(grepl(".*\\t.*", input_janno_linewise))
   if ( !check ) {
-    cli::cli_alert_danger("The janno file is nota a valid tab separated file with")
+    cli::cli_alert_danger("The janno file is not a valid tab separated file with")
   }
   return(check)
 }
