@@ -114,6 +114,18 @@ validate_janno <- function(input_janno) {
       }
     }
   }
+  # final output
+  if ( everything_fine_flag ) {
+    cli::cli_alert_success(paste(
+      "Everything seems to be perfectly fine with", input_janno
+    ))
+    return(0)
+  } else {
+    cli::cli_alert_warning(paste(
+      "There seems to be something fishy with", input_janno
+    ))
+    return(2)
+  }
 }
 
 is_na <- function(x) {
@@ -252,16 +264,17 @@ is_valid_float <- function(x, cur_col, cur_row, expected_range = c(-Inf, Inf)) {
 validate_package <- function(input_package) {
   cli::cli_rule(left = input_package)
   # does it exist?
-  if (dir.exists(input_package)) {
-    cli::cli_alert_success("The directory exists")
-  } else {
-    cli::cli_alert_danger("The directory does not exist")
+  if ( !checkmate::test_directory_exists(input_package) ) {
+    cli::cli_alert_danger("The package directory does not exist")
     return(1)
   }
   # validate POSEIDON.yml
-  validate_POSEIDON_yml(list.files(input_package, pattern = "POSEIDON\\.yml", full.names = T)) -> read_success
-  if ( is.logical(read_success) && !read_success ) {
+  POSEIDON_yml_file <- list.files(input_package, pattern = "POSEIDON\\.yml", full.names = T)
+  if ( !can_POSEIDON_yml_be_read ) {
     return(1)
+  }
+  if ( validate_POSEIDON_yml(POSEIDON_yml_file) ) {
+    
   }
   # does it contain the other necessary files once?
   necessary_files <- list.files(input_package, pattern = "\\.janno|\\.bed|\\.bim|\\.fam")
@@ -290,9 +303,8 @@ validate_package <- function(input_package) {
 
 #### validate POSEIDON.yml files ####
 
-validate_POSEIDON_yml <- function(input_POSEIDON_yml) {
-  # check if file can be read by yaml::read_yaml
-  pyml <- tryCatch(
+can_POSEIDON_yml_be_read <- function(x) {
+  tryCatch(
     yaml::read_yaml(input_POSEIDON_yml), 
     error = function(e) {
       cli::cli_alert_danger(paste(
@@ -302,15 +314,21 @@ validate_POSEIDON_yml <- function(input_POSEIDON_yml) {
       return(FALSE)
     }
   )
-  if ( is.logical(pyml) && !pyml ) {
-    return(pyml)
-  }
-  has_the_necessary_elements(names(pyml))
-  is_valid_poseidon_version(pyml$poseidonVersion)
-  is_valid_string(pyml$title)
-  is_valid_string(pyml$description)
-  is_valid_string(pyml$contributor$name)
-  is_valid_email(pyml$contributor$email)
+  return(TRUE)
+}
+
+validate_POSEIDON_yml <- function(x) {
+  # read file
+  pyml <- yaml::read_yaml(x)
+  # check stuff
+  return(
+    has_the_necessary_elements(names(pyml)) &
+    is_valid_poseidon_version(pyml$poseidonVersion) &
+    is_valid_string(pyml$title) &
+    is_valid_string(pyml$description) &
+    is_valid_string(pyml$contributor$name) &
+    is_valid_email(pyml$contributor$email)
+  )
 }
 
 is_valid_email <- function(x) {
