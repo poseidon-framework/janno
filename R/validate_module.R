@@ -73,7 +73,7 @@ validate_janno <- function(input_janno) {
       )
     }
     # column wise checks
-    if (cur_col %in% no_dupli) {
+    if (no_dupli) {
       if (no_duplicates(character_janno, cur_col)) {
         everything_fine_flag <- FALSE
       }
@@ -137,10 +137,10 @@ is_empty <- function(x, cur_col, cur_row) {
 }
 
 no_duplicates <- function(x, column) {
-  check <- unique(x[[column]])
+  check <- length(unique(x[[column]])) == length(x[[column]])
   if ( !check ) {
     cli::cli_alert_danger(paste(
-      "Duplicates are not allowed in column ", column
+      "Duplicates are not allowed in column", column
     ))
   }
   return(check)
@@ -209,12 +209,14 @@ is_valid_string_list <- function(x, cur_col, cur_row) {
 }
 
 is_valid_integer <- function(x, cur_col, cur_row, expected_range = c(-Inf, Inf)) {
-  check_0 <- checkmate::test_integer(x)
+  check_0 <- grepl("^[0-9-]+$", x) && !grepl("\\.", x) && !is.na(suppressWarnings(as.integer(x)))
   check_1 <- FALSE
   if ( !check_0 ) {
     cli::cli_alert_danger(paste(cur_row, ":", cur_col, "Value not a valid integer number"))
   } else {
-    check_1 <- checkmate::test_integer(x, lower = expected_range[1], upper = expected_range[2])
+    check_1 <- checkmate::test_integer(
+      as.integer(x), lower = expected_range[1], upper = expected_range[2]
+    )
     if ( !check_1 ) {
       cli::cli_alert_danger(paste(
         cur_row, ":", cur_col, "Value not in range", expected_range[1], "to", expected_range[2]
@@ -226,12 +228,16 @@ is_valid_integer <- function(x, cur_col, cur_row, expected_range = c(-Inf, Inf))
 
 is_valid_integer_list <- function(x, cur_col, cur_row, expected_range = c(-Inf, Inf)) {
   supposed_integers <- unlist(strsplit(x, split = ";"))
-  check_0 <- checkmate::test_integer(supposed_integers)
+  check_0 <- all(grepl("^[0-9-]+$", supposed_integers)) &&
+    all(!grepl("\\.", supposed_integers)) &&
+    !any(is.na(suppressWarnings(as.integer(supposed_integers))))
   check_1 <- FALSE
   if ( !check_0 ) {
     cli::cli_alert_danger(paste(cur_row, ":", cur_col, "One or multiple values not valid integer numbers"))
   } else {
-    check_1 <- checkmate::test_integer(x, lower = expected_range[1], upper = expected_range[2])
+    check_1 <- checkmate::test_integer(
+      as.integer(supposed_integers), lower = expected_range[1], upper = expected_range[2]
+    )
     if ( !check_1 ) {
       cli::cli_alert_danger(paste(
         cur_row, ":", cur_col, "One or multiple values not in range", expected_range[1], "to", expected_range[2]
@@ -242,12 +248,14 @@ is_valid_integer_list <- function(x, cur_col, cur_row, expected_range = c(-Inf, 
 }
 
 is_valid_float <- function(x, cur_col, cur_row, expected_range = c(-Inf, Inf)) {
-  check_0 <- checkmate::test_double(x)
+  check_0 <- grepl("^[0-9\\.-]+$", x) && !is.na(suppressWarnings(as.double(x)))
   check_1 <- FALSE
   if ( !check_0 ) {
     cli::cli_alert_danger(paste(cur_row, ":", cur_col, "Value not a valid double number"))
   } else {
-    check_1 <- checkmate::test_double(x, lower = expected_range[1], upper = expected_range[2])
+    check_1 <- checkmate::test_numeric(
+      as.double(x), lower = expected_range[1], upper = expected_range[2]
+    )
     if ( !check_1 ) {
       cli::cli_alert_danger(paste(
         cur_row, ":", cur_col, "Value not in range", expected_range[1], "to", expected_range[2]
