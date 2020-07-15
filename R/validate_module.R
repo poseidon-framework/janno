@@ -273,32 +273,43 @@ validate_package <- function(input_package) {
   if ( !can_POSEIDON_yml_be_read ) {
     return(1)
   }
-  if ( validate_POSEIDON_yml(POSEIDON_yml_file) ) {
-    
+  # flag for less mandatory conditions
+  everything_fine_flag <- TRUE
+  if ( !validate_POSEIDON_yml(POSEIDON_yml_file) ) {
+    everything_fine_flag <- FALSE
   }
-  # does it contain the other necessary files once?
-  necessary_files <- list.files(input_package, pattern = "\\.janno|\\.bed|\\.bim|\\.fam")
-  extensions_necessary_files <- tools::file_ext(necessary_files)
-  if (all(extensions_necessary_files == c("bed", "bim", "fam", "janno"))) {
-    cli::cli_alert_success(
-      "The package contains the necessary files POSEIDON.yml, .bed, .bim, .fam and .janno exactly once"
-    )
-  } else {
+  # does it contain the other necessary files exactly once?
+  janno_file <- list.files(input_package, pattern = "\\.janno")
+  bed_file <- list.files(input_package, pattern = "\\.bed")
+  bim_file <- list.files(input_package, pattern = "\\.bim")
+  fam_file <- list.files(input_package, pattern = "\\.fam")
+  if ( 
+    !checkmate::test_string(janno_file, min.chars = 1) | 
+    !checkmate::test_string(bed_file, min.chars = 1) | 
+    !checkmate::test_string(bim_file, min.chars = 1) | 
+    !checkmate::test_string(fam_file, min.chars = 1) 
+  ) {
     cli::cli_alert_danger(
-      "Necessary files (.bed, .bim, .fam and .janno) are missing or multiple of these are present"
+      "One or multiple of the necessary files (.bed, .bim, .fam and .janno) are missing duplicate multiple times"
     )
     return(1)
   }
   # are other files present?
   all_files <- list.files(input_package)
-  if (any(!all_files %in% necessary_files)) {
+  if (any(!all_files %in% c(basename(POSEIDON_yml_file), janno_file, bed_file, bim_file, fam_file))) {
     cli::cli_alert_warning(paste(
       "There are other files present as well:", 
       paste(all_files[!all_files %in% necessary_files], collapse = ", ")
     ))
   }
   # check .janno file
-  validate_janno(list.files(input_package, pattern = ".janno", full.names = T))
+  error_code <- validate_janno(list.files(input_package, pattern = ".janno", full.names = T))
+  # final output
+  if (error_code == 0) {
+    return(0)
+  } else if (error_code == 2 || !everything_fine_flag) {
+    return(2)
+  }
 }
 
 #### validate POSEIDON.yml files ####
