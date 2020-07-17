@@ -43,20 +43,25 @@ is_valid_date <- function(x) {
   if ( !check_0 ) {
     return(check_0)
   } else {
-    check_2 <- !is.na(suppressWarnings(as.POSIXlt(x, format = "%Y-%m-%d")))
-    if ( !check_2 ) {
-      cli::cli_alert_danger("Not a valid email adress for the contributor")
+    check_1 <- !is.na(suppressWarnings(as.POSIXlt(x, format = "%Y-%m-%d")))
+    if ( !check_1 ) {
+      cli::cli_alert_danger("Not a valid date of format %Y-%m-%d")
     }
-    return(check_2)
+    return(check_1)
   }
 }
 
 is_valid_poseidon_version <- function(x) {
-  check <- grepl("[2]{1}\\.[0-9]+\\.[0-9]+", x)
-  if ( !check ) {
-    cli::cli_alert_danger("Not a valid POSEIDON v.2 version number")
+  check_0 <- is_valid_string(x)
+  if ( !check_0 ) {
+    return(check_0)
+  } else {
+    check_1 <- grepl("[2]{1}\\.[0-9]+\\.[0-9]+", x)
+    if ( !check_1 ) {
+      cli::cli_alert_danger("Not a valid POSEIDON v.2 version number")
+    }
+    return(check_1)
   }
-  return(check)
 }
 
 has_POSEIDON_yml_the_necessary_elements <- function(
