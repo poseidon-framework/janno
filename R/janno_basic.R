@@ -115,12 +115,9 @@ as_integer_list_column <- function(x) {
 }
 
 as_list_column <- function(x) {
-  ifelse(
+  as.list(ifelse(
     grepl(";", x),
     strsplit(x, split = ";"),
     x
-  )
+  ))
 }
-
-
-
