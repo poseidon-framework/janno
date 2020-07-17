@@ -34,7 +34,7 @@ validate_module <- function(input_janno_file_or_packages) {
       }
     }
   }
-  cat("---\n")
+  cat("\n-----\n")
   general_result <- 1
   if (all(result == 0)) {
     general_result <- 0

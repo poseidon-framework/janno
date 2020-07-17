@@ -1,6 +1,5 @@
 validate_package <- function(input_package) {
-  cat("*****\n")
-  cli::cli_alert(input_package)
+  cli::cli_h2(input_package)
   # does it exist?
   if ( !checkmate::test_directory_exists(input_package) ) {
     cli::cli_alert_danger("The package directory does not exist")
@@ -8,7 +7,7 @@ validate_package <- function(input_package) {
   }
   # validate POSEIDON.yml
   POSEIDON_yml_file <- list.files(input_package, pattern = "POSEIDON\\.yml", full.names = T)
-  cli::cli_alert_info(POSEIDON_yml_file)
+  cli::cli_h3(POSEIDON_yml_file)
   if ( !checkmate::test_string(POSEIDON_yml_file, min.chars = 1) ) {
     cli::cli_alert_danger(
       "Can't find POSEIDON.yml file"
@@ -27,6 +26,7 @@ validate_package <- function(input_package) {
   if ( !validate_POSEIDON_yml(pyml) ) {
     everything_fine_flag <- FALSE
   }
+  cli::cli_h3("General package checks")
   # does it contain the other necessary files exactly once?
   janno_file <- list.files(input_package, pattern = "\\.janno")
   bed_file <- list.files(input_package, pattern = "\\.bed")
@@ -56,8 +56,8 @@ validate_package <- function(input_package) {
   }
   # check .janno file
   error_code <- validate_janno(list.files(input_package, pattern = ".janno", full.names = T))
+  cat("\n---\n")
   # final output
-  cat("*****\n")
   if (error_code == 0) {
     return(0)
   } else if (error_code == 2 || !everything_fine_flag) {
