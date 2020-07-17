@@ -1,11 +1,19 @@
 #' @rdname cli_modules
 #' @export
-convert_module <- function(output_format, input_package, output_directory, log_directory) {
+convert_module <- function(output_format, input_package, output_directory, log_directory = tempdir()) {
   # input check and prep
   checkmate::assert_choice(output_format, choices = c("eigenstrat"))
   checkmate::assert_directory_exists(input_package, access = "r")
   checkmate::assert_directory_exists(log_directory, access = "rw")
-  #validate_module(input_package)
+  # validate input package
+  validation_result <- validate_module(input_package)
+  if (validation_result == 1) {
+    cli::cli_alert_danger("Can't convert broken package.")
+    return(1)
+  } else if (validation_result == 2) {
+    cli::cli_alert_info("Conversion will be attempted anyway.")
+  }
+  # create output directory
   if (dir.exists(output_directory)) {
     stop("output directory already exists")
   } else {

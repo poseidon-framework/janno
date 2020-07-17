@@ -7,9 +7,14 @@
 \alias{validate_module}
 \title{poseidon2 command line interface module functions}
 \usage{
-convert_module(output_format, input_package, output_directory, log_directory)
+convert_module(
+  output_format,
+  input_package,
+  output_directory,
+  log_directory = tempdir()
+)
 
-merge_module(input_file, output_directory, log_directory)
+merge_module(input_file, output_directory, log_directory = tempdir())
 
 validate_module(input_janno_file_or_packages)
 }
