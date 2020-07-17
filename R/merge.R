@@ -1,12 +1,20 @@
 #' @rdname cli_modules
 #' @export
-merge_module <- function(input_file, output_directory, log_directory) {
+merge_module <- function(input_file, output_directory, log_directory = tempdir()) {
   # input check and prep
   checkmate::assert_file_exists(input_file, access = "r")
   merge_read_package_list(input_file) -> list_of_packages
   checkmate::assert_directory_exists(list_of_packages, access = "r")
   checkmate::assert_directory_exists(log_directory, access = "rw")
-  #validate_module(list_of_packages)
+  # validate input packages
+  validation_result <- validate_module(list_of_packages)
+  if (validation_result == 1) {
+    cli::cli_alert_danger("Can't merge broken packages.")
+    return(1)
+  } else if (validation_result == 2) {
+    cli::cli_alert_info("Merging will be attempted anyway.")
+  }
+  # create output directory
   if (dir.exists(output_directory)) {
     stop("output directory already exists")
   } else {
@@ -31,7 +39,7 @@ merge_concat_LITERATURE_bib_files <- function(list_of_packages, output_directory
   list_of_bib_files <- list.files(list_of_packages, pattern = "*.bib", full.names = T)
   if (length(list_of_bib_files) == 0) {
     cli::cli_alert_info("No *.bib files found")
-    return()
+    return(2)
   }
   new_bib_file <- file.path(output_directory, "LITERATURE.bib")
   bib_files_read <- lapply(list_of_bib_files, function(x) {readLines(x)} )
