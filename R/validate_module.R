@@ -12,13 +12,41 @@ validate_module <- function(input_janno_file_or_packages) {
   # start message
   validate_start_message(input_janno_file_or_packages, type)
   # select validation submodule
+  result <- c()
   for (i in 1:length(input_janno_file_or_packages)) {
     if (type[i] == "janno") {
-      validate_janno(input_janno_file_or_packages[i])
+      result[i] <- validate_janno(input_janno_file_or_packages[i])
+      if (result[i] == 0) {
+        cli::cli_alert_success("Everything seems to be alright with this janno file.")
+      } else if (result[i] == 1) {
+        cli::cli_alert_danger("This is not a valid janno file.")
+      } else if (result[i] == 2) {
+        cli::cli_alert_warning("This seems to be a valid janno file, but some things are fishy.")
+      }
     } else if (type[i] == "package") {
-      validate_package(input_janno_file_or_packages[i])
+      result[i] <- validate_package(input_janno_file_or_packages[i])
+      if (result[i] == 0) {
+        cli::cli_alert_success("Everything seems to be alright with this package.")
+      } else if (result[i] == 1) {
+        cli::cli_alert_danger("This is not a valid package.")
+      } else if (result[i] == 2) {
+        cli::cli_alert_warning("This seems to be a valid package, but some things are fishy.")
+      }
     }
   }
+  cat("---\n")
+  general_result <- 1
+  if (all(result == 0)) {
+    general_result <- 0
+    cli::cli_alert_success("Everything seems to be alright with these packages or janno files.")
+  } else if (any(result == 1)) {
+    general_result <- 1
+    cli::cli_alert_danger("There are non-valid packages or janno files in this set.")
+  } else if (any(result == 2)) {
+    general_result <- 2
+    cli::cli_alert_warning("These seem to be valid packages or janno files, but some things are fishy.")
+  }
+  return(general_result)
 }
 
 validate_start_message <- function(input_janno_file_or_packages, type) {
@@ -32,6 +60,7 @@ validate_janno_or_package <- function(input_janno_file_or_packages) {
 #### janno file validation ####
 
 validate_janno <- function(input_janno) {
+  cat("***\n")
   cli::cli_alert_info(input_janno)
   # does it exist?
   if ( !checkmate::test_file_exists(input_janno) ) {
@@ -115,6 +144,7 @@ validate_janno <- function(input_janno) {
     }
   }
   # final output
+  cat("***\n")
   if ( everything_fine_flag ) {
     return(0)
   } else {
@@ -268,6 +298,7 @@ is_valid_float <- function(x, cur_col, cur_row, expected_range = c(-Inf, Inf)) {
 #### validate poseidon package ####
 
 validate_package <- function(input_package) {
+  cat("*****\n")
   cli::cli_alert(input_package)
   # does it exist?
   if ( !checkmate::test_directory_exists(input_package) ) {
@@ -325,6 +356,7 @@ validate_package <- function(input_package) {
   # check .janno file
   error_code <- validate_janno(list.files(input_package, pattern = ".janno", full.names = T))
   # final output
+  cat("*****\n")
   if (error_code == 0) {
     return(0)
   } else if (error_code == 2 || !everything_fine_flag) {
