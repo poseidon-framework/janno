@@ -57,7 +57,7 @@ validate_janno <- function(input_janno) {
       } else if (is_n_a(cur_cell)) {
         if (mandatory) {
           cli::cli_alert_danger("n/a in a mandatory column")
-          cat("  in ", position_in_table_string(cur_col, cur_row), "\n")
+          cat("  in", position_in_table_string(cur_col, cur_row), "\n")
           everything_fine_flag <- FALSE
           next
         } else {
