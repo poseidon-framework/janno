@@ -3,6 +3,7 @@
 S3method(enforce_types,default)
 S3method(enforce_types,janno)
 export(a2j)
+export(as.janno)
 export(convert_module)
 export(enforce_types)
 export(merge_module)
