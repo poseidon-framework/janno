@@ -41,7 +41,7 @@ validate_janno <- function(input_janno) {
     }
     # column wise checks
     if (no_dupli) {
-      if (no_duplicates(character_janno, cur_col)) {
+      if ( !no_duplicates(character_janno, cur_col) ) {
         everything_fine_flag <- FALSE
       }
     }
