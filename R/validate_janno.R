@@ -50,13 +50,14 @@ validate_janno <- function(input_janno) {
     for (cur_row in 1:nrow(character_janno)) {
       cur_cell <- character_janno[[cur_col]][cur_row]
       ## general checks ##
-      if (is_empty(cur_cell, cur_col, cur_row)) {
+      if ( !positioned_feedback(cur_cell, is_not_empty, position_in_table_string(cur_col, cur_row)) ) {
         everything_fine_flag <- FALSE
         next
         # special case: n/a
-      } else if (is_na(cur_cell)) {
+      } else if (is_n_a(cur_cell)) {
         if (mandatory) {
-          cli::cli_alert_danger(paste(cur_row, ":", cur_col, "n/a in a mandatory column"))
+          cli::cli_alert_danger("n/a in a mandatory column")
+          cat("  in ", position_in_table_string(cur_col, cur_row), "\n")
           everything_fine_flag <- FALSE
           next
         } else {
@@ -66,17 +67,34 @@ validate_janno <- function(input_janno) {
       ## column type checks ##
       # with defined set of choices
       if (with_choices) {
-        if ( !check_function(cur_cell, cur_col, cur_row, expected_choices) ) {
+        if ( 
+          !positioned_feedback(
+            cur_cell, check_function, 
+            position_in_table_string(cur_col, cur_row), 
+            choices = expected_choices
+          )
+        ) {
           everything_fine_flag <- FALSE
         }
         # with range
       } else if (with_range) {
-        if ( !check_function(cur_cell, cur_col, cur_row, expected_range) ) {
+        if ( 
+          !positioned_feedback(
+            cur_cell, check_function, 
+            position_in_table_string(cur_col, cur_row), 
+            expected_range = expected_range
+          ) 
+        ) {
           everything_fine_flag <- FALSE
         }
         # without anything
       } else {
-        if ( !check_function(cur_cell, cur_col, cur_row) ) {
+        if ( 
+          !positioned_feedback(
+            cur_cell, check_function, 
+            position_in_table_string(cur_col, cur_row)
+          ) 
+        ) {
           everything_fine_flag <- FALSE
         }
       }
@@ -91,16 +109,28 @@ validate_janno <- function(input_janno) {
   }
 }
 
-is_na <- function(x) {
+is_n_a <- function(x) {
   x == "n/a"
 }
 
-is_empty <- function(x, cur_col, cur_row) {
-  check <- is.na(x) | x == ""
-  if ( check ) {
-    cli::cli_alert_danger(paste(
-      cur_row, ":", cur_col, "Empty cells are not allowed, please fill with n/a"
-    ))
+position_in_table_string <- function(cur_col, cur_row) {
+  paste0("[", cur_row, " | ", cur_col, "]")
+}
+
+positioned_feedback <- function(x, check_function, position_string, ...) {
+  check_result <- check_function(x, ...)
+  if ( !check_result ) {
+    cat("  in ")
+    cat(position_string)
+    cat("\n")
+  }
+  return(check_result)
+}
+
+is_not_empty <- function(x) {
+  check <- !(is.na(x) | x == "")
+  if ( !check ) {
+    cli::cli_alert_danger("Empty cells are not allowed, please fill with n/a")
   }
   return(check)
 }
@@ -149,91 +179,85 @@ type_string_to_check_function <- function(x) {
   )
 }
 
-is_valid_string <- function(x, cur_col = NA, cur_row = NA) {
+is_valid_string <- function(x) {
   check <- checkmate::test_string(x, min.chars = 1)
   if ( !check ) {
-    if ( is.na(cur_col) | is.na(cur_row) ) {
-      cli::cli_alert_danger("Not a valid string")
-    } else {
-      cli::cli_alert_danger(paste(cur_row, ":", cur_col, "Not a valid string"))
-    }
+    cli::cli_alert_danger("Not a valid string")
   }
   return(check)
 }
 
-is_valid_string_choice <- function(x, cur_col, cur_row, choices) {
+is_valid_string_choice <- function(x, choices) {
   check <- checkmate::test_choice(x, choices)
-  if (!check ) {
-    cli::cli_alert_danger(paste(cur_row, ":", cur_col, "Value not in", paste(choices, collapse = ", ")))
+  if ( !check ) {
+    cli::cli_alert_danger(paste("Value not in", paste(choices, collapse = ", ")))
   }
   return(check)
 }
 
-is_valid_string_list <- function(x, cur_col, cur_row) {
-  check_0 <- checkmate::test_string(x, min.chars = 1)
-  if ( !check_0 ) {
-    cli::cli_alert_danger(paste(cur_row, ":", cur_col, "Not a valid string"))
+is_valid_string_list <- function(x) {
+  check_0 <- is_valid_string(x)
+  if ( check_0 ) {
+    check_1 <- !grepl(".*;?\\s+.*|.*\\s+;?.*", x)
+    if( !check_1 ) {
+      cli::cli_alert_danger("Superfluous white space around separator ;")
+    }
+    return(check_1)
   }
-  check_1 <- !grepl(".*;?\\s+.*|.*\\s+;?.*", x)
-  if( !check_1 ) {
-    cli::cli_alert_danger(paste(cur_row, ":", cur_col, "Superfluous white space around separator ;"))
-  }
-  return(all(check_0, check_1))
+  return(check_0)
 }
 
-is_valid_integer <- function(x, cur_col, cur_row, expected_range = c(-Inf, Inf)) {
+is_valid_integer <- function(x, expected_range = c(-Inf, Inf)) {
   check_0 <- grepl("^[0-9-]+$", x) && !grepl("\\.", x) && !is.na(suppressWarnings(as.integer(x)))
-  check_1 <- FALSE
   if ( !check_0 ) {
-    cli::cli_alert_danger(paste(cur_row, ":", cur_col, "Value not a valid integer number"))
+    cli::cli_alert_danger("Value not a valid integer number")
   } else {
     check_1 <- checkmate::test_integer(
       as.integer(x), lower = expected_range[1], upper = expected_range[2]
     )
     if ( !check_1 ) {
-      cli::cli_alert_danger(paste(
-        cur_row, ":", cur_col, "Value not in range", expected_range[1], "to", expected_range[2]
-      ))
+      cli::cli_alert_danger(
+        paste("Value not in range", expected_range[1], "to", expected_range[2])
+      )
+      return(check_1)
     }
   }
-  return(all(check_0, check_1))
+  return(check_0)
 }
 
-is_valid_integer_list <- function(x, cur_col, cur_row, expected_range = c(-Inf, Inf)) {
+is_valid_integer_list <- function(x, expected_range = c(-Inf, Inf)) {
   supposed_integers <- unlist(strsplit(x, split = ";"))
   check_0 <- all(grepl("^[0-9-]+$", supposed_integers)) &&
     all(!grepl("\\.", supposed_integers)) &&
     !any(is.na(suppressWarnings(as.integer(supposed_integers))))
-  check_1 <- FALSE
   if ( !check_0 ) {
-    cli::cli_alert_danger(paste(cur_row, ":", cur_col, "One or multiple values not valid integer numbers"))
+    cli::cli_alert_danger("One or multiple values not valid integer numbers")
   } else {
     check_1 <- checkmate::test_integer(
       as.integer(supposed_integers), lower = expected_range[1], upper = expected_range[2]
     )
     if ( !check_1 ) {
-      cli::cli_alert_danger(paste(
-        cur_row, ":", cur_col, "One or multiple values not in range", expected_range[1], "to", expected_range[2]
-      ))
+      cli::cli_alert_danger(
+        paste("One or multiple values not in range", expected_range[1], "to", expected_range[2])
+      )
+      return(check_1)
     }
   }
-  return(all(check_0, check_1))
+  return(check_0)
 }
 
-is_valid_float <- function(x, cur_col, cur_row, expected_range = c(-Inf, Inf)) {
+is_valid_float <- function(x, expected_range = c(-Inf, Inf)) {
   check_0 <- grepl("^[0-9\\.-]+$", x) && !is.na(suppressWarnings(as.double(x)))
-  check_1 <- FALSE
   if ( !check_0 ) {
-    cli::cli_alert_danger(paste(cur_row, ":", cur_col, "Value not a valid double number"))
+    cli::cli_alert_danger("Value not a valid double number")
   } else {
     check_1 <- checkmate::test_numeric(
       as.double(x), lower = expected_range[1], upper = expected_range[2]
     )
     if ( !check_1 ) {
-      cli::cli_alert_danger(paste(
-        cur_row, ":", cur_col, "Value not in range", expected_range[1], "to", expected_range[2]
-      ))
+      cli::cli_alert_danger(paste("Value not in range", expected_range[1], "to", expected_range[2]))
+      return(check_1)
     }
   }
-  return(all(check_0, check_1))
+  return(check_0)
 }
