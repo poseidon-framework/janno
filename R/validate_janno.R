@@ -149,10 +149,14 @@ type_string_to_check_function <- function(x) {
   )
 }
 
-is_valid_string <- function(x, cur_col, cur_row) {
+is_valid_string <- function(x, cur_col = NA, cur_row = NA) {
   check <- checkmate::test_string(x, min.chars = 1)
   if ( !check ) {
-    cli::cli_alert_danger(paste(cur_row, ":", cur_col, "Not a valid string"))
+    if ( is.na(cur_col) | is.na(cur_row) ) {
+      cli::cli_alert_danger("Not a valid string")
+    } else {
+      cli::cli_alert_danger(paste(cur_row, ":", cur_col, "Not a valid string"))
+    }
   }
   return(check)
 }
