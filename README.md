@@ -6,7 +6,9 @@
 
 A CLI tool for merging, convertion and validation of poseidon2 packages.
 
-## Quickstart
+**poseidon2 is already installed on the MPI-SHH-DAG cluster, you do not have to install the software manually.** 
+
+## Installation
 
 1. Install poseidon2 R package from github within R 
 
