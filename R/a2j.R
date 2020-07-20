@@ -20,7 +20,7 @@ a2j <- function(
     Individual_ID = rep(NA, nrow(anno)),
     Collection_ID = NA,
     # sample info
-    Skeletal_Element = NA,
+    Source_Tissue = NA,
     # spatial location
     Country = NA,
     Location = NA,
@@ -65,7 +65,7 @@ a2j <- function(
   janno$Collection_ID <- anno %c% "master_id"
   
   # sample info
-  janno$Skeletal_Element <- anno %c% "skeletal_element"
+  janno$Source_Tissue <- anno %c% "skeletal_element"
   
   # spatial location
   janno$Country <- anno %c% "country"
