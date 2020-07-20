@@ -28,14 +28,41 @@ calibrate.janno <- function(x, ...) {
   # no_errors <- sapply(x$Date_C14_Uncal_BP_Err, function(z) { all(is.na(z)) } )
   
   x %>% dplyr::mutate(
-    Date_C14_Cal_BC_AD_prob = sumcal_list_of_multiple_dates(
-      .data[["Date_C14_Uncal_BP"]], .data[["Date_C14_Uncal_BP_Err"]]
+    Date_BC_AD_Prob = age_probability_master(
+      .data[["Date_Type"]],
+      .data[["Date_C14_Uncal_BP"]], .data[["Date_C14_Uncal_BP_Err"]],
+      .data[["Date_BC_AD_Start"]], .data[["Date_BC_AD_Stop"]]
     )
   )
   
 }
 
-arch_age <- function(start, stop)
+age_probability_master <- function(date_type, c14bp, c14std, startbcad, stopbcad) {
+  
+  res_list <- lapply(seq_along(date_type), function(i) {NA})
+  
+  is_c14 <- !is.na(date_type) & date_type == "C14"
+  is_contextual <- !is.na(date_type) & date_type == "contextual"
+  
+  res_list[is_c14] <- sumcal_list_of_multiple_dates(c14bp[is_c14], c14std[is_c14])
+  res_list[is_contextual] <- contextual_date_uniform(startbcad[is_contextual], stopbcad[is_contextual])
+  
+  return(res_list)
+
+}
+
+contextual_date_uniform <- function(startbcad, stopbcad) {
+  
+  lapply(seq_along(startbcad), function(i) {
+    tibble::tibble(
+      age = startbcad[i]:stopbcad[i],
+      sum_dens = 1/(length(startbcad[i]:stopbcad[i])),
+      two_sigma = TRUE,
+      center = .data[["age"]] == round(mean(c(startbcad[i]:stopbcad[i])))
+    )
+  })
+  
+}
 
 sumcal_list_of_multiple_dates <- function(age_list, err_list) {
   
