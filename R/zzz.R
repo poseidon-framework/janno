@@ -4,6 +4,7 @@
 globalVariables(".")
 
 #'@importFrom magrittr "%>%"
+#'@importFrom magrittr "%<>%"
 #'@importFrom rlang .data 
 #'
 NULL

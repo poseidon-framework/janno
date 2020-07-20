@@ -24,18 +24,34 @@ calibrate.janno <- function(x,...) {
   no_dates <- sapply(x$Date_C14_Uncal_BP, function(z) { all(is.na(z)) } )
   no_errors <- sapply(x$Date_C14_Uncal_BP_Err, function(z) { all(is.na(z)) } )
   
-  x_filtered <- x[!no_dates & !no_errors,]
+  x[!no_dates & !no_errors,] %<>% dplyr::mutate(
+    Date_C14_Cal_BC_AD_prob = sumcal_list_of_multiple_dates(
+      .date[["Date_C14_Uncal_BP"]], .date[["Date_C14_Uncal_BP_Err"]]
+    )
+  )
   
-  x_filtered <- sumcal(x_filtered$Date_C14_Uncal_BP, x_filtered$Date_C14_Uncal_BP_Err)
-  
+  return(x)
 }
 
-sumcal <- function(x, err) {
+sumcal_list_of_multiple_dates <- function(x, err) {
   
   bol <- 1950 # c14 reference zero
   threshold <- (1 - 0.9545) / 2 # 2sigma range probability threshold
   
+  # run for each date collection
   Map(function(cur_xs, cur_errs) {
+    
+    if (all(is.na(cur_xs)) | all(is.na(cur_errs))) {
+      # return(
+      #   tibble::tibble(
+      #     age = rlang::na_int,
+      #     sum_dens = rlang::na_dbl,
+      #     two_sigma = rlang::na_lgl,
+      #     center = rlang::na_lgl
+      #   )
+      # )
+      NA
+    }
     
     cur_raw_calibration_output <- Bchron::BchronCalibrate(
       ages      = cur_xs,
@@ -47,7 +63,7 @@ sumcal <- function(x, err) {
       cur_raw_calibration_output,
       function(y) { 
         tibble::tibble(
-          age = -y$ageGrid + bol,
+          age = as.integer(-y$ageGrid + bol),
           densities = y$densities
         )
       }
