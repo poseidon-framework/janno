@@ -27,14 +27,42 @@ calibrate.janno <- function(x, ...) {
   # no_dates <- sapply(x$Date_C14_Uncal_BP, function(z) { all(is.na(z)) } )
   # no_errors <- sapply(x$Date_C14_Uncal_BP_Err, function(z) { all(is.na(z)) } )
   
-  x %>% dplyr::mutate(
-    Date_BC_AD_Prob = age_probability_master(
-      .data[["Date_Type"]],
-      .data[["Date_C14_Uncal_BP"]], .data[["Date_C14_Uncal_BP_Err"]],
-      .data[["Date_BC_AD_Start"]], .data[["Date_BC_AD_Stop"]]
-    )
+  x$Date_BC_AD_Prob <- age_probability_master(
+    x[["Date_Type"]],
+    x[["Date_C14_Uncal_BP"]], x[["Date_C14_Uncal_BP_Err"]],
+    x[["Date_BC_AD_Start"]], x[["Date_BC_AD_Stop"]]
   )
   
+  x$Date_BC_AD_Median_Prob <- get_center_age(x$Date_BC_AD_Prob)
+  
+  x$Date_BC_AD_Sample <- get_random_ages(x$Date_BC_AD_Prob, n = 100)
+  
+  return(x)
+  
+}
+
+get_random_ages <- function(prob, n) {
+  lapply(
+    prob, function(y, n) {
+      if (!is.data.frame(y) && is.na(y)) {
+        return(NA_integer_)
+      } else {
+        sample(y[["age"]], n, y[["sum_dens"]], replace = T)
+      }
+    }, n = n
+  )
+}
+
+get_center_age <- function(prob) {
+  sapply(
+    prob, function(y) {
+      if (!is.data.frame(y) && is.na(y)) {
+        return(NA_integer_)
+      } else {
+        y[["age"]][y[["center"]]]
+      }
+    }
+  )
 }
 
 age_probability_master <- function(date_type, c14bp, c14std, startbcad, stopbcad) {
