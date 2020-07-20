@@ -43,70 +43,44 @@ sumcal <- function(x, err) {
       calCurves = rep("intcal13", length(cur_xs))
     )
     
-    densities <- lapply(
+    density_tables <- lapply(
       cur_raw_calibration_output,
       function(y) { 
         tibble::tibble(
           age = -y$ageGrid + bol,
-          dens_dist = y$densities
+          densities = y$densities
         )
       }
     )
     
-    dplyr::bind_rows(densities) %>%
+    sum_density_table <- dplyr::bind_rows(density_tables) %>%
       dplyr::group_by(age) %>%
       dplyr::summarise(
-        dens = sum(dens_dist)
+        sum_dens = sum(densities)/length(density_tables),
+        .groups = "drop"
       ) %>%
-      dplyr::ungroup()
+      dplyr::right_join(
+        .,
+        data.frame(age = min(.$age):max(.$age)),
+        by = "age"
+      ) %>%
+      dplyr::mutate(
+        sum_dens = tidyr::replace_na(sum_dens, 0)
+      )
     
-    # transform BchronCalibrate result to a informative tibble
-    # this tibble includes the years, the density per year,
-    # the normalized density per year and the information,
-    # if this year is in the two_sigma range for the current date
-    lapply(
-      cur_raw_calibration_output,
-      function(y) {
-        a <- cumsum(y$densities) # cumulated density
-        bottom <- y$ageGrid[max(which(a <= threshold))]
-        top <- y$ageGrid[min(which(a > 1 - threshold))]
-        center <- y$ageGrid[which.min(abs(a - 0.5))]
-        tibble::tibble(
-          age = -y$ageGrid + bol,
-          dens_dist = y$densities,
-          #norm_dens = y$densities/max(y$densities),
-          #two_sigma = y$ageGrid >= bottom & y$ageGrid <= top,
-          #center = y$ageGrid == center
-        )
-      }
+    a <- cumsum(sum_density_table$sum_dens) # cumulated density
+    bottom <- sum_density_table$age[max(which(a <= threshold))]
+    top <- sum_density_table$age[min(which(a > 1 - threshold))]
+    center <- sum_density_table$age[which.min(abs(a - 0.5))]
+    
+    result_table <- sum_density_table %>% dplyr::mutate(
+      two_sigma = age >= bottom & age <= top,
+      center = age == center
     )
+    
+    return(result_table)
     
   }, x, err)
-  
-  Bchron::BchronCalibrate(
-    ages      = x,
-    ageSds    = err,
-    calCurves = rep("intcal13", nrow(.))
-  ) %>%
-    # transform BchronCalibrate result to a informative tibble
-    # this tibble includes the years, the density per year,
-    # the normalized density per year and the information,
-    # if this year is in the two_sigma range for the current date
-    pbapply::pblapply(
-      function(y) {
-        a <- y$densities %>% cumsum # cumulated density
-        bottom <- y$ageGrid[which(a <= threshold) %>% max]
-        top <- y$ageGrid[which(a > 1 - threshold) %>% min]
-        center <- y$ageGrid[which.min(abs(a - 0.5))]
-        tibble::tibble(
-          age = -y$ageGrid + bol,
-          dens_dist = y$densities,
-          norm_dens = y$densities/max(y$densities),
-          two_sigma = y$ageGrid >= bottom & y$ageGrid <= top,
-          center = y$ageGrid == center
-        )
-      }
-    )
   
 }
 
