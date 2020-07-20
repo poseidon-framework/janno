@@ -3,6 +3,9 @@
 #' @name calibrate
 #' @title Calibrate all valid dates in a \strong{janno} table
 #'
+#' @param x an object of class janno
+#' @param ... further arguments passed to or from other methods
+#' 
 #' @export
 #'
 #' @rdname calibrate
@@ -19,21 +22,22 @@ calibrate.default <- function(x, ...) {
 
 #' @rdname calibrate
 #' @export
-calibrate.janno <- function(x,...) {
+calibrate.janno <- function(x, ...) {
   
-  no_dates <- sapply(x$Date_C14_Uncal_BP, function(z) { all(is.na(z)) } )
-  no_errors <- sapply(x$Date_C14_Uncal_BP_Err, function(z) { all(is.na(z)) } )
+  # no_dates <- sapply(x$Date_C14_Uncal_BP, function(z) { all(is.na(z)) } )
+  # no_errors <- sapply(x$Date_C14_Uncal_BP_Err, function(z) { all(is.na(z)) } )
   
-  x[!no_dates & !no_errors,] %<>% dplyr::mutate(
+  x %>% dplyr::mutate(
     Date_C14_Cal_BC_AD_prob = sumcal_list_of_multiple_dates(
-      .date[["Date_C14_Uncal_BP"]], .date[["Date_C14_Uncal_BP_Err"]]
+      .data[["Date_C14_Uncal_BP"]], .data[["Date_C14_Uncal_BP_Err"]]
     )
   )
   
-  return(x)
 }
 
-sumcal_list_of_multiple_dates <- function(x, err) {
+arch_age <- function(start, stop)
+
+sumcal_list_of_multiple_dates <- function(age_list, err_list) {
   
   bol <- 1950 # c14 reference zero
   threshold <- (1 - 0.9545) / 2 # 2sigma range probability threshold
@@ -50,7 +54,7 @@ sumcal_list_of_multiple_dates <- function(x, err) {
       #     center = rlang::na_lgl
       #   )
       # )
-      NA
+      return(NA)
     }
     
     cur_raw_calibration_output <- Bchron::BchronCalibrate(
@@ -70,18 +74,18 @@ sumcal_list_of_multiple_dates <- function(x, err) {
     )
     
     sum_density_table <- dplyr::bind_rows(density_tables) %>%
-      dplyr::group_by(age) %>%
+      dplyr::group_by(.data[["age"]]) %>%
       dplyr::summarise(
-        sum_dens = sum(densities)/length(density_tables),
+        sum_dens = sum(.data[["densities"]])/length(density_tables),
         .groups = "drop"
       ) %>%
       dplyr::right_join(
         .,
-        data.frame(age = min(.$age):max(.$age)),
+        data.frame(age = min(.[["age"]]):max(.[["age"]])),
         by = "age"
       ) %>%
       dplyr::mutate(
-        sum_dens = tidyr::replace_na(sum_dens, 0)
+        sum_dens = tidyr::replace_na(.data[["sum_dens"]], 0)
       )
     
     a <- cumsum(sum_density_table$sum_dens) # cumulated density
@@ -90,13 +94,13 @@ sumcal_list_of_multiple_dates <- function(x, err) {
     center <- sum_density_table$age[which.min(abs(a - 0.5))]
     
     result_table <- sum_density_table %>% dplyr::mutate(
-      two_sigma = age >= bottom & age <= top,
-      center = age == center
+      two_sigma = .data[["age"]] >= bottom & .data[["age"]] <= top,
+      center = .data[["age"]] == center
     )
     
     return(result_table)
     
-  }, x, err)
+  }, age_list, err_list)
   
 }
 
