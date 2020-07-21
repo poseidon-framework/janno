@@ -1,41 +1,61 @@
-#### calibrate ####
+#### process_age ####
 
-#' @name calibrate
-#' @title Calibrate all valid dates in a \strong{janno} table
+#' @name process_age
+#' @title Process all valid dates in a \strong{janno} table
 #'
 #' @param x an object of class janno
+#' @param choices character vector. Which output columns should be added?
+#' @param n integer. If "Date_BC_AD_Sample" in choices, then how many samples should be drawn? Default: 100
 #' @param ... further arguments passed to or from other methods
 #' 
 #' @export
 #'
-#' @rdname calibrate
+#' @rdname process_age
 #'
-calibrate <- function(x, ...) {
-  UseMethod("calibrate")
+process_age <- function(
+  x, 
+  choices = c("Date_BC_AD_Prob", "Date_BC_AD_Median_Derived", "Date_BC_AD_Sample"),
+  n = 100, 
+  ...
+) {
+  UseMethod("process_age")
 }
 
-#' @rdname calibrate
+#' @rdname process_age
 #' @export
-calibrate.default <- function(x, ...) {
+process_age.default <- function(
+  x, 
+  choices = c("Date_BC_AD_Prob", "Date_BC_AD_Median_Derived", "Date_BC_AD_Sample"),
+  n = 100, 
+  ...
+) {
   stop("x is not an object of class janno")
 }
 
-#' @rdname calibrate
+#' @rdname process_age
 #' @export
-calibrate.janno <- function(x, ...) {
+process_age.janno <- function(
+  x, 
+  choices = c("Date_BC_AD_Prob", "Date_BC_AD_Median_Derived", "Date_BC_AD_Sample"),
+  n = 100, 
+  ...
+) {
   
-  # no_dates <- sapply(x$Date_C14_Uncal_BP, function(z) { all(is.na(z)) } )
-  # no_errors <- sapply(x$Date_C14_Uncal_BP_Err, function(z) { all(is.na(z)) } )
+  if ("Date_BC_AD_Prob" %in% choices) {
+    x$Date_BC_AD_Prob <- age_probability_master(
+      x[["Date_Type"]],
+      x[["Date_C14_Uncal_BP"]], x[["Date_C14_Uncal_BP_Err"]],
+      x[["Date_BC_AD_Start"]], x[["Date_BC_AD_Stop"]]
+    )
+  }
   
-  x$Date_BC_AD_Prob <- age_probability_master(
-    x[["Date_Type"]],
-    x[["Date_C14_Uncal_BP"]], x[["Date_C14_Uncal_BP_Err"]],
-    x[["Date_BC_AD_Start"]], x[["Date_BC_AD_Stop"]]
-  )
+  if ("Date_BC_AD_Prob" %in% choices && "Date_BC_AD_Median_Derived" %in% choices) {
+    x$Date_BC_AD_Median_Derived <- get_center_age(x$Date_BC_AD_Prob)
+  }
   
-  x$Date_BC_AD_Median_Prob <- get_center_age(x$Date_BC_AD_Prob)
-  
-  x$Date_BC_AD_Sample <- get_random_ages(x$Date_BC_AD_Prob, n = 100)
+  if ("Date_BC_AD_Prob" %in% choices && "Date_BC_AD_Sample" %in% choices) {
+    x$Date_BC_AD_Sample <- get_random_ages(x$Date_BC_AD_Prob, n = n)
+  }
   
   return(x)
   
@@ -85,7 +105,7 @@ contextual_date_uniform <- function(startbcad, stopbcad) {
     tibble::tibble(
       age = startbcad[i]:stopbcad[i],
       sum_dens = 1/(length(startbcad[i]:stopbcad[i])),
-      two_sigma = TRUE,
+      #two_sigma = TRUE,
       center = .data[["age"]] == round(mean(c(startbcad[i]:stopbcad[i])))
     )
   })
@@ -95,22 +115,22 @@ contextual_date_uniform <- function(startbcad, stopbcad) {
 sumcal_list_of_multiple_dates <- function(age_list, err_list) {
   
   bol <- 1950 # c14 reference zero
-  threshold <- (1 - 0.9545) / 2 # 2sigma range probability threshold
+  #threshold <- (1 - 0.9545) / 2 # 2sigma range probability threshold
   
   # run for each date collection
   Map(function(cur_xs, cur_errs) {
     
-    if (all(is.na(cur_xs)) | all(is.na(cur_errs))) {
-      # return(
-      #   tibble::tibble(
-      #     age = rlang::na_int,
-      #     sum_dens = rlang::na_dbl,
-      #     two_sigma = rlang::na_lgl,
-      #     center = rlang::na_lgl
-      #   )
-      # )
-      return(NA)
-    }
+    # if (all(is.na(cur_xs)) | all(is.na(cur_errs))) {
+    #   # return(
+    #   #   tibble::tibble(
+    #   #     age = rlang::na_int,
+    #   #     sum_dens = rlang::na_dbl,
+    #   #     two_sigma = rlang::na_lgl,
+    #   #     center = rlang::na_lgl
+    #   #   )
+    #   # )
+    #   return(NA)
+    # }
     
     cur_raw_calibration_output <- Bchron::BchronCalibrate(
       ages      = cur_xs,
@@ -144,12 +164,12 @@ sumcal_list_of_multiple_dates <- function(age_list, err_list) {
       )
     
     a <- cumsum(sum_density_table$sum_dens) # cumulated density
-    bottom <- sum_density_table$age[max(which(a <= threshold))]
-    top <- sum_density_table$age[min(which(a > 1 - threshold))]
+    #bottom <- sum_density_table$age[max(which(a <= threshold))]
+    #top <- sum_density_table$age[min(which(a > 1 - threshold))]
     center <- sum_density_table$age[which.min(abs(a - 0.5))]
     
     result_table <- sum_density_table %>% dplyr::mutate(
-      two_sigma = .data[["age"]] >= bottom & .data[["age"]] <= top,
+      #two_sigma = .data[["age"]] >= bottom & .data[["age"]] <= top,
       center = .data[["age"]] == center
     )
     
