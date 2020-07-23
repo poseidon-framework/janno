@@ -120,6 +120,8 @@ positioned_feedback <- function(x, check_function, position_string, ...) {
   if ( !check_result ) {
     cat("  in ")
     cat(position_string)
+    cat(": ")
+    cat(x)
     cat("\n")
   }
   return(check_result)
