@@ -198,7 +198,7 @@ is_valid_string_choice <- function(x, choices) {
 is_valid_string_list <- function(x) {
   check_0 <- is_valid_string(x)
   if ( check_0 ) {
-    check_1 <- !grepl(".*;?\\s+.*|.*\\s+;?.*", x)
+    check_1 <- !grepl(".*;+?\\s+.*|.*\\s+;+?.*", x)
     if( !check_1 ) {
       cli::cli_alert_danger("Superfluous white space around separator ;")
     }
