@@ -44,10 +44,19 @@ anno <- data.table::fread("https://reichdata.hms.harvard.edu/pub/datasets/amh_re
 
 # UDG treatment
 `%clean_UDG%` <- function(anno, variable) {
-  if (variable %in% colnames(anno)) { 
-    new_UDG <- ifelse(length(unique(unlist(stringr::str_split(anno[[variable]], ",")))) > 1, "mixed", unique(unlist(stringr::str_split(anno[[variable]], ","))))
+  if (variable %in% colnames(anno)) {
+    treatment_list <- lapply(anno[[variable]] %>% strsplit(","), function(x) {unique(x)})
+    new_UDG <- sapply(treatment_list, function(x) {
+      if ( length(x) > 1 || (!is.na(x) && x == "Mix")) {
+        "mixed"
+      } else if (!is.na(x) && x == "..") {
+        NA
+      } else {
+        x
+      }
+    })
     # in case multiple libraries with different UDG treatment were merged
-    new_UDG <- gsub("^ss.", "" , new_UDG) 
+    new_UDG <- gsub("^ss.", "" , new_UDG)
     return(new_UDG)
   } else { NA }
 }
