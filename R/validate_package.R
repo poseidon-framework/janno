@@ -23,7 +23,7 @@ validate_package <- function(input_package) {
   }
   # flag for less important conditions
   everything_fine_flag <- TRUE
-  if ( !validate_POSEIDON_yml(pyml) ) {
+  if ( !validate_POSEIDON_yml(pyml, input_package) ) {
     everything_fine_flag <- FALSE
   }
   cli::cli_h3("General package checks")

@@ -9,19 +9,29 @@ can_POSEIDON_yml_be_read <- function(x) {
   return(TRUE)
 }
 
-validate_POSEIDON_yml <- function(x) {
+validate_POSEIDON_yml <- function(x, package_path) {
   return(
     positioned_feedback(x$poseidonVersion, is_valid_poseidon_version, "poseidonVersion") &
     positioned_feedback(x$title, is_valid_string, "title") &
     is_valid_contributors_list(x$contributor) &
     positioned_feedback(x$lastModified, is_valid_date, "lastModified") &
-    positioned_feedback(x$bibFile, is_valid_string, "bibFile") &
+    positioned_feedback(x$bibFile, produce_check_for_valid_file(package_path), "bibFile") &
     positioned_feedback(x$genotypeData$format, is_valid_string, "genotypeData > format") &
-    positioned_feedback(x$genotypeData$genoFile, is_valid_string, "genotypeData > genoFile") &
-    positioned_feedback(x$genotypeData$snpFile, is_valid_string, "genotypeData > snpFile") &
-    positioned_feedback(x$genotypeData$indFile, is_valid_string, "genotypeData > indFile") &
-    positioned_feedback(x$jannoFile, is_valid_string, "jannoFile")
+    positioned_feedback(x$genotypeData$genoFile, produce_check_for_valid_file(package_path), "genotypeData > genoFile") &
+    positioned_feedback(x$genotypeData$snpFile, produce_check_for_valid_file(package_path), "genotypeData > snpFile") &
+    positioned_feedback(x$genotypeData$indFile, produce_check_for_valid_file(package_path), "genotypeData > indFile") &
+    positioned_feedback(x$jannoFile, produce_check_for_valid_file(package_path), "jannoFile")
   )
+}
+
+produce_check_for_valid_file <- function(package_path) {
+  function(x) {
+    check <- checkmate::test_file_exists(file.path(package_path, x))
+    if ( !check ) {
+      cli::cli_alert_danger("File does not seem to exist.")
+    }
+    return(check)
+  }
 }
 
 is_valid_contributors_list <- function(x) {

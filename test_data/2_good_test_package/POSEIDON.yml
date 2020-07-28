@@ -8,8 +8,8 @@ lastModified: 2020-07-14
 bibFile: LITERATURE.bib
 genotypeData:
   format: PLINK
-  genoFile: file1.bed
-  snpFile: file1.bim
-  indFile: file1.fam
-jannoFile : file1.janno
+  genoFile: file2.bed
+  snpFile: file2.bim
+  indFile: file2.fam
+jannoFile : file2.janno
 
