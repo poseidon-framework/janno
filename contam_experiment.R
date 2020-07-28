@@ -18,6 +18,10 @@ xcontam <- anno %>% dplyr::transmute(
   tidyr::separate(
     err_list, c("start", "stop"), sep = ","
   ) %>%
+  dplyr::mutate(
+    start = as.numeric(start),
+    stop = as.numeric(stop)
+  ) %>%
   tibble::as_tibble()
 
 threshold <- (1 - 0.9545) / 2 # 2sigma range probability threshold
@@ -37,6 +41,21 @@ predict_start_stop_one <- function(xcon, var = 0.00005) {
   bottom <- round(x[max(which(cu <= threshold_adjusted))], 3)
   top <- round(x[min(which(cu > (max(cu) - threshold_adjusted)))], 3)
   return(tibble::tibble(bottom, top))
+}
+
+predict_start_stop_one(xcontam$xcon[1], 0.000013)
+
+min_distance <- function(data, par) {
+  res <- predict_start_stop_one(data$xcon, par)
+  mean(c(res$bottom - data$start, res$top - data$stop))
+}
+
+for (i in 1:1){#nrow(xcontam)) {
+  res <- optim(
+    par = 0.00001, fn = min_distance, data = xcontam[i,], 
+    method = "BFGS"
+  )
+  print(res)
 }
 
 predict_contam_err <- lapply(
