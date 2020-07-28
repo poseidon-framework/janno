@@ -13,8 +13,7 @@ validate_POSEIDON_yml <- function(x) {
   return(
     positioned_feedback(x$poseidonVersion, is_valid_poseidon_version, "poseidonVersion") &
     positioned_feedback(x$title, is_valid_string, "title") &
-    positioned_feedback(x$contributor$name, is_valid_string, "contributor > name") &
-    positioned_feedback(x$contributor$email, is_valid_email, "contributor > email") &
+    is_valid_contributors_list(x$contributor) &
     positioned_feedback(x$lastModified, is_valid_date, "lastModified") &
     positioned_feedback(x$bibFile, is_valid_string, "bibFile") &
     positioned_feedback(x$genotypeData$format, is_valid_string, "genotypeData > format") &
@@ -23,6 +22,14 @@ validate_POSEIDON_yml <- function(x) {
     positioned_feedback(x$genotypeData$indFile, is_valid_string, "genotypeData > indFile") &
     positioned_feedback(x$jannoFile, is_valid_string, "jannoFile")
   )
+}
+
+is_valid_contributors_list <- function(x) {
+  sapply(seq_along(x), function(i) {
+    y <- x[[i]]
+    positioned_feedback(y$name, is_valid_string, paste("contributor", i, "> name"))
+    positioned_feedback(y$email, is_valid_email, paste("contributor", i, "> email"))
+  }) %>% all()
 }
 
 is_valid_email <- function(x) {
