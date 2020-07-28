@@ -57,6 +57,8 @@ validate_package <- function(input_package) {
   # check .janno file
   error_code <- validate_janno(list.files(input_package, pattern = ".janno", full.names = T))
   cat("\n---\n")
+  # check data interactions
+  # https://github.com/poseidon-framework/poseidon2/issues/6
   # final output
   if (error_code == 0) {
     return(0)
