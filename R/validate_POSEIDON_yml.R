@@ -71,9 +71,7 @@ is_valid_poseidon_version <- function(x) {
 has_POSEIDON_yml_the_necessary_elements <- function(
   x,
   elements = c(
-    "poseidonVersion", "title", "contributor", 
-    "lastModified", "genotypeData", "jannoFile",
-    "description", "bibFile"
+    "poseidonVersion", "title", "contributor", "genotypeData", "jannoFile"
   )
 ) {
   check <- all(elements %in% x)

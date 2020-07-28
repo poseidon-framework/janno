@@ -2,8 +2,8 @@ poseidonVersion: 2.0.0
 title: Schmid_2020_2
 description: Test data for the poseidon2 cli tool
 contributor:
-  name: Clemens Schmid
-  email: clemens.schmid@institute.org
+  - name: Clemens Schmid
+    email: clemens.schmid@institute.org
 lastModified: 2020-07-14
 bibFile: LITERATURE.bib
 genotypeData:
