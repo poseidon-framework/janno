@@ -58,7 +58,7 @@ validate_package <- function(input_package) {
   janno_error_code <- validate_janno(list.files(input_package, pattern = "\\.janno", full.names = T))
   cat("\n---\n")
   # check data interactions
-  ## .fam <-> .janno ID identical
+  ## .fam <-> .janno
   if (janno_error_code == 2) {
     cli::cli_alert_warning("There seem to be some issues with the janno file. .janno + .fam overlap check may fail because the janno file is broken.")
   }
@@ -66,7 +66,13 @@ validate_package <- function(input_package) {
     fam = list.files(input_package, pattern = "\\.fam", full.names = T),
     janno = list.files(input_package, pattern = "\\.janno", full.names = T)
   )
-  # ...
+  ## .bib <-> .janno
+  if ( length(list.files(input_package, pattern = "\\.bib")) != 0 ) {
+    validate_bib_janno_interaction(
+      bib = list.files(input_package, pattern = "\\.bib", full.names = T),
+      janno = list.files(input_package, pattern = "\\.janno", full.names = T)
+    )
+  }
   # final output (serious errors already ended returned the error code 1)
   if (janno_error_code == 0) {
     return(0)
