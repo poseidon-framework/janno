@@ -173,6 +173,11 @@ split_age_string <- function(x) {
   return(res)
 }
 
+# Explanation of what's in the .anno file:
+# Yes, we compute ANGSD confidence intervals as follows. I believe ANGSD outputs a mean=M and a standard error=S.
+# The 95% confidence interval is then computed as: [max(0,M-1.65*S),min(1,M+1.65S)]
+# It’s possible that ANGSD instead outputs a mean=M and a number of standard errors from zero=Z. 
+# The 95% confidence interval is then computed as: [max(0,M-1.65*(abs(M/Z)),min(1,M+1.65*(abs(M/Z))]
 derive_standard_error <- function(anno, mean_var, err_var) {
   mean_val <- anno[[mean_var]]
   mean_val[mean_val == "n/a (<200 SNPs)"] <- NA
