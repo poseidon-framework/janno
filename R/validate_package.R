@@ -55,14 +55,18 @@ validate_package <- function(input_package) {
     ))
   }
   # check .janno file
-  error_code <- validate_janno(list.files(input_package, pattern = ".janno", full.names = T))
+  janno_error_code <- validate_janno(list.files(input_package, pattern = ".janno", full.names = T))
   cat("\n---\n")
   # check data interactions
-  # https://github.com/poseidon-framework/poseidon2/issues/6
-  # final output
-  if (error_code == 0) {
+  # ## .fam <-> .janno ID identical
+  # if (janno_error_code == 2) {
+  #   cli::cli_alert_warning("There seem to be some issues with the janno file. .janno + .fam overlap check may fail.")
+  # } 
+  # # ...
+  # final output (serious errors already ended returned the error code 1)
+  if (janno_error_code == 0) {
     return(0)
-  } else if (error_code == 2 || !everything_fine_flag) {
+  } else if (janno_error_code == 2 || !everything_fine_flag) {
     return(2)
   }
 }
