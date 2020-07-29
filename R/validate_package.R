@@ -65,6 +65,16 @@ validate_package <- function(input_package) {
   if ( !validate_plink(bed_file, bim_file, fam_file) ) {
     return(1)
   }
+  # check .bib file
+  if ( length(bib_file) != 0 ) {
+    cli::cli_alert_info(bib_file)
+    bib_file_fine <- TRUE
+    if ( !is.character(names(bibtex::read.bib(bib_file))) ) {
+      cli::cli_alert_danger("Bibtex file is not valid.")
+      bib_file_fine <- FALSE
+      everything_fine <- FALSE
+    }
+  }
   # check data interactions
   cli::cli_alert_info("Cross-file relationships")
   ## .fam <-> .janno
@@ -78,7 +88,7 @@ validate_package <- function(input_package) {
     return(1)
   }
   ## .bib <-> .janno
-  if ( length(list.files(input_package, pattern = "\\.bib")) != 0 ) {
+  if ( length(bib_file) != 0 && bib_file_fine ) {
     if ( !validate_bib_janno_interaction(bib_file, janno_file) ) {
       everything_fine <- FALSE
     }
