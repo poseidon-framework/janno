@@ -1,6 +1,6 @@
 validate_package <- function(input_package) {
   # flag for less important conditions
-  everything_fine_flag <- TRUE
+  everything_fine <- TRUE
   # beginn package check
   cli::cli_h2(input_package)
   # does it exist?
@@ -55,15 +55,21 @@ validate_package <- function(input_package) {
     return(1)
   }
   if ( !validate_POSEIDON_yml(pyml, input_package) ) {
-    everything_fine_flag <- FALSE
+    everything_fine <- FALSE
   }
   # check .janno file
   janno_error_code <- validate_janno(list.files(input_package, pattern = "\\.janno", full.names = T))
+  if (janno_error_code == 2) {
+    everything_fine <- FALSE
+  }
   cat("\n---\n")
   # check data interactions
   ## .fam <-> .janno
   if (janno_error_code == 2) {
-    cli::cli_alert_warning("There seem to be some issues with the janno file. .janno + .fam overlap check may fail because the janno file is broken.")
+    cli::cli_alert_warning(paste(
+      "There seem to be some issues with the janno file.",
+      ".janno + .fam and .janno + .bib check may fail because the janno file is broken."
+    ))
   }
   validate_fam_janno_interaction(
     fam = list.files(input_package, pattern = "\\.fam", full.names = T),
@@ -77,9 +83,9 @@ validate_package <- function(input_package) {
     )
   }
   # final output (serious errors already ended returned the error code 1)
-  if (janno_error_code == 0) {
+  if (everything_fine) {
     return(0)
-  } else if (janno_error_code == 2 || !everything_fine_flag) {
+  } else {
     return(2)
   }
 }
