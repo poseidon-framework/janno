@@ -76,7 +76,9 @@ validate_package <- function(input_package) {
   }
   ## .bib <-> .janno
   if ( length(list.files(input_package, pattern = "\\.bib")) != 0 ) {
-    validate_bib_janno_interaction(bib_file, janno_file)
+    if ( !validate_bib_janno_interaction(bib_file, janno_file) ) {
+      everything_fine <- FALSE
+    }
   }
   # final output (serious errors already ended returned the error code 1)
   if (everything_fine) {

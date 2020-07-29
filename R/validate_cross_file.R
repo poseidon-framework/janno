@@ -24,5 +24,19 @@ validate_fam_janno_interaction <- function(fam_file, janno_file) {
 }
 
 validate_bib_janno_interaction <- function(bib_file, janno_file) {
-  
+  # read files
+  bib <- bibtex::read.bib(bib_file)
+  janno <- read_janno(janno_file, validate = F, to_janno = F)
+  # extract relevant information
+  bib_keys <- names(bib)
+  janno_keys <- janno[["Publication_Status"]]
+  # check if equal
+  if ( !all(stats::na.omit(janno_keys[janno_keys != "unpublished"]) %in% bib_keys) ) {
+    cli::cli_alert_warning(paste(
+      "The .bib file does not contain the literature in the janno file",
+      "or the bibtex keys are different"
+    ))
+    return(FALSE)
+  }
+  return(TRUE)
 }
