@@ -1,5 +1,5 @@
 validate_janno <- function(input_janno) {
-  cli::cli_h3(input_janno)
+  cli::cli_alert_info(input_janno)
   # does it exist?
   if ( !checkmate::test_file_exists(input_janno) ) {
     cli::cli_alert_danger("The janno file does not exist")

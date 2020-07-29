@@ -2,13 +2,12 @@ validate_package <- function(input_package) {
   # flag for less important conditions
   everything_fine <- TRUE
   # beginn package check
-  cli::cli_h2(input_package)
+  cli::cli_alert_info(input_package)
   # does it exist?
   if ( !checkmate::test_directory_exists(input_package) ) {
     cli::cli_alert_danger("The package directory does not exist")
     return(1)
   }
-  cli::cli_h3("General package checks")
   # collect file paths
   POSEIDON_yml_file <- list.files(input_package, pattern = "POSEIDON.yml", full.names = T)
   janno_file <- list.files(input_package, pattern = "\\.janno", full.names = T)
@@ -46,7 +45,7 @@ validate_package <- function(input_package) {
     ))
   }
   # validate POSEIDON.yml
-  cli::cli_h3(POSEIDON_yml_file)
+  cli::cli_alert_info(POSEIDON_yml_file)
   if ( !can_POSEIDON_yml_be_read(POSEIDON_yml_file) ) {
     return(1)
   }
@@ -62,7 +61,6 @@ validate_package <- function(input_package) {
   if (janno_error_code == 2) {
     everything_fine <- FALSE
   }
-  cat("\n---\n")
   # check data interactions
   ## .fam <-> .janno
   if (janno_error_code == 2) {
