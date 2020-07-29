@@ -173,6 +173,30 @@ split_age_string <- function(x) {
   return(res)
 }
 
+derive_standard_error <- function(anno, mean_var, err_var) {
+  mean_val <- anno[[mean_var]]
+  mean_val[mean_val == "n/a (<200 SNPs)"] <- NA
+  mean_val <- as.numeric(mean_val)
+  err_val <- anno[[err_var]]
+  err_val[err_val == "n/a (<200 SNPs)"] <- NA
+  range_list <- strsplit(gsub("\\[|\\]", "", err_val), ",")
+  unlist(Map(
+    function(mean_one, range_list_one) {
+      lower_range <- as.numeric(range_list_one[1])
+      upper_range <- as.numeric(range_list_one[2])
+      if (is.na(mean_one) || is.na(lower_range) || is.na(upper_range)) {
+        NA
+      } else if ( upper_range < 1 ) {
+        abs(upper_range - mean_one) / 1.65
+      } else if ( upper_range >= 1 & lower_range > 0 ) {
+        abs(mean_one - lower_range) / 1.65
+      } else {
+        NA
+      }
+    }, 
+    mean_val, range_list
+  ))
+}
 
 #### construct janno file sceleton ####
 
@@ -267,8 +291,12 @@ janno$Endogenous <- NA # does not exist in anno files
 janno$UDG <- anno %clean_UDG% "library_type_minus_no_damage_correction_half_damage_retained_at_last_position_plus_damage_fully_corrected_ss_single_stranded_library_preparation"
 janno$Library_Built <- anno %library_type_from_UDG_id% "library_type_minus_no_damage_correction_half_damage_retained_at_last_position_plus_damage_fully_corrected_ss_single_stranded_library_preparation"
 janno$Damage <- anno %c% "damage_rate_in_first_nucleotide_on_sequences_overlapping_1240k_targets_merged_data"
-janno$Xcontam <- anno %c% "xcontam_angsd_sn_ps_only_if_male_and_200"
-janno$Xcontam_stderr <- anno %c% "xcontam_angsd_mom_95_percent_ci_truncated_at_0_only_if_male_and_200"
+janno$Xcontam <- anno %c% "xcontam_angsd_mom_point_estimate_only_if_male_and_200"
+janno$Xcontam_stderr <- derive_standard_error(
+  anno, 
+  "xcontam_angsd_mom_point_estimate_only_if_male_and_200", 
+  "xcontam_angsd_mom_95_percent_ci_truncated_at_0_only_if_male_and_200"
+) 
 janno$mtContam <- NA # does not exist in anno files
 janno$mtContam_stderr <- NA # does not exist in anno files
 
