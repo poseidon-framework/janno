@@ -71,16 +71,12 @@ validate_package <- function(input_package) {
       ".janno + .fam and .janno + .bib check may fail because the janno file is broken."
     ))
   }
-  validate_fam_janno_interaction(
-    fam = list.files(input_package, pattern = "\\.fam", full.names = T),
-    janno = list.files(input_package, pattern = "\\.janno", full.names = T)
-  )
+  if ( !validate_fam_janno_interaction(fam_file, janno_file) ) {
+    return(1)
+  }
   ## .bib <-> .janno
   if ( length(list.files(input_package, pattern = "\\.bib")) != 0 ) {
-    validate_bib_janno_interaction(
-      bib = list.files(input_package, pattern = "\\.bib", full.names = T),
-      janno = list.files(input_package, pattern = "\\.janno", full.names = T)
-    )
+    validate_bib_janno_interaction(bib_file, janno_file)
   }
   # final output (serious errors already ended returned the error code 1)
   if (everything_fine) {
