@@ -1,7 +1,9 @@
 library(magrittr)
 library(ggplot2)
 
-anno <- data.table::fread("~/v42.4.1240K.anno", na.strings = c("..", "n/a (<200 SNPs)"))
+#### get data ####
+
+anno <- data.table::fread("~/Desktop/v42.4.1240K.anno", na.strings = c("..", "n/a (<200 SNPs)"))
 
 xcontam <- anno %>% dplyr::transmute(
   xcon = `Xcontam ANGSD MOM point estimate (only if male and ≥200)`,
@@ -12,8 +14,8 @@ xcontam <- anno %>% dplyr::transmute(
     )
 ) %>%
   dplyr::filter(
-    !is.na(xcon),
-    xcon > 0
+    !is.na(xcon)#,
+    #xcon > 0
   ) %>%
   tidyr::separate(
     err_list, c("start", "stop"), sep = ","
@@ -23,6 +25,8 @@ xcontam <- anno %>% dplyr::transmute(
     stop = as.numeric(stop)
   ) %>%
   tibble::as_tibble()
+
+#### beta theory ###
 
 threshold <- (1 - 0.9545) / 2 # 2sigma range probability threshold
 
@@ -67,3 +71,14 @@ hu <- xcontam %>%
   dplyr::bind_cols(predict_contam_err)
 
 View(hu)
+
+#### truncated normal theory ####
+
+xcontam %>% dplyr::filter(
+  xcon > 0, start > 0
+) %>% dplyr::mutate(
+  diff_mean_start = abs(xcon - start),
+  diff_mean_stop = abs(xcon - stop)
+)
+
+
