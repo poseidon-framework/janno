@@ -61,7 +61,12 @@ validate_package <- function(input_package) {
   if (janno_error_code == 2) {
     everything_fine <- FALSE
   }
+  # check .bed, .bim and .fam files
+  if ( !validate_plink(bed_file, bim_file, fam_file) ) {
+    return(1)
+  }
   # check data interactions
+  cli::cli_alert_info("Cross-file relationships")
   ## .fam <-> .janno
   if (janno_error_code == 2) {
     cli::cli_alert_warning(paste(
