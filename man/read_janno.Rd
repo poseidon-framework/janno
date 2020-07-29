@@ -4,10 +4,18 @@
 \alias{read_janno}
 \title{read_janno}
 \usage{
-read_janno(x = "test_data/1_good_test_package/file1.janno")
+read_janno(
+  x = "test_data/1_good_test_package/file1.janno",
+  validate = TRUE,
+  to_janno = TRUE
+)
 }
 \arguments{
 \item{x}{character. Path to a .janno file}
+
+\item{validate}{logical. Should the janno file be validated upon reading}
+
+\item{to_janno}{logical. Should the read function transform the input file to a janno object}
 }
 \description{
 read_janno
