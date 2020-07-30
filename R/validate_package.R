@@ -44,16 +44,8 @@ validate_package <- function(input_package) {
       paste(additional_files, collapse = ", ")
     ))
   }
-  # validate POSEIDON.yml
-  cli::cli_alert_info(POSEIDON_yml_file)
-  if ( !can_POSEIDON_yml_be_read(POSEIDON_yml_file) ) {
-    return(1)
-  }
-  pyml <- yaml::read_yaml(POSEIDON_yml_file)
-  if ( !has_POSEIDON_yml_the_necessary_elements(names(pyml)) ) {
-    return(1)
-  }
-  if ( !validate_POSEIDON_yml(pyml, input_package) ) {
+  # check POSEIDON.yml
+  if ( !validate_POSEIDON_yml(POSEIDON_yml_file, input_package) ) {
     everything_fine <- FALSE
   }
   # check .janno file

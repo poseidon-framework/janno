@@ -1,3 +1,15 @@
+validate_POSEIDON_yml <- function(POSEIDON_yml_file, input_package) {
+  cli::cli_alert_info(POSEIDON_yml_file)
+  if ( !can_POSEIDON_yml_be_read(POSEIDON_yml_file) ) {
+    return(FALSE)
+  }
+  pyml <- yaml::read_yaml(POSEIDON_yml_file)
+  return(
+    has_POSEIDON_yml_the_necessary_elements(names(pyml)) &
+      check_POSEIDON_yml_elements(pyml, input_package)
+  )
+}
+
 can_POSEIDON_yml_be_read <- function(x) {
   tryCatch(
     yaml::read_yaml(x), 
@@ -25,7 +37,7 @@ has_POSEIDON_yml_the_necessary_elements <- function(
   return(check)
 }
 
-validate_POSEIDON_yml <- function(x, package_path) {
+check_POSEIDON_yml_elements <- function(x, package_path) {
   return(
     positioned_feedback(x$poseidonVersion, is_valid_poseidon_version, "poseidonVersion") &
     positioned_feedback(x$title, is_valid_string, "title") &
