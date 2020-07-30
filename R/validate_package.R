@@ -67,10 +67,8 @@ validate_package <- function(input_package) {
   }
   # check .bib file
   if ( length(bib_file) != 0 ) {
-    cli::cli_alert_info(bib_file)
     bib_file_fine <- TRUE
-    if ( !is.character(names(bibtex::read.bib(bib_file))) ) {
-      cli::cli_alert_danger("Bibtex file is not valid.")
+    if ( !validate_bibtex(bib_file) ) {
       bib_file_fine <- FALSE
       everything_fine <- FALSE
     }

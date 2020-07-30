@@ -35,13 +35,13 @@ validate_plink_bim <- function(bim_file) {
   }, warning = function(w) {
     cli::cli_alert_danger(paste(
       "Test reading of .bim file showed an issue:",
-      w
+      conditionMessage(w)
     ))
     return(FALSE)
   }, error = function(e) {
     cli::cli_alert_danger(paste(
       "Test reading of .bim file showed an issue:",
-      e
+      conditionMessage(e)
     ))
     return(FALSE)
   })
@@ -67,13 +67,13 @@ validate_plink_fam <- function(fam_file) {
   }, warning = function(w) {
     cli::cli_alert_danger(paste(
       "Test reading of .fam file showed an issue:",
-      w
+      conditionMessage(w)
     ))
     return(FALSE)
   }, error = function(e) {
     cli::cli_alert_danger(paste(
       "Test reading of .fam file showed an issue:",
-      e
+      conditionMessage(e)
     ))
     return(FALSE)
   })
