@@ -49,5 +49,32 @@ validate_plink_bim <- function(bim_file) {
 
 validate_plink_fam <- function(fam_file) {
   cli::cli_alert_info(fam_file)
-  return(TRUE)
+  tryCatch({
+    readr::read_delim(
+      fam_file,
+      delim = " ",
+      col_names = FALSE,
+      col_types = readr::cols(
+        readr::col_character(),
+        readr::col_character(),
+        readr::col_character(),
+        readr::col_character(),
+        readr::col_integer(),
+        readr::col_character()
+      )
+    )
+    TRUE
+  }, warning = function(w) {
+    cli::cli_alert_danger(paste(
+      "Test reading of .fam file showed an issue:",
+      w
+    ))
+    return(FALSE)
+  }, error = function(e) {
+    cli::cli_alert_danger(paste(
+      "Test reading of .fam file showed an issue:",
+      e
+    ))
+    return(FALSE)
+  })
 }
