@@ -6,6 +6,13 @@ validate_plink <- function(bed_file, bim_file, fam_file) {
 
 validate_plink_bed <- function(bed_file) {
   cli::cli_alert_info(bed_file)
+  if ( !all(as.character(readBin(bed_file, what = "raw", n = 3)) == c("6c", "1b", "01")) ) {
+    cli::cli_alert_danger(paste(
+      "According to the start bytes this is not a valid .bed file",
+      "(see https://www.cog-genomics.org/plink/1.9/formats#bed)"
+    ))
+    return(FALSE)
+  }
   return(TRUE)
 }
 
