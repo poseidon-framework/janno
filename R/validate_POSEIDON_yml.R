@@ -9,6 +9,22 @@ can_POSEIDON_yml_be_read <- function(x) {
   return(TRUE)
 }
 
+has_POSEIDON_yml_the_necessary_elements <- function(
+  x,
+  elements = c(
+    "poseidonVersion", "title", "contributor", "genotypeData", "jannoFile"
+  )
+) {
+  check <- all(elements %in% x)
+  if ( !check ) {
+    cli::cli_alert_danger(paste(
+      "The following mandatory elements of the POSEIDON.yml are missing:",
+      paste(elements[!elements %in% x], collapse = ", ")
+    ))
+  }
+  return(check)
+}
+
 validate_POSEIDON_yml <- function(x, package_path) {
   return(
     positioned_feedback(x$poseidonVersion, is_valid_poseidon_version, "poseidonVersion") &
@@ -76,20 +92,4 @@ is_valid_poseidon_version <- function(x) {
     }
   }
   return(check_0)
-}
-
-has_POSEIDON_yml_the_necessary_elements <- function(
-  x,
-  elements = c(
-    "poseidonVersion", "title", "contributor", "genotypeData", "jannoFile"
-  )
-) {
-  check <- all(elements %in% x)
-  if ( !check ) {
-    cli::cli_alert_danger(paste(
-      "The following mandatory elements of the POSEIDON.yml are missing:",
-      paste(elements[!elements %in% x], collapse = ", ")
-    ))
-  }
-  return(check)
 }
