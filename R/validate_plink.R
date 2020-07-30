@@ -18,7 +18,33 @@ validate_plink_bed <- function(bed_file) {
 
 validate_plink_bim <- function(bim_file) {
   cli::cli_alert_info(bim_file)
-  return(TRUE)
+  tryCatch({
+    readr::read_tsv(
+      bim_file, 
+      col_names = FALSE,
+      col_types = readr::cols(
+        readr::col_character(),
+        readr::col_character(),
+        readr::col_double(),
+        readr::col_double(),
+        readr::col_character(),
+        readr::col_character()
+      )
+    )
+    TRUE
+  }, warning = function(w) {
+    cli::cli_alert_danger(paste(
+      "Test reading of .bim file showed an issue:",
+      w
+    ))
+    return(FALSE)
+  }, error = function(e) {
+    cli::cli_alert_danger(paste(
+      "Test reading of .bim file showed an issue:",
+      e
+    ))
+    return(FALSE)
+  })
 }
 
 validate_plink_fam <- function(fam_file) {
