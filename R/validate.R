@@ -4,11 +4,6 @@ validate_module <- function(input_janno_file_or_packages) {
   # input check and prep
   checkmate::assert_character(input_janno_file_or_packages, any.missing = FALSE, all.missing = FALSE, min.len = 1)
   validate_janno_or_package(input_janno_file_or_packages) -> type
-  if ("janno" %in% type) {
-    checkmate::assert_file_exists(input_janno_file_or_packages[type == "janno"], access = "r", extension = "janno")
-  } else if ("package" %in% type) {
-    checkmate::assert_directory_exists(input_janno_file_or_packages[type == "package"])
-  }
   # start message
   validate_start_message(input_janno_file_or_packages, type)
   # select validation submodule
