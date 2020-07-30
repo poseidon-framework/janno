@@ -5,7 +5,7 @@ validate_POSEIDON_yml <- function(POSEIDON_yml_file, input_package) {
   }
   pyml <- yaml::read_yaml(POSEIDON_yml_file)
   return(
-    has_POSEIDON_yml_the_necessary_elements(names(pyml)) &
+    has_POSEIDON_yml_the_necessary_elements(pyml) &&
       check_POSEIDON_yml_elements(pyml, input_package)
   )
 }
@@ -22,19 +22,31 @@ can_POSEIDON_yml_be_read <- function(x) {
 }
 
 has_POSEIDON_yml_the_necessary_elements <- function(
-  x,
-  elements = c(
-    "poseidonVersion", "title", "contributor", "genotypeData", "jannoFile"
-  )
+  x
 ) {
-  check <- all(elements %in% x)
-  if ( !check ) {
+  mandatory_top_level_elements <- c("poseidonVersion", "title", "contributor", "genotypeData", "jannoFile")
+  if ( !all(mandatory_top_level_elements %in% names(x)) ) {
     cli::cli_alert_danger(paste(
-      "The following mandatory elements of the POSEIDON.yml are missing:",
-      paste(elements[!elements %in% x], collapse = ", ")
+      "The following mandatory top level elements of the POSEIDON.yml are missing:",
+      paste(mandatory_top_level_elements[!mandatory_top_level_elements %in% names(x)], collapse = ", ")
     ))
+    return(FALSE)
   }
-  return(check)
+  mandatory_genotype_data_elements <- c("format", "genoFile", "snpFile", "indFile")
+  if ( !all(mandatory_genotype_data_elements %in% names(x[["genotypeData"]])) ) {
+    cli::cli_alert_danger(paste(
+      "The following mandatory top level elements of the POSEIDON.yml are missing:",
+      paste(mandatory_genotype_data_elements[!mandatory_genotype_data_elements %in% names(x[["genotypeData"]])], collapse = ", ")
+    ))
+    return(FALSE)
+  }
+  if ( !all(sapply(x[["contributor"]], function(x) {"name" %in% names(x) & "email" %in% names(x)})) ) {
+    cli::cli_alert_danger(paste(
+      "There is an issue with the contributor yaml array. Each contributor must be listed with name and email."
+    ))
+    return(FALSE)
+  }
+  return(TRUE)
 }
 
 check_POSEIDON_yml_elements <- function(x, package_path) {
