@@ -17,25 +17,25 @@ validate_module <- function(input_janno_file_or_packages) {
     if (type[i] == "janno") {
       result[i] <- validate_janno(input_janno_file_or_packages[i])
       if (result[i] == 0) {
-        cli::col_green("Everything seems to be alright with this janno file.")
+        cli::cli_alert_success(cli::col_green("Everything seems to be alright with this janno file."))
         cat("\n")
       } else if (result[i] == 1) {
-        cli::col_red("This is not a valid janno file.")
+        cli::cli_alert_danger(cli::col_red("This is not a valid janno file."))
         cat("\n")
       } else if (result[i] == 2) {
-        cli::col_yellow("This seems to be a valid janno file, but some things are fishy.")
+        cli::cli_alert_warning(cli::col_yellow("This seems to be a valid janno file, but some things are fishy."))
         cat("\n")
       }
     } else if (type[i] == "package") {
       result[i] <- validate_package(input_janno_file_or_packages[i])
       if (result[i] == 0) {
-        cli::col_green("Everything seems to be alright with this package.")
+        cli::cli_alert_success(cli::col_green("Everything seems to be alright with this package."))
         cat("\n")
       } else if (result[i] == 1) {
-        cli::col_red("This is not a valid package.")
+        cli::cli_alert_danger(cli::col_red("This is not a valid package."))
         cat("\n")
       } else if (result[i] == 2) {
-        cli::col_yellow("This seems to be a valid package, but some things are fishy.")
+        cli::cli_alert_warning(cli::col_yellow("This seems to be a valid package, but some things are fishy."))
         cat("\n")
       }
     }
