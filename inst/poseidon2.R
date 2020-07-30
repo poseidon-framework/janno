@@ -35,7 +35,7 @@ if (arguments$log_directory == "./poseidon2_tmp_and_log/current_date_random_stri
 }
 
 # create log directory
-if (!dir.exists(arguments$log_directory)) {
+if (!dir.exists(arguments$log_directory) & !arguments$validate) {
   dir.create(arguments$log_directory, recursive = T)
 }
   
