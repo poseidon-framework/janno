@@ -36,6 +36,8 @@ validate_module(input_janno_file_or_packages)
 
 \item{log_directory}{character. Path to directory for log files and temporary data}
 
+\item{filter_file}{character. Path to filter file}
+
 \item{input_file}{character. Path to input file}
 
 \item{input_janno_file_or_packages}{character. Path to input janno file or poseidon2 package}
