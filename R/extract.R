@@ -23,10 +23,11 @@ extract_module <- function(filter_file, input_package, output_directory, log_dir
   # start message
   extract_start_message(filter_file, input_package, output_directory, log_directory)
   # process extraction
-  output_files_name <- "poseidon2_merged"
+  output_files_name <- "poseidon2_extracted"
+  bed_file_name <- sub(".bed", "", list.files(input_package, "\\.bed"))
   create_new_POSEIDON_yml_file(output_files_name, output_directory)
   filter_and_copy_janno(filter_file, input_package, output_directory, output_files_name)
-  filter_and_copy_plink(filter_file, input_package, output_directory, output_files_name, log_directory)
+  filter_and_copy_plink(bed_file_name, filter_file, input_package, output_directory, output_files_name, log_directory)
 }
 
 extract_start_message <- function(filter_file, input_package, output_directory, log_directory) {
@@ -49,12 +50,12 @@ filter_and_copy_janno <- function(filter_file, input_package, output_directory, 
   # filter
   janno_filtered <- janno[janno[["Individual_ID"]] %in% filter_list[[2]], ]
   # write result
-  new_janno_file <- file.path(output_directory, output_files_name)
+  new_janno_file <- file.path(output_directory, paste0(output_files_name, ".janno"))
   readr::write_tsv(x = janno_filtered, path = new_janno_file)
   cli::cli_alert_success(new_janno_file)
 }
 
-filter_and_copy_plink <- function(filter_file, input_package, output_directory, output_files_name, log_directory) {
+filter_and_copy_plink <- function(bed_file_name, filter_file, input_package, output_directory, output_files_name, log_directory) {
   cat("\n")
   cli::cli_alert_info("You can trigger the plink extraction with")
   cat(paste0(
@@ -64,8 +65,9 @@ filter_and_copy_plink <- function(filter_file, input_package, output_directory, 
     '--wrap=',
     '"',
     'plink',
-    ' --file ', input_package,
+    ' --bfile ', file.path(input_package, bed_file_name),
     ' --keep ', filter_file,
+    ' --make-bed ',
     ' --out ', file.path(output_directory, output_files_name),
     ' && mv ', paste0(file.path(output_directory, output_files_name), '.log'), ' ', file.path(log_directory, 'plink.log'),
     '"'
