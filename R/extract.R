@@ -22,8 +22,11 @@ extract_module <- function(filter_file, input_package, output_directory, log_dir
   checkmate::assert_directory_exists(output_directory, access = "rw")
   # start message
   extract_start_message(filter_file, input_package, output_directory, log_directory)
-  # construct extraction command
-  # extract(...)
+  # process extraction
+  output_files_name <- "poseidon2_merged"
+  create_new_POSEIDON_yml_file(output_files_name, output_directory)
+  filter_and_copy_janno(filter_file, input_package, output_directory)
+  filter_and_copy_plink(filter_file, input_package, output_directory)
 }
 
 extract_start_message <- function(filter_file, input_package, output_directory, log_directory) {
@@ -32,4 +35,12 @@ extract_start_message <- function(filter_file, input_package, output_directory, 
   cli::cli_alert(paste0("Input package:\t", input_package))
   cli::cli_alert(paste0("Output directory:\t", output_directory))
   cli::cli_alert(paste0("Log file directory:\t", log_directory))
+}
+
+filter_and_copy_janno <- function(filter_file, input_package, output_directory) {
+  
+}
+
+filter_and_copy_plink <- function(filter_file, input_package, output_directory) {
+  
 }
