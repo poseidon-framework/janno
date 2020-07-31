@@ -13,6 +13,7 @@ file structure as documented here: /projects1/poseidon/poseidon2.package.manager
 
 Usage:
   poseidon2 convert <output_format> <input_package> <output_directory> [--log_directory=DIR]
+  poseidon2 extract <filter_file> <input_package> <output_directory> [--log_directory=DIR]
   poseidon2 merge <input_file> <output_directory> [--log_directory=DIR]
   poseidon2 validate <input_janno_file_or_packages>...
 
@@ -42,6 +43,13 @@ if (!dir.exists(arguments$log_directory) & !arguments$validate) {
 if (arguments$convert) {
   poseidon2::convert_module(
     output_format = arguments$output_format,
+    input_package = arguments$input_package,
+    output_directory = arguments$output_directory,
+    log_directory = arguments$log_directory
+  )
+} else if (arguments$extract) {
+  poseidon2::extract_module(
+    filter_file = arguments$filter_file,
     input_package = arguments$input_package,
     output_directory = arguments$output_directory,
     log_directory = arguments$log_directory

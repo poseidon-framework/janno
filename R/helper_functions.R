@@ -12,3 +12,29 @@ random_alphanumeric_string <- function(n = 1, l = 7) {
     ) 
   })
 }
+
+create_new_POSEIDON_yml_file <- function(output_files_name, output_directory) {
+  cli::cli_alert_info("Create new POSEIDON.yml file...")
+  new_poseidon_yml <- file.path(output_directory, "POSEIDON.yml")
+  writeLines(
+    c(
+      "poseidonVersion:",
+      "title:",
+      "description:",
+      "contributor:",
+      "  - name:",
+      "    email:",
+      paste0("lastModified: ", Sys.Date()),
+      "bibFile: LITERATURE.bib",
+      "genotypeData:",
+      "  format: PLINK",
+      paste0("  genoFile: ", output_files_name, ".bed"),
+      paste0("  snpFile: ", output_files_name, ".bim"),
+      paste0("  indFile: ", output_files_name, ".fam"),
+      paste0("jannoFile: ", output_files_name, ".janno")
+    ),
+    con = new_poseidon_yml
+  )
+  cli::cli_alert_success(new_poseidon_yml)
+  cli::cli_alert_warning("Don't forget to edit it!")
+}

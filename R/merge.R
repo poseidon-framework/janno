@@ -26,7 +26,7 @@ merge_module <- function(input_file, output_directory, log_directory = tempdir()
   merge_print_packages(list_of_packages)
   # process merge
   output_files_name <- "poseidon2_merged"
-  merge_create_new_POSEIDON_yml_file(output_files_name, output_directory)
+  create_new_POSEIDON_yml_file(output_files_name, output_directory)
   merge_concat_janno_files(list_of_packages, output_directory, output_files_name)
   merge_concat_LITERATURE_bib_files(list_of_packages, output_directory)
   merge_create_plink_merge_input_file(list_of_packages, log_directory) -> plink_merge_file
@@ -45,32 +45,6 @@ merge_concat_LITERATURE_bib_files <- function(list_of_packages, output_directory
   bib_files_read <- lapply(list_of_bib_files, function(x) {readLines(x)} )
   writeLines(unlist(bib_files_read), con = new_bib_file)
   cli::cli_alert_success(new_bib_file)
-}
-
-merge_create_new_POSEIDON_yml_file <- function(output_files_name, output_directory) {
-  cli::cli_alert_info("Create new POSEIDON.yml file...")
-  new_poseidon_yml <- file.path(output_directory, "POSEIDON.yml")
-  writeLines(
-    c(
-      "poseidonVersion:",
-      "title:",
-      "description:",
-      "contributor:",
-      "  - name:",
-      "    email:",
-      paste0("lastModified: ", Sys.Date()),
-      "bibFile: LITERATURE.bib",
-      "genotypeData:",
-      "  format: PLINK",
-      paste0("  genoFile: ", output_files_name, ".bed"),
-      paste0("  snpFile: ", output_files_name, ".bim"),
-      paste0("  indFile: ", output_files_name, ".fam"),
-      paste0("jannoFile: ", output_files_name, ".janno")
-    ),
-    con = new_poseidon_yml
-  )
-  cli::cli_alert_success(new_poseidon_yml)
-  cli::cli_alert_warning("Don't forget to edit it!")
 }
 
 merge_plink_merge <- function(plink_merge_file, plink_order_file, output_directory, output_files_name, log_directory) {
