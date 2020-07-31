@@ -2,7 +2,7 @@
 #' @export
 extract_module <- function(filter_file, input_package, output_directory, log_directory = tempdir()) {
   # input check and prep
-  checkmate::assert_file_exists(input_file, access = "r")
+  checkmate::assert_file_exists(filter_file, access = "r")
   checkmate::assert_directory_exists(input_package, access = "r")
   checkmate::assert_directory_exists(log_directory, access = "rw")
   # validate input package
@@ -28,7 +28,7 @@ extract_module <- function(filter_file, input_package, output_directory, log_dir
 
 extract_start_message <- function(filter_file, input_package, output_directory, log_directory) {
   cli::cli_h1("extract => Extracts a subset of individuals from a poseidon package")
-  cli::cli_alert(paste0("Filter file:\t", filter_file))
+  cli::cli_alert(paste0("Filter file:\t\t", filter_file))
   cli::cli_alert(paste0("Input package:\t", input_package))
   cli::cli_alert(paste0("Output directory:\t", output_directory))
   cli::cli_alert(paste0("Log file directory:\t", log_directory))
