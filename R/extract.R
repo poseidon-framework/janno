@@ -38,7 +38,20 @@ extract_start_message <- function(filter_file, input_package, output_directory, 
 }
 
 filter_and_copy_janno <- function(filter_file, input_package, output_directory) {
-  
+  cli::cli_alert_info("Subsetting janno file...")
+  # collect data
+  janno_file <- list.files(input_package, "\\.janno", full.names = T)
+  janno <- read_janno(janno_file, validate = F, to_janno = F)
+  filter_list <- readr::read_delim(filter_file, " ", col_names = FALSE, col_types = readr::cols(
+    readr::col_character(),
+    readr::col_character()
+  ))
+  # filter
+  janno_filtered <- janno[janno[["Individual_ID"]] %in% filter_list[[2]], ]
+  # write result
+  new_janno_file <- file.path(output_directory, basename(janno_file))
+  readr::write_tsv(x = janno_filtered, path = new_janno_file)
+  cli::cli_alert_success(new_janno_file)
 }
 
 filter_and_copy_plink <- function(filter_file, input_package, output_directory) {
