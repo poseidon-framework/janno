@@ -25,8 +25,8 @@ extract_module <- function(filter_file, input_package, output_directory, log_dir
   # process extraction
   output_files_name <- "poseidon2_merged"
   create_new_POSEIDON_yml_file(output_files_name, output_directory)
-  filter_and_copy_janno(filter_file, input_package, output_directory)
-  filter_and_copy_plink(filter_file, input_package, output_directory)
+  filter_and_copy_janno(filter_file, input_package, output_directory, output_files_name)
+  filter_and_copy_plink(filter_file, input_package, output_directory, output_files_name, log_directory)
 }
 
 extract_start_message <- function(filter_file, input_package, output_directory, log_directory) {
@@ -37,7 +37,7 @@ extract_start_message <- function(filter_file, input_package, output_directory, 
   cli::cli_alert(paste0("Log file directory:\t", log_directory))
 }
 
-filter_and_copy_janno <- function(filter_file, input_package, output_directory) {
+filter_and_copy_janno <- function(filter_file, input_package, output_directory, output_files_name) {
   cli::cli_alert_info("Subsetting janno file...")
   # collect data
   janno_file <- list.files(input_package, "\\.janno", full.names = T)
@@ -49,11 +49,29 @@ filter_and_copy_janno <- function(filter_file, input_package, output_directory) 
   # filter
   janno_filtered <- janno[janno[["Individual_ID"]] %in% filter_list[[2]], ]
   # write result
-  new_janno_file <- file.path(output_directory, basename(janno_file))
+  new_janno_file <- file.path(output_directory, output_files_name)
   readr::write_tsv(x = janno_filtered, path = new_janno_file)
   cli::cli_alert_success(new_janno_file)
 }
 
-filter_and_copy_plink <- function(filter_file, input_package, output_directory) {
-  
+filter_and_copy_plink <- function(filter_file, input_package, output_directory, output_files_name, log_directory) {
+  cat("\n")
+  cli::cli_alert_info("You can trigger the plink extraction with")
+  cat(paste0(
+    'sbatch -p short -c 1 --mem=5000 -J poseidon2_extract ',
+    '-o ', file.path(log_directory, 'poseidon2_%j.out '),
+    '-e ', file.path(log_directory, 'poseidon2_%j.err '),
+    '--wrap=',
+    '"',
+    'plink',
+    ' --file ', input_package,
+    ' --keep ', filter_file,
+    ' --out ', file.path(output_directory, output_files_name),
+    ' && mv ', paste0(file.path(output_directory, output_files_name), '.log'), ' ', file.path(log_directory, 'plink.log'),
+    '"'
+  ))
+  cat("\n")
 }
+
+
+
