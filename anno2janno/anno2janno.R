@@ -309,5 +309,6 @@ janno$mtContam_stderr <- NA # does not exist in anno files
 janno$Primary_Contact <- anno %c% "representative_contact" 
 janno$Publication_Status <- anno %c% "publication"
 janno$Note <- anno %c% "assessment_xcontam_listed_if_z_2_standard_errors_from_zero_0_02_0_05_questionable_0_05_questionable_critical_or_fail_mtcontam_97_5th_percentile_estimates_listed_if_coverage_2_0_8_is_questionable_critical_0_8_0_95_is_questionable_and_0_95_0_98_is_recorded_but_pass_gets_overriden_by_angsd"
+janno$Note <- trimws(paste(janno$Note,anno %publication_info_to_note% "publication"))
 janno$Keywords <- NA # does not exist in anno files
 
