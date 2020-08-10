@@ -12,7 +12,7 @@ anno <- data.table::fread("https://reichdata.hms.harvard.edu/pub/datasets/amh_re
 
 # clean source tissue to a well-structured format
 `%clean_source_tissue%` <- function(anno,variable) {
-  if (variable %in% colnames(anno)) {mgsub::mgsub(tolower(anno[[variable]]),c("\\s|\\)","\\(","&|and|\\+|,|;","teeth"),c("","_","; ","tooth"))}
+  if (variable %in% colnames(anno)) {mgsub::mgsub(tolower(anno[[variable]]),c("\\s|\\)","\\(","&|and|\\+|,|;","teeth"),c("","_",";","tooth"))}
 }
 
 # copy and round to 5 decimals
@@ -23,7 +23,7 @@ anno <- data.table::fread("https://reichdata.hms.harvard.edu/pub/datasets/amh_re
 
 # clean data type
 `%clean_data_type%` <- function(anno, variable) {
-  if (variable %in% colnames(anno)) {ifelse(grepl("^shotgun",anno[[variable]],ignore.case=TRUE),"shotgun",ifelse(grepl("1240K",anno[[variable]]),"1240K","Other capture"))} else { NA }
+  if (variable %in% colnames(anno)) {ifelse(grepl("^shotgun",anno[[variable]],ignore.case=TRUE),"Shotgun",ifelse(grepl("1240K",anno[[variable]]),"1240K",ifelse(grepl("Reference.Genome",anno[[variable]],ignore.case=TRUE),"ReferenceGenome","OtherCapture")))} else { NA }
 }
 
 # ploidy
