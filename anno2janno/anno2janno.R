@@ -1,3 +1,4 @@
+library(magrittr)
 
 #### read anno file ####
 
@@ -88,6 +89,13 @@ anno <- data.table::fread("https://reichdata.hms.harvard.edu/pub/datasets/amh_re
 # age string parsing
 split_age_string <- function(x) {
   
+  # modify input (fixing small details)
+  x <- gsub("\\+", "±", x) # + instead of ±
+  x <- gsub("(.*)(?=\\()", "\\1 ", x, perl = T) # missing space before parentheses
+  x <- gsub("AA-R-", "AAR- ", x) # wrong lab code (http://www.radiocarbon.org/Info/labcodes.html)
+  
+  
+  # construct result table
   res <- tibble::tibble(
     x = x,
     Date_C14_Labnr = rep(NA, length(x)),
@@ -101,14 +109,16 @@ split_age_string <- function(x) {
   # determine type of date info
   none_ids <- which(is.na(x))
   present_ids <- grep("present", x)
-  c14_age_ids <- grep("cal", x)
+  c14_age_ids <- grep("±", x)
   res$Date_Type[c14_age_ids] <- "C14"
   res$Date_Type[-c14_age_ids] <- "contextual"
   res$Date_Type[present_ids] <- "modern"
   res$Date_Type[none_ids] <- "none"
   
   # parse uncalibrated c14 age info
-  res$Date_C14_Labnr[c14_age_ids] <- stringr::str_extract_all(x[c14_age_ids], "[A-Z,a-z]{2,7}-[0-9]*") %>% sapply(., function(y) { paste(y, collapse = ";") } )
+  res$Date_C14_Labnr[c14_age_ids] <- stringr::str_extract_all(
+    x[c14_age_ids], "[A-Z,a-z]{2,7}-[0-9]*"
+  ) %>% sapply(., function(y) { paste(y, collapse = ";") } )
   uncal_dates <- stringr::str_extract_all(x[c14_age_ids], "[0-9]{1,5}\u00B1[0-9]{1,4}")
   res$Date_C14_Uncal_BP[c14_age_ids] <- sapply(uncal_dates, function(z) { 
     sapply(strsplit(z, "\u00B1"), function(a) { a[1] } ) %>% 
