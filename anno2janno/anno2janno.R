@@ -12,7 +12,7 @@ anno <- data.table::fread("https://reichdata.hms.harvard.edu/pub/datasets/amh_re
 
 # clean source tissue to a well-structured format
 `%clean_source_tissue%` <- function(anno,variable) {
-  if (variable %in% colnames(anno)) {mgsub::mgsub(tolower(anno[[variable]]),c("\\s|\\)","\\(","&|and|\\+|,|;","teeth"),c("","_",";","tooth"))}
+  if (variable %in% colnames(anno)) {mgsub::mgsub(tolower(anno[[variable]]),c("\\s|\\)","\\(","&|and|\\+|,|;","teeth"),c("","_",";","tooth"))} else { NA }
 }
 
 # copy and round to 5 decimals
@@ -67,12 +67,6 @@ anno <- data.table::fread("https://reichdata.hms.harvard.edu/pub/datasets/amh_re
   if (variable %in% colnames(anno)) { ifelse(grepl("^ss.", anno[[variable]]),"ss","ds") } else { NA } # if not ss, put ds
 }
 
-# extract publication info
-`%extract_publication_name%` <- function(anno, variable) {
-  if (variable %in% colnames(anno)) { 
-    sapply(stringr::str_split(anno[[variable]], " "), function(x) { x[1] }) 
-  } else { NA }
-}
 
 # clean publication info
 `%clean_publication%` <- function(anno,variable) {
@@ -178,6 +172,10 @@ split_age_string <- function(x) {
   res[res == ""] <- NA
   
   return(res)
+}
+
+`%clean_Xcontam%` <- function(anno,variable) {
+  if (variable %in% colnames(anno)) {as.numeric(gsub("n/a \\(<200 SNPs\\)|^.*-",NA,anno[[variable]]))} else { NA }
 }
 
 # Explanation of what's in the .anno file:
@@ -303,7 +301,7 @@ janno$Endogenous <- NA # does not exist in anno files
 janno$UDG <- anno %clean_UDG% "library_type_minus_no_damage_correction_half_damage_retained_at_last_position_plus_damage_fully_corrected_ss_single_stranded_library_preparation"
 janno$Library_Built <- anno %library_type_from_UDG_id% "library_type_minus_no_damage_correction_half_damage_retained_at_last_position_plus_damage_fully_corrected_ss_single_stranded_library_preparation"
 janno$Damage <- anno %c% "damage_rate_in_first_nucleotide_on_sequences_overlapping_1240k_targets_merged_data"
-janno$Xcontam <- anno %c% "xcontam_angsd_mom_point_estimate_only_if_male_and_200"
+janno$Xcontam <- anno %clean_Xcontam% "xcontam_angsd_mom_point_estimate_only_if_male_and_200"
 janno$Xcontam_stderr <- derive_standard_error(
   anno, 
   "xcontam_angsd_mom_point_estimate_only_if_male_and_200", 
