@@ -93,7 +93,8 @@ split_age_string <- function(x) {
   x <- gsub("\\+", "±", x) # + instead of ±
   x <- gsub("(.*)(?=\\()", "\\1 ", x, perl = T) # missing space before parentheses
   x <- gsub("AA-R-", "AAR- ", x) # wrong lab code (http://www.radiocarbon.org/Info/labcodes.html)
-  
+  x <- gsub("Wk - ", "Wk-", x) # wrong lab nr
+  x <- gsub("\u{00a0}", " ", x) # wrong space
   
   # construct result table
   res <- tibble::tibble(
@@ -130,7 +131,7 @@ split_age_string <- function(x) {
   } )
   
   # parse simplified start and stop age
-  simple_age_split <- x %>% strsplit("-|\\ ") %>% lapply(function(y) {y[y != ""]})
+  simple_age_split <- x %>% strsplit("-|\\s+") %>% lapply(function(y) {y[y != ""]})
   stop <- start <- rep(NA, length(simple_age_split))
   for (i in 1:length(simple_age_split)) {
     # no age info
