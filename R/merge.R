@@ -85,7 +85,7 @@ merge_concat_janno_files <- function(list_of_packages, output_directory, output_
   cli::cli_alert_info("Merge janno files...")
   list_of_janno_files <- list.files(list_of_packages, pattern = ".janno", full.names = T)
   list_of_janno_tables <- lapply(list_of_janno_files, function(janno) {
-    suppressMessages(readr::read_tsv(janno))
+    suppressMessages(readr::read_tsv(janno, col_types = readr::cols(.default = "c")))
   })
   new_janno <- do.call(rbind, list_of_janno_tables)
   new_janno_file <- paste0(file.path(output_directory, output_files_name), ".janno")
