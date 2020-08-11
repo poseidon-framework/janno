@@ -43,9 +43,9 @@ process_age.janno <- function(
   
   if ("Date_BC_AD_Prob" %in% choices) {
     x$Date_BC_AD_Prob <- age_probability_master(
-      x[["Date_Type"]],
-      x[["Date_C14_Uncal_BP"]], x[["Date_C14_Uncal_BP_Err"]],
-      x[["Date_BC_AD_Start"]], x[["Date_BC_AD_Stop"]]
+      date_type = x[["Date_Type"]],
+      c14bp = x[["Date_C14_Uncal_BP"]], c14std = x[["Date_C14_Uncal_BP_Err"]],
+      startbcad = x[["Date_BC_AD_Start"]], stopbcad = x[["Date_BC_AD_Stop"]]
     )
   }
   
@@ -89,11 +89,24 @@ age_probability_master <- function(date_type, c14bp, c14std, startbcad, stopbcad
   
   res_list <- lapply(seq_along(date_type), function(i) {NA})
   
-  is_c14 <- !is.na(date_type) & date_type == "C14"
-  is_contextual <- !is.na(date_type) & date_type == "contextual"
+  is_c14 <- !is.na(date_type) & 
+    date_type == "C14" & 
+    sapply(c14bp, function(x) { !any(is.na(x)) }) &
+    sapply(c14std, function(x) { !any(is.na(x)) })
   
-  res_list[is_c14] <- sumcal_list_of_multiple_dates(c14bp[is_c14], c14std[is_c14])
-  res_list[is_contextual] <- contextual_date_uniform(startbcad[is_contextual], stopbcad[is_contextual])
+  is_contextual <- !is.na(date_type) & date_type == "contextual" & 
+    sapply(startbcad, function(x) { !any(is.na(x)) }) &
+    sapply(stopbcad, function(x) { !any(is.na(x)) })
+  
+  res_list[is_c14] <- sumcal_list_of_multiple_dates(
+    age_list = c14bp[is_c14], 
+    err_list = c14std[is_c14]
+  )
+  
+  res_list[is_contextual] <- contextual_date_uniform(
+    startbcad = startbcad[is_contextual], 
+    stopbcad = stopbcad[is_contextual]
+  )
   
   return(res_list)
 
