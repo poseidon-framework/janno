@@ -67,12 +67,6 @@ anno <- data.table::fread("https://reichdata.hms.harvard.edu/pub/datasets/amh_re
   if (variable %in% colnames(anno)) { ifelse(grepl("^ss.", anno[[variable]]),"ss","ds") } else { NA } # if not ss, put ds
 }
 
-# extract publication info
-`%extract_publication_name%` <- function(anno, variable) {
-  if (variable %in% colnames(anno)) { 
-    sapply(stringr::str_split(anno[[variable]], " "), function(x) { x[1] }) 
-  } else { NA }
-}
 
 # clean publication info
 `%clean_publication%` <- function(anno,variable) {
@@ -181,7 +175,7 @@ split_age_string <- function(x) {
 }
 
 `%clean_Xcontam%` <- function(anno,variable) {
-  if (variable %in% colnames(anno)) {gsub("n/a \\(<200 SNPs\\)|^-",NA,anno[[variable]])} else { NA }
+  if (variable %in% colnames(anno)) {as.numeric(gsub("n/a \\(<200 SNPs\\)|^.*-",NA,anno[[variable]]))} else { NA }
 }
 
 # Explanation of what's in the .anno file:
