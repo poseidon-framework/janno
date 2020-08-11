@@ -12,7 +12,7 @@ anno <- data.table::fread("https://reichdata.hms.harvard.edu/pub/datasets/amh_re
 
 # clean source tissue to a well-structured format
 `%clean_source_tissue%` <- function(anno,variable) {
-  if (variable %in% colnames(anno)) {mgsub::mgsub(tolower(anno[[variable]]),c("\\s|\\)","\\(","&|and|\\+|,|;","teeth"),c("","_",";","tooth"))}
+  if (variable %in% colnames(anno)) {mgsub::mgsub(tolower(anno[[variable]]),c("\\s|\\)","\\(","&|and|\\+|,|;","teeth"),c("","_",";","tooth"))} else { NA }
 }
 
 # copy and round to 5 decimals
@@ -180,6 +180,10 @@ split_age_string <- function(x) {
   return(res)
 }
 
+`%clean_Xcontam%` <- function(anno,variable) {
+  if (variable %in% colnames(anno)) {gsub("n/a \\(<200 SNPs\\)|^-",NA,anno[[variable]])} else { NA }
+}
+
 # Explanation of what's in the .anno file:
 # Yes, we compute ANGSD confidence intervals as follows. I believe ANGSD outputs a mean=M and a standard error=S.
 # The 95% confidence interval is then computed as: [max(0,M-1.65*S),min(1,M+1.65S)]
@@ -303,7 +307,7 @@ janno$Endogenous <- NA # does not exist in anno files
 janno$UDG <- anno %clean_UDG% "library_type_minus_no_damage_correction_half_damage_retained_at_last_position_plus_damage_fully_corrected_ss_single_stranded_library_preparation"
 janno$Library_Built <- anno %library_type_from_UDG_id% "library_type_minus_no_damage_correction_half_damage_retained_at_last_position_plus_damage_fully_corrected_ss_single_stranded_library_preparation"
 janno$Damage <- anno %c% "damage_rate_in_first_nucleotide_on_sequences_overlapping_1240k_targets_merged_data"
-janno$Xcontam <- anno %c% "xcontam_angsd_mom_point_estimate_only_if_male_and_200"
+janno$Xcontam <- anno %clean_Xcontam% "xcontam_angsd_mom_point_estimate_only_if_male_and_200"
 janno$Xcontam_stderr <- derive_standard_error(
   anno, 
   "xcontam_angsd_mom_point_estimate_only_if_male_and_200", 
