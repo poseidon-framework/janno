@@ -118,7 +118,17 @@ split_age_string <- function(x) {
   
   # parse uncalibrated c14 age info
   res$Date_C14_Labnr[c14_age_ids] <- stringr::str_extract_all(
-    x[c14_age_ids], "[A-Z,a-z]{2,7}-[0-9]*"
+    x[c14_age_ids], paste(
+      c(
+        "AAR-\\s[0-9]*",
+        "OxA-X-[0-9]*-[0-9]*",
+        "CIRCE-DSH-[0-9]*",
+        "ISGS-A[0-9]*",
+        "CEDAD-LTL[0-9]*A",
+        "[A-Za-z]{2,7}-[0-9]*"
+      ),
+      collapse = "|"
+    )
   ) %>% sapply(., function(y) { paste(y, collapse = ";") } )
   uncal_dates <- stringr::str_extract_all(x[c14_age_ids], "[0-9]{1,5}\u00B1[0-9]{1,4}")
   res$Date_C14_Uncal_BP[c14_age_ids] <- sapply(uncal_dates, function(z) { 
