@@ -130,8 +130,12 @@ sumcal_list_of_multiple_dates <- function(age_list, err_list) {
   bol <- 1950 # c14 reference zero
   #threshold <- (1 - 0.9545) / 2 # 2sigma range probability threshold
   
+  pb <- progress::progress_bar$new(total = length(age_list))
+  
   # run for each date collection
   Map(function(cur_xs, cur_errs) {
+    
+    pb$tick()
     
     # if (all(is.na(cur_xs)) | all(is.na(cur_errs))) {
     #   # return(

@@ -27,6 +27,7 @@ Imports:
   tidyr,
   hash,
   magrittr (>= 1.5),
+  progress,
   purrr,
   rlang (>= 0.4.6),
   janitor,
