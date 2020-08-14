@@ -50,7 +50,9 @@ validate_package <- function(input_package) {
   }
   # check .janno file
   janno_error_code <- validate_janno(list.files(input_package, pattern = "\\.janno", full.names = T))
-  if (janno_error_code == 2) {
+  if (janno_error_code == 1) {
+    return(1)
+  } else if (janno_error_code == 2) {
     everything_fine <- FALSE
   }
   # check .bed, .bim and .fam files
