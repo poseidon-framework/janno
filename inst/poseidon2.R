@@ -9,7 +9,7 @@
 
 Utility functions for the poseidon2 data format. 
 All input directories have to adhere to the poseidon2 package 
-file structure as documented here: /projects1/poseidon/poseidon2.package.manager/README.md
+file structure as documented here: https://github.com/poseidon-framework/poseidon2-schema
 
 Usage:
   poseidon2 convert <output_format> <input_package> <output_directory> [--log_directory=DIR]
@@ -24,7 +24,7 @@ Options:
 
 ' -> doc
 
-arguments <- docopt::docopt(doc, version = 'Poseidon 2.0.0\n')
+arguments <- docopt::docopt(doc, version = 'Poseidon 2.0.0.9000\n')
 #print(arguments)
 
 # implements log_directory default
