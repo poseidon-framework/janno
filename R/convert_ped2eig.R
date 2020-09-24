@@ -16,11 +16,15 @@ convert_ped2eig <- function(input_package, output_directory, log_directory) {
 }
 
 convert_start_ped2eig_run <- function(par_file, log_directory) {
-  system(paste0(
+  cli::cli_alert_info("Run convertf...")
+  command <- paste0(
     'convertf ',
     '-p ', par_file,
     ' > ', file.path(log_directory, "convert.log")
-  ))
+  )
+  cat(command)
+  system(command)
+  cat("\n")
 }
 
 convert_create_par_file <- function(bed_file, bim_file, pedind_file, output_directory, return_file_name, log_directory) {

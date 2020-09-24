@@ -56,7 +56,8 @@ filter_and_copy_janno <- function(filter_file, input_package, output_directory, 
 }
 
 filter_and_copy_plink <- function(bed_file_name, filter_file, input_package, output_directory, output_files_name, log_directory) {
-  system(paste0(
+  cli::cli_alert_info("Run plink...")
+  command <- paste0(
     'plink',
     ' --bfile ', file.path(input_package, bed_file_name),
     ' --keep ', filter_file,
@@ -65,7 +66,10 @@ filter_and_copy_plink <- function(bed_file_name, filter_file, input_package, out
     ' && mv ', paste0(file.path(output_directory, output_files_name), '.log'), 
     ' ', 
     file.path(log_directory, 'plink.log')
-  ))
+  )
+  cat(command)
+  system(command)
+  cat("\n")
 }
 
 

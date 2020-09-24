@@ -48,7 +48,8 @@ merge_concat_LITERATURE_bib_files <- function(list_of_packages, output_directory
 }
 
 merge_plink_merge <- function(plink_merge_file, plink_order_file, output_directory, output_files_name, log_directory) {
-  system(paste0(
+  cli::cli_alert_info("Run plink...")
+  command <- paste0(
     'plink ',
     '--merge-list ', plink_merge_file,
     ' --make-bed ', 
@@ -58,7 +59,11 @@ merge_plink_merge <- function(plink_merge_file, plink_order_file, output_directo
     ' && mv ', paste0(file.path(output_directory, output_files_name), '.log'), 
     ' ', 
     file.path(log_directory, 'plink.log')
-  ))
+  )
+  cat(command)
+  system(command)
+  cat("\n")
+  
 }
 
 merge_create_order_file_from_fam_files <- function(list_of_packages, log_directory) {
