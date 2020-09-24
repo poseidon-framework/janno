@@ -68,6 +68,7 @@ filter_and_copy_plink <- function(bed_file_name, filter_file, input_package, out
     file.path(log_directory, 'plink.log')
   )
   cat(command)
+  cat("\n\n")
   system(command)
   cat("\n")
 }

@@ -61,9 +61,9 @@ merge_plink_merge <- function(plink_merge_file, plink_order_file, output_directo
     file.path(log_directory, 'plink.log')
   )
   cat(command)
+  cat("\n\n")
   system(command)
   cat("\n")
-  
 }
 
 merge_create_order_file_from_fam_files <- function(list_of_packages, log_directory) {

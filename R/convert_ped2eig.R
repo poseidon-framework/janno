@@ -23,6 +23,7 @@ convert_start_ped2eig_run <- function(par_file, log_directory) {
     ' > ', file.path(log_directory, "convert.log")
   )
   cat(command)
+  cat("\n\n")
   system(command)
   cat("\n")
 }
