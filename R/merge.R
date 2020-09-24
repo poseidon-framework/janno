@@ -50,12 +50,12 @@ merge_concat_LITERATURE_bib_files <- function(list_of_packages, output_directory
 merge_plink_merge <- function(plink_merge_file, plink_order_file, output_directory, output_files_name, log_directory) {
   cli::cli_alert_info("Run plink...")
   command <- paste0(
-    'plink ',
-    '--merge-list ', plink_merge_file,
+    'plink1.9',
+    ' --merge-list ', plink_merge_file,
     ' --make-bed ', 
-    '--indiv-sort f ', plink_order_file,
+    ' --indiv-sort f ', plink_order_file,
     ' --keep-allele-order ',
-    '--out ', file.path(output_directory, output_files_name),
+    ' --out ', file.path(output_directory, output_files_name),
     ' && mv ', paste0(file.path(output_directory, output_files_name), '.log'), 
     ' ', 
     file.path(log_directory, 'plink.log')

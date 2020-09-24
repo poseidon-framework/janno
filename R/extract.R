@@ -58,7 +58,7 @@ filter_and_copy_janno <- function(filter_file, input_package, output_directory, 
 filter_and_copy_plink <- function(bed_file_name, filter_file, input_package, output_directory, output_files_name, log_directory) {
   cli::cli_alert_info("Run plink...")
   command <- paste0(
-    'plink',
+    'plink1.9',
     ' --bfile ', file.path(input_package, bed_file_name),
     ' --keep ', filter_file,
     ' --make-bed ',
