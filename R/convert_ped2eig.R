@@ -16,20 +16,11 @@ convert_ped2eig <- function(input_package, output_directory, log_directory) {
 }
 
 convert_start_ped2eig_run <- function(par_file, log_directory) {
-  cat("\n")
-  cli::cli_alert_info("You can trigger the actual conversion now with")
-  cat(paste0(
-    'sbatch -p short -c 1 --mem=2000 -J poseidon_convert ',
-    '-o ', file.path(log_directory, 'poseidon2_%j.out '),
-    '-e ', file.path(log_directory, 'poseidon2_%j.err '),
-    '--wrap=',
-    '"',
+  system(paste0(
     'convertf ',
     '-p ', par_file,
-    ' > ', file.path(log_directory, "convert.log"),
-    '"'
+    ' > ', file.path(log_directory, "convert.log")
   ))
-  cat("\n")
 }
 
 convert_create_par_file <- function(bed_file, bim_file, pedind_file, output_directory, return_file_name, log_directory) {

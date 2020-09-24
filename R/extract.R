@@ -56,23 +56,16 @@ filter_and_copy_janno <- function(filter_file, input_package, output_directory, 
 }
 
 filter_and_copy_plink <- function(bed_file_name, filter_file, input_package, output_directory, output_files_name, log_directory) {
-  cat("\n")
-  cli::cli_alert_info("You can trigger the plink extraction with")
-  cat(paste0(
-    'sbatch -p short -c 1 --mem=5000 -J poseidon2_extract ',
-    '-o ', file.path(log_directory, 'poseidon2_%j.out '),
-    '-e ', file.path(log_directory, 'poseidon2_%j.err '),
-    '--wrap=',
-    '"',
+  system(paste0(
     'plink',
     ' --bfile ', file.path(input_package, bed_file_name),
     ' --keep ', filter_file,
     ' --make-bed ',
     ' --out ', file.path(output_directory, output_files_name),
-    ' && mv ', paste0(file.path(output_directory, output_files_name), '.log'), ' ', file.path(log_directory, 'plink.log'),
-    '"'
+    ' && mv ', paste0(file.path(output_directory, output_files_name), '.log'), 
+    ' ', 
+    file.path(log_directory, 'plink.log')
   ))
-  cat("\n")
 }
 
 
