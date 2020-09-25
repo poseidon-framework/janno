@@ -24,7 +24,7 @@ Options:
 
 ' -> doc
 
-arguments <- docopt::docopt(doc, version = 'Poseidon 2.0.0.9000\n')
+arguments <- docopt::docopt(doc, version = paste(packageVersion("poseidon2"), "\n"))
 #print(arguments)
 
 # implements log_directory default
