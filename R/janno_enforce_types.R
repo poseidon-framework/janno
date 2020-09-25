@@ -28,11 +28,11 @@ enforce_types.janno <- function(x, suppress_na_introduced_warnings = TRUE) {
   )
   
   # special treatment of list columns, because purrr::map2_df can't deal with them :-(
-  string_list_cols <- hash::keys(janno_column_name_column_type)[
-    grep("String list", hash::values(janno_column_name_column_type))
+  string_list_cols <- hash::keys(janno_column_name_data_type)[
+    grep("String list", hash::values(janno_column_name_data_type))
     ]
-  integer_list_cols <- hash::keys(janno_column_name_column_type)[
-    grep("Integer list", hash::values(janno_column_name_column_type))
+  integer_list_cols <- hash::keys(janno_column_name_data_type)[
+    grep("Integer list", hash::values(janno_column_name_data_type))
     ]
   for (i in string_list_cols) {
     # TODO: should check if type is already character list column
@@ -53,7 +53,7 @@ enforce_types.janno <- function(x, suppress_na_introduced_warnings = TRUE) {
 apply_col_types <- function(col_data, col_name, suppress_na_introduced_warnings) {
   res <- col_data
   # lookup type for variable in hash
-  col_type <- hash::values(janno_column_name_column_type, col_name)
+  col_type <- hash::values(janno_column_name_data_type, col_name)
   # get trans function
   col_trans_function <- string_to_as(col_type)
   # transform variable, if trans function is available

@@ -21,7 +21,7 @@ validate_janno <- function(input_janno) {
   # loop through each column
   for (cur_col in colnames(character_janno)) {
     # get column background information
-    expected_type <- hash::values(janno_column_name_column_type, cur_col)
+    expected_type <- hash::values(janno_column_name_data_type, cur_col)
     check_function <- type_string_to_check_function(expected_type)
     mandatory <- cur_col %in% janno_mandatory_columns
     no_dupli <- cur_col %in% janno_unique_columns
