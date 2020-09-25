@@ -1,7 +1,10 @@
 Bootstrap: docker
-From: rocker/tidyverse:4.0.1
+From: rocker/r-ver:latest
 
 %post
+  export DEBIAN_FRONTEND=noninteractive
+  apt-get update && apt-get install -y plink1.9 eigensoft
+  R --slave -e 'install.packages("remotes")'
   R --slave -e 'remotes::install_github("poseidon-framework/poseidon2", dependencies = TRUE)'
   R --slave -e 'poseidon2::quick_install(".")'
   

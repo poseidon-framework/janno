@@ -48,23 +48,21 @@ merge_concat_LITERATURE_bib_files <- function(list_of_packages, output_directory
 }
 
 merge_plink_merge <- function(plink_merge_file, plink_order_file, output_directory, output_files_name, log_directory) {
-  cat("\n")
-  cli::cli_alert_info("You can trigger the merging now with")
-  cat(paste0(
-    'sbatch -p short -c 4 --mem=10000 -J poseidon2_merge ',
-    '-o ', file.path(log_directory, 'poseidon2_%j.out '),
-    '-e ', file.path(log_directory, 'poseidon2_%j.err '),
-    '--wrap=',
-    '"',
-      'plink ',
-      '--merge-list ', plink_merge_file,
-      ' --make-bed ', 
-      '--indiv-sort f ', plink_order_file,
-      ' --keep-allele-order ',
-      '--out ', file.path(output_directory, output_files_name),
-      ' && mv ', paste0(file.path(output_directory, output_files_name), '.log'), ' ', file.path(log_directory, 'plink.log'),
-    '"'
-  ))
+  cli::cli_alert_info("Run plink...")
+  command <- paste0(
+    'plink1.9',
+    ' --merge-list ', plink_merge_file,
+    ' --make-bed ', 
+    ' --indiv-sort f ', plink_order_file,
+    ' --keep-allele-order ',
+    ' --out ', file.path(output_directory, output_files_name),
+    ' && mv ', paste0(file.path(output_directory, output_files_name), '.log'), 
+    ' ', 
+    file.path(log_directory, 'plink.log')
+  )
+  cat(command)
+  cat("\n\n")
+  system(command)
   cat("\n")
 }
 

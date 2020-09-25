@@ -16,19 +16,15 @@ convert_ped2eig <- function(input_package, output_directory, log_directory) {
 }
 
 convert_start_ped2eig_run <- function(par_file, log_directory) {
-  cat("\n")
-  cli::cli_alert_info("You can trigger the actual conversion now with")
-  cat(paste0(
-    'sbatch -p short -c 1 --mem=2000 -J poseidon_convert ',
-    '-o ', file.path(log_directory, 'poseidon2_%j.out '),
-    '-e ', file.path(log_directory, 'poseidon2_%j.err '),
-    '--wrap=',
-    '"',
+  cli::cli_alert_info("Run convertf...")
+  command <- paste0(
     'convertf ',
     '-p ', par_file,
-    ' > ', file.path(log_directory, "convert.log"),
-    '"'
-  ))
+    ' > ', file.path(log_directory, "convert.log")
+  )
+  cat(command)
+  cat("\n\n")
+  system(command)
   cat("\n")
 }
 
