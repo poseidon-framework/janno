@@ -60,6 +60,8 @@ Validate Poseidon v.2 packages or individual .janno files.
 
 - **input_janno_file_or_packages**: One or multiple paths to package directories or .janno files
 
+`validate` always tries to give you comprehensive and specific information about what seems to be wrong with a package or .janno file. Some times though it can not test lower level aspects as long as top level issues are not fixed. That means new errors might pop up after fixing top level problems. If you're preparing a package you should rerun the validator until it does not show any remaining issues. It's also likely that the validator does not catch every possible mistake one could introduce when preparing a package. It's supposed to be helpful, but can never be perfect.
+
 ## R interface 
 
 Above described command line modules can also be called from within R. 
