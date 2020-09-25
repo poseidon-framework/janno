@@ -1,11 +1,11 @@
 Package: poseidon2
 Title: Poseidon v.2 Package Management
-Version: 0.1.10
+Version: 0.1.11
 Authors@R: c(person(given = "Clemens", family = "Schmid", role =
         c("aut", "cre", "cph"), email = "clemens@nevrome.de", comment =
         c(ORCID = "0000-0003-3448-5715")), person(given = "Ayshin",
         family = "Ghalichi", role = "aut"))
-Description: Validation, merging, subsetting and convertion of Poseidon
+Description: Validation, merging, subsetting and conversion of Poseidon
         v.2 packages both in R and on the command line.
 License: MIT + file LICENSE
 Encoding: UTF-8

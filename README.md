@@ -4,7 +4,7 @@
 
 # poseidon2
 
-Validation, merging, subsetting and convertion of Poseidon v.2 packages both in R and on the command line.
+Validation, merging, subsetting and conversion of Poseidon v.2 packages both in R and on the command line.
 
 ## Command line interface
 

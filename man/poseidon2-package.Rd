@@ -6,7 +6,7 @@
 \alias{poseidon2-package}
 \title{poseidon2: Poseidon v.2 Package Management}
 \description{
-Validation, merging, subsetting and convertion of Poseidon
+Validation, merging, subsetting and conversion of Poseidon
         v.2 packages both in R and on the command line.
 }
 \author{
