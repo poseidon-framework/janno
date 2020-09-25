@@ -1,6 +1,6 @@
 Package: poseidon2
 Title: Poseidon v.2 Package Management 
-Version: 0.0.0.9000
+Version: 0.1.0
 Authors@R:
     c(person(given = "Clemens",
              family = "Schmid",
