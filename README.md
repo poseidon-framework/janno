@@ -8,15 +8,65 @@ Validation, merging, subsetting and convertion of Poseidon v.2 packages both in 
 
 ## Command line interface
 
-**The poseidon2 command line utility is already installed on the MPI-SHH-DAG cluster, you do not have to install the software manually.**
+```
+poseidon2 --help
+```
 
+Show a manual page.
 
+```
+poseidon2 --version
+```
+
+Show the poseidon2 package version.
+
+```
+poseidon2 convert <output_format> <input_package> <output_directory> [--log_directory=DIR]
+```
+
+Convert the genetic data in a Poseidon v.2 package to another format.
+
+- **output_format**: Output format of the conversion. Available options: `eigenstrat` (uses convertf)
+- **input_package**: Path to the input package directory
+- **output_directory**: Path to the output directory
+- **log_directory**: Path to the directory for log files and temporary data
+
+```
+poseidon2 extract <filter_file> <input_package> <output_directory> [--log_directory=DIR]
+```
+
+Extract individuals from a Poseidon v.2 package and create a new subset package (uses plink1.9).
+
+- **filter_file**: Text file with the individuals that should be kept. [A space/tab-delimited text file with family IDs in the first column and within-family IDs in the second column](https://www.cog-genomics.org/plink/1.9/filter#indiv)
+- **input_package**: Path to the input package directory
+- **output_directory**: Path to the output directory
+- **log_directory**: Path to the directory for log files and temporary data
+
+```
+poseidon2 merge <input_file> <output_directory> [--log_directory=DIR]
+```
+
+Combine multiple Poseidon v.2 packages and create a new merged package (uses plink1.9).
+
+- **input_file**: Text file with the paths to the packages that should be merged. A text file with each package path in one row. Empty rows and rows starting with `#` are ignored
+- **output_directory**: Path to the output directory
+- **log_directory**: Path to the directory for log files and temporary data
+
+```
+poseidon2 validate <input_janno_file_or_packages>...
+```
+
+Validate Poseidon v.2 packages or individual .janno files.
+
+- **input_janno_file_or_packages**: One or multiple paths to package directories or .janno files
 
 ## R interface 
 
 ...
 
 ## Installation
+
+**For MPI-SHH members: The poseidon2 command line utility is already installed on the MPI-SHH-DAG cluster. You do not have to install the software.**
 
 Install the poseidon2 R package from github with the following command in R. That allows you to use all its functions within R.
 
