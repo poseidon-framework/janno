@@ -62,7 +62,23 @@ Validate Poseidon v.2 packages or individual .janno files.
 
 ## R interface 
 
+Above described command line modules can also be called from within R. 
+
+Beyond that poseidon2 provides a dedicated R S3 class `janno` that inherits from `tibble` and allows to tidily read .janno files into R. This allows to work systematically with the individual-wise context information in a Poseidon v.2 package -- for example with the tools of the tidyverse.
+
+There are also dedicated class methods that can be applied to .janno objects.
+
+```
+poseidon2::process.age()
+```
+
+Process age information stored in .janno files. E.g. apply sum calibration on radiocarbon dates to get proper median ages and to draw samples from the post-calibration probability distribution.
+
+```
 ...
+```
+
+More to be developed...
 
 ## Installation
 
