@@ -6,8 +6,8 @@
 \alias{poseidon2-package}
 \title{poseidon2: Poseidon v.2 Package Management}
 \description{
-Validation, merging, subsetting and convertion of 
-        Poseidon v.2 packages both in R and on the command line.
+Validation, merging, subsetting and convertion of Poseidon
+        v.2 packages both in R and on the command line.
 }
 \author{
 \strong{Maintainer}: Clemens Schmid \email{clemens@nevrome.de} (\href{https://orcid.org/0000-0003-3448-5715}{ORCID}) [copyright holder]
