@@ -43,7 +43,7 @@ validate_janno <- function(input_janno) {
         hash::values(janno_column_name_range_upper, cur_col)
       )
     } else {
-      expected_range <- NA
+      expected_range <- c(-Inf, Inf)
     }
     # column wise checks
     if (no_dupli) {
@@ -53,6 +53,7 @@ validate_janno <- function(input_janno) {
     }
     # cell wise checks: loop through each cell
     for (cur_row in 1:nrow(character_janno)) {
+      #print(paste(cur_col, cur_row))
       cur_cell <- character_janno[[cur_col]][cur_row]
       # general cell wise checks
       if ( !positioned_feedback(cur_cell, is_not_empty, position_in_table_string(cur_col, cur_row)) ) {
