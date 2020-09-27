@@ -39,7 +39,8 @@ apply_col_types <- function(col_data, col_name, suppress_na_introduced_warnings)
   col_trans_function <- string_to_as(expected_type)
   # split to multi if necessary
   multi <- col_name %in% janno_multi_value_columns
-  if (multi) {
+  already_list_column <- is.list(res)
+  if (multi && !already_list_column) {
     res <- strsplit(res, ";")
   }
   # transform variable, if trans function is available
@@ -54,7 +55,7 @@ apply_col_types <- function(col_data, col_name, suppress_na_introduced_warnings)
       res <- lapply(res, function(y) { col_trans_function(y) })
   }
   # unlist if not multi
-  if (!multi) {
+  if (!multi && !already_list_column) {
     res <- unlist(res)
   }
   return(res)
