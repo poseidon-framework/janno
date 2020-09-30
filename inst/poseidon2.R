@@ -15,7 +15,7 @@ Usage:
   poseidon2 convert <output_format> <input_package> <output_directory> [--log_directory=DIR]
   poseidon2 extract <filter_file> <input_package> <output_directory> [--log_directory=DIR]
   poseidon2 merge <input_file> <output_directory> [--log_directory=DIR]
-  poseidon2 quickcalibrate (<uncalibrated_ages_BP> <standard_errors>)...
+  poseidon2 quickcalibrate (<uncalibrated_ages_BP> <standard_deviations>)...
   poseidon2 validate <input_janno_file_or_packages>...
 
 Options:
@@ -62,9 +62,10 @@ if (arguments$convert) {
     log_directory = arguments$log_directory
   )
 } else if (arguments$quickcalibrate) {
-  # poseidon2::quickcalibrate_module(
-  #   ...
-  # )
+  poseidon2::quickcalibrate_module(
+    uncalibrated_ages_BP = arguments$uncalibrated_ages_BP,
+    standard_deviations = arguments$standard_deviations
+  )
 } else if (arguments$validate) {
   poseidon2::validate_module(
     input_janno_file_or_packages = arguments$input_janno_file_or_packages
