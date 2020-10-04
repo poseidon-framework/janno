@@ -32,8 +32,7 @@ quickcalibrate_module <- function(uncalibrated_ages_BP, standard_deviations) {
 
 quickcalibrate_start_message <- function() {
   cli::cli_h1(paste(
-    "quickcalibrate => Simplifies filling the .janno file columns",
-    "Date_BC_AD_Median, Date_BC_AD_Start and Date_BC_AD_Stop"
+    "quickcalibrate => Simplifies filling the .janno file dating columns"
   ))
 }
 

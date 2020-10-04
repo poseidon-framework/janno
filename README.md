@@ -53,6 +53,17 @@ Combine multiple Poseidon v.2 packages and create a new merged package (uses pli
 - **log_directory**: Path to the directory for log files and temporary data
 
 ```
+poseidon2 quickcalibrate (<uncalibrated_ages_BP> <standard_deviations>)...
+```
+
+Determine what to fill into the .janno file columns `Date_BC_AD_Median`, `Date_BC_AD_Start`, `Date_BC_AD_Stop` if you only have radiocarbon dates.
+
+- **uncalibrated_ages_BP character**: One or multiple radiocarbon date ages BP (e.g. 3000 or 3000,3100,3050)
+- **standard_deviations**: One or multiple standard deviations (1 sigma ±) (e.g. 30 or 30,40,50)
+
+It's also possible to run multiple samples at once. So if you have two aDNA samples with three radiocarbon ages each, you can run `poseidon2 quickcalibrate 3000,3100,3050 30,40,50 2300,2400,2330 100,20,70`.
+
+```
 poseidon2 validate <input_janno_file_or_packages>...
 ```
 
