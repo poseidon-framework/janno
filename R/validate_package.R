@@ -44,6 +44,17 @@ validate_package <- function(input_package) {
       paste(additional_files, collapse = ", ")
     ))
   }
+  # check for alternative genetic data formats
+  available_genetic_data_formats <- get_genetic_data_type(input_package)
+  non_plink_binary <- available_genetic_data_formats[available_genetic_data_formats != "plink_binary"]
+  if (length(non_plink_binary) > 0) {
+    cli::cli_alert_warning(paste(
+      "There is additional genetic data in the following formats stored in this package:", 
+      paste(non_plink_binary, collapse = ", "), 
+      "- This data will be ignored by poseidon2.",
+      "It only considers the binary plink format (.bed + .bim + .fam)."
+    ))
+  }
   # check POSEIDON.yml
   if ( !validate_POSEIDON_yml(POSEIDON_yml_file, input_package) ) {
     everything_fine <- FALSE
