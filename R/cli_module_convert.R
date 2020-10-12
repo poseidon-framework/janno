@@ -15,7 +15,8 @@ convert_module <- function(output_format, input_package, output_directory, log_d
   }
   # create output directory
   if (dir.exists(output_directory)) {
-    stop("output directory already exists")
+    cli::cli_alert_danger("Output directory already exists.")
+    return(1)
   } else {
     dir.create(output_directory, recursive = T)
   }
@@ -26,7 +27,8 @@ convert_module <- function(output_format, input_package, output_directory, log_d
   if (output_format == "eigenstrat") {
     convert_ped2eig(input_package, output_directory, log_directory)
   } else {
-    stop("Unknown output format.")
+    cli::cli_alert_danger("Unknown output format.")
+    return(1)
   }
 }
 

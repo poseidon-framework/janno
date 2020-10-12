@@ -15,7 +15,8 @@ extract_module <- function(filter_file, input_package, output_directory, log_dir
   }
   # create output directory
   if (dir.exists(output_directory)) {
-    stop("output directory already exists")
+    cli::cli_alert_danger("Output directory already exists.")
+    return(1)
   } else {
     dir.create(output_directory, recursive = T)
   }

@@ -16,7 +16,8 @@ merge_module <- function(input_file, output_directory, log_directory = tempdir()
   }
   # create output directory
   if (dir.exists(output_directory)) {
-    stop("output directory already exists")
+    cli::cli_alert_danger("Output directory already exists.")
+    return(1)
   } else {
     dir.create(output_directory, recursive = T)
   }
