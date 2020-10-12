@@ -6,6 +6,7 @@ contributor:
     email: clemens.schmid@institute.org
   - name: Paul Panther
     email: gemuese@test.com
+packageVersion: 1.0
 lastModified: 2020-07-14
 bibFile: LITERATURE.bib
 genotypeData:
