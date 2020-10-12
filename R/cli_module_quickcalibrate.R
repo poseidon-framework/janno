@@ -27,13 +27,14 @@ quickcalibrate_module <- function(uncalibrated_ages_BP, standard_deviations) {
     )
   }) %>% dplyr::bind_rows()
   # print output
-  knitr::kable(result_table)
+  utils::write.table(result_table, row.names = F, quote = F, sep = '\t')
 }
 
 quickcalibrate_start_message <- function() {
   cli::cli_h1(paste(
     "quickcalibrate => Simplifies filling the .janno file dating columns"
   ))
+  cat("\n")
 }
 
 sumcal <- function(xs, errs) {
