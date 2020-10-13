@@ -77,6 +77,12 @@ validate_janno <- function(input_janno) {
           next
         }
       }
+      # leading or trailing whitespace
+      positioned_feedback(
+        cur_cell, 
+        has_no_leading_or_trailing_whitespace, 
+        position_in_table_string(cur_col, cur_row)
+      )
       # specific column type checks
       if ( 
         !positioned_feedback(
@@ -97,6 +103,14 @@ validate_janno <- function(input_janno) {
   } else {
     return(2)
   }
+}
+
+has_no_leading_or_trailing_whitespace <- function(x) {
+  check <- any(grepl("(*UCP)^\\s+", x, perl = T) | grepl("(*UCP)\\s+$", x, perl = T))
+  if ( check ) {
+    cli::cli_alert_warning("Cell has leading or trailing whitespaces")
+  }
+  return(!check)
 }
 
 is_n_a <- function(x) {
@@ -208,7 +222,7 @@ is_valid_integer <- function(x, multi = FALSE, expected_range = c(-Inf, Inf), ..
     all(!grepl("\\.", x)) &&
     !any(is.na(suppressWarnings(as.integer(x))))
   if ( !check_1 ) {
-    cli::cli_alert_danger("One or multiple values not valid integer numbers")
+    cli::cli_alert_danger("One or multiple values are not valid integer numbers")
     return(check_1)
   }
   # is in range?
@@ -234,7 +248,7 @@ is_valid_float <- function(x, multi = FALSE, expected_range = c(-Inf, Inf), ...)
   check_1 <- all(grepl("^[0-9\\.-]+$", x)) &&
     !any(is.na(suppressWarnings(as.double(x))))
   if ( !check_1 ) {
-    cli::cli_alert_danger("One or multiple values not valid floating point numbers")
+    cli::cli_alert_danger("One or multiple values are not valid floating point numbers")
     return(check_1)
   }
   # is in range?
