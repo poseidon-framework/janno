@@ -52,7 +52,6 @@ validate_janno <- function(input_janno) {
         cur_col, 
         "]"
       ))
-      everything_fine_flag <- FALSE
     }
     if (no_dupli) {
       if ( !no_duplicates(character_janno, cur_col) ) {
