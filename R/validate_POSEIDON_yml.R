@@ -1,5 +1,5 @@
 validate_POSEIDON_yml <- function(POSEIDON_yml_file, input_package) {
-  cli::cli_alert_info(POSEIDON_yml_file)
+  cli::cli_alert_info(basename(POSEIDON_yml_file))
   if ( !can_POSEIDON_yml_be_read(POSEIDON_yml_file) ) {
     return(FALSE)
   }

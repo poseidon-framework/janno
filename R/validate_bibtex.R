@@ -1,5 +1,5 @@
 validate_bibtex <- function(bib_file) {
-  cli::cli_alert_info(bib_file)
+  cli::cli_alert_info(basename(bib_file))
   tryCatch({
     bibtex::read.bib(bib_file)
     TRUE
