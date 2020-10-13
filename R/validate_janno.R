@@ -46,6 +46,14 @@ validate_janno <- function(input_janno) {
       expected_range <- c(-Inf, Inf)
     }
     # column wise checks
+    if (all(character_janno[[cur_col]] == "n/a")) {
+      cli::cli_alert_warning(paste0(
+        "Only n/a values in Column [", 
+        cur_col, 
+        "]"
+      ))
+      everything_fine_flag <- FALSE
+    }
     if (no_dupli) {
       if ( !no_duplicates(character_janno, cur_col) ) {
         everything_fine_flag <- FALSE
