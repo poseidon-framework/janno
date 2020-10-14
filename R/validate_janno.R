@@ -27,6 +27,7 @@ validate_janno <- function(input_janno) {
     no_dupli <- cur_col %in% janno_unique_columns
     with_choices <- cur_col %in% janno_choice_columns
     with_range <- cur_col %in% janno_range_columns
+    bonus <- cur_col %in% janno_bonus_columns
     # get derived column background information
     type_check_function <- type_string_to_type_check_function(expected_type)
     if (with_choices) {
@@ -46,7 +47,7 @@ validate_janno <- function(input_janno) {
       expected_range <- c(-Inf, Inf)
     }
     # column wise checks
-    if (all(character_janno[[cur_col]] == "n/a")) {
+    if (!bonus & all(character_janno[[cur_col]] == "n/a")) {
       cli::cli_alert_warning(paste0(
         "Only n/a values in Column [", 
         cur_col, 

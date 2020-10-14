@@ -22,7 +22,10 @@ janno_column_name_choices <- hash::hash(janno_choice_columns, choices)
 janno_mandatory_columns <- janno_columns$janno_column_name[janno_columns$mandatory]
 
 # unique columns
-janno_unique_columns <-  janno_columns$janno_column_name[janno_columns$unique]
+janno_unique_columns <- janno_columns$janno_column_name[janno_columns$unique]
+
+# bonus columns
+janno_bonus_columns <- janno_columns$janno_column_name[janno_columns$bonus]
 
 # range columns
 janno_range_columns <- janno_columns$janno_column_name[janno_columns$range]
@@ -41,6 +44,7 @@ usethis::use_data(
   janno_column_name_choices,
   janno_mandatory_columns,
   janno_unique_columns,
+  janno_bonus_columns,
   janno_range_columns,
   janno_column_name_range_lower,
   janno_column_name_range_upper,
