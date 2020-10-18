@@ -76,8 +76,8 @@ format.janno <- function(x, ...) {
   out_str$sites <- print_number_and_name(unique(x[["Site"]]), "Sites")
   out_str$age <- paste0(
     "\tMean age BC/AD: ",
-    mean(x[["Date_BC_AD_Median"]], na.rm = T), " ± ",
-    sd(x[["Date_BC_AD_Median"]], na.rm = T)
+    round(mean(x[["Date_BC_AD_Median"]], na.rm = T)), " ± ",
+    round(sd(x[["Date_BC_AD_Median"]], na.rm = T))
   )
   out_str$publications <- print_number_and_name(unique(x[["Publication_Status"]]), "Publications")
   out_str$sep2 <- "--"
@@ -111,9 +111,9 @@ print_min_mean_max <- function(x, name) {
   if (!all(is.na(x))) {
     paste0(
       name, ": \t", 
-      "min → ", min(x, na.rm = T), " ",
-      "mean → ", mean(x, na.rm = T), " ",
-      "max → ", max(x, na.rm = T), " "
+      "min → ", round(min(x, na.rm = T), 3), ", ",
+      "mean → ", round(mean(x, na.rm = T)), 3, ", ",
+      "max → ", round(max(x, na.rm = T), 3), " "
     )
   } else {
     paste0(name, ": \t", "min → NA, mean → NA, max → NA")
