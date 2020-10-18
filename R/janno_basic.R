@@ -92,7 +92,6 @@ format.janno <- function(x, ...) {
 }
 
 print_number_and_name <- function(x, name) {
-  x <- stats::na.omit(x)
   show_number <- if (length(x) > 3) {3} else {length(x)}
   paste0(
     length(x), 

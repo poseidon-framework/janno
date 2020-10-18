@@ -1,6 +1,6 @@
 #' @rdname cli_modules
 #' @export
-summarise_module <- function(input_janno_file_or_packages) {
+summarise_module <- function(input_janno_file_or_packages, validate = F) {
   # input check and prep
   checkmate::assert_character(input_janno_file_or_packages, any.missing = FALSE, all.missing = FALSE, min.len = 1)
   type <- janno_or_package(input_janno_file_or_packages)
@@ -16,8 +16,7 @@ summarise_module <- function(input_janno_file_or_packages) {
   }
   all_janno_files <- unique(unlist(list_of_janno_files))
   for (i in all_janno_files) {cli::cli_alert_info(i)}
-  cat("\n")
-  list_of_janno_tables <- lapply(all_janno_files, function(y) {read_janno(y)})
+  list_of_janno_tables <- lapply(all_janno_files, function(y) {read_janno(y, validate = validate)})
   superjanno <- dplyr::bind_rows(list_of_janno_tables)
   cat("\n")
   print(superjanno, only_header = T)
