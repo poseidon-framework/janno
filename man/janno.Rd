@@ -18,7 +18,7 @@ read_janno(
 
 \method{format}{janno}(x, ...)
 
-\method{print}{janno}(x, ...)
+\method{print}{janno}(x, only_header = FALSE, ...)
 }
 \arguments{
 \item{x}{an object}
