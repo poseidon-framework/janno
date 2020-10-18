@@ -2,6 +2,8 @@
 
 S3method(enforce_types,default)
 S3method(enforce_types,janno)
+S3method(format,janno)
+S3method(print,janno)
 S3method(process_age,default)
 S3method(process_age,janno)
 export(as.janno)
