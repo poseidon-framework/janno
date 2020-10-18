@@ -18,7 +18,15 @@ Show a manual page.
 poseidon2 --version
 ```
 
-Show the poseidon2 package version.
+Show the poseidon2 software version.
+
+```
+poseidon2 summarise <input_janno_file_or_packages>...
+```
+
+Give a quick overview over one or multiple Poseidon v.2 packages based on the .janno files.
+
+- **input_janno_file_or_packages**: One or multiple paths to package directories or .janno files
 
 ```
 poseidon2 convert <output_format> <input_package> <output_directory> [--log_directory=DIR]
