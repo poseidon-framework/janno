@@ -17,6 +17,6 @@ summarise_module <- function(input_janno_file_or_packages) {
     cat("\n")
   }
   superjanno <- dplyr::bind_rows(list_of_janno_files)
-  print(superjanno)
+  print(superjanno, only_header = T)
   return(0)
 }

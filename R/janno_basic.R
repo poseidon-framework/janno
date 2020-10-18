@@ -67,14 +67,42 @@ read_janno <- function(
 #' @export
 format.janno <- function(x, ...) {
   out_str <- list()
-  out_str$header <- paste0("janno")
+  # compile information
+  out_str$header <- paste0("~ janno ~")
+  out_str$individuals <- paste(nrow(x), "\tIndividuals")
+  groups <- unique(sapply(x[["Group_Name"]], function(y) {y[1]}))
+  out_str$groups <- print_number_and_name(groups, "Populations")
+  out_str$countries <- print_number_and_name(unique(x[["Country"]]), "Countries")
+  out_str$locations <- print_number_and_name(unique(x[["Location"]]), "Locations")
+  out_str$sites <- print_number_and_name(unique(x[["Site"]]), "Sites")
+  out_str$age <- paste0(
+    "\tMean age BC/AD: ",
+    mean(x[["Date_BC_AD_Median"]], na.rm = T), "±",
+    sd(x[["Date_BC_AD_Median"]], na.rm = T)
+  )
+  # merge information
   return_value <- paste(out_str, collapse = "\n", sep = "")
   invisible(return_value)
 }
 
+print_number_and_name <- function(x, name) {
+  x <- stats::na.omit(x)
+  show_number <- if (length(x) > 3) {3} else {length(x)}
+  paste0(
+    length(x), 
+    paste0("\t", name, ": "),
+    paste0(x[1:show_number], collapse = ", "),
+    if (length(x) > 3) {", ..."}
+  )
+}
+
 #' @rdname janno
 #' @export
-print.janno <- function(x, ...) {
+print.janno <- function(x, only_header = FALSE, ...) {
   # own format function
   cat(format(x, ...), "\n\n")
+  if (!only_header) {
+    # add table printed like a tibble
+    x %>% `class<-`(c("tbl", "tbl_df", "data.frame")) %>% print
+  }
 }
