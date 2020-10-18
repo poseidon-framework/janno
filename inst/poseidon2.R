@@ -12,6 +12,7 @@ All input directories have to adhere to the poseidon2 package
 file structure as documented here: https://github.com/poseidon-framework/poseidon2-schema
 
 Usage:
+  poseidon2 summarise <input_janno_file_or_packages>...
   poseidon2 convert <output_format> <input_package> <output_directory> [--log_directory=DIR]
   poseidon2 extract <filter_file> <input_package> <output_directory> [--log_directory=DIR]
   poseidon2 merge <input_file> <output_directory> [--log_directory=DIR]
@@ -40,8 +41,13 @@ if (arguments$log_directory == "./poseidon2_tmp_and_log/current_date_random_stri
 if (!dir.exists(arguments$log_directory) & !arguments$validate) {
   dir.create(arguments$log_directory, recursive = T)
 }
-  
-if (arguments$convert) {
+
+# select and run module
+if (arguments$summarise) {  
+  poseidon2::summarise_module(
+    input_janno_file_or_packages = arguments$input_janno_file_or_packages
+  )
+} else if (arguments$convert) {
   poseidon2::convert_module(
     output_format = arguments$output_format,
     input_package = arguments$input_package,
