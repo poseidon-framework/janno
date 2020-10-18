@@ -112,7 +112,7 @@ print_min_mean_max <- function(x, name) {
     paste0(
       name, ": \t", 
       "min → ", round(min(x, na.rm = T), 3), ", ",
-      "mean → ", round(mean(x, na.rm = T)), 3, ", ",
+      "mean → ", round(mean(x, na.rm = T), 3), ", ",
       "max → ", round(max(x, na.rm = T), 3), " "
     )
   } else {
