@@ -75,7 +75,7 @@ merge_create_order_file_from_fam_files <- function(list_of_packages, log_directo
   })
   concat_first_two_columns <- do.call(rbind, list_of_fam_tables)[,1:2]
   plink_order_file <- file.path(log_directory, "poseidon2_merge_plink_order_file.txt")
-  readr::write_delim(concat_first_two_columns, path = plink_order_file, delim = " ", col_names = FALSE)
+  readr::write_delim(concat_first_two_columns, file = plink_order_file, delim = " ", col_names = FALSE)
   cli::cli_alert_success(plink_order_file)
   return(plink_order_file)
 }
@@ -88,7 +88,7 @@ merge_concat_janno_files <- function(list_of_packages, output_directory, output_
   })
   new_janno <- do.call(rbind, list_of_janno_tables)
   new_janno_file <- paste0(file.path(output_directory, output_files_name), ".janno")
-  readr::write_tsv(new_janno, path = new_janno_file)
+  readr::write_tsv(new_janno, file = new_janno_file)
   cli::cli_alert_success(new_janno_file)
 }
 

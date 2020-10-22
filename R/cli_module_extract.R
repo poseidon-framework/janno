@@ -52,7 +52,7 @@ filter_and_copy_janno <- function(filter_file, input_package, output_directory, 
   janno_filtered <- janno[janno[["Individual_ID"]] %in% filter_list[[2]], ]
   # write result
   new_janno_file <- file.path(output_directory, paste0(output_files_name, ".janno"))
-  readr::write_tsv(x = janno_filtered, path = new_janno_file, na = "n/a")
+  readr::write_tsv(x = janno_filtered, file = new_janno_file, na = "n/a")
   cli::cli_alert_success(new_janno_file)
 }
 

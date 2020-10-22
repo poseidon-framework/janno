@@ -52,7 +52,7 @@ convert_create_pedind_file <- function(fam_file, log_directory) {
   cli::cli_alert_info("Create .pedind file...")
   fam_table <- suppressMessages(readr::read_delim(fam_file, delim = " ", col_names = F))
   pedind_file <- file.path(log_directory, "for_conversion.pedind")
-  readr::write_delim(fam_table[,c(1:5, 1)], path = pedind_file, delim = " ", col_names = F)
+  readr::write_delim(fam_table[,c(1:5, 1)], file = pedind_file, delim = " ", col_names = F)
   cli::cli_alert_success(pedind_file)
   return(pedind_file)
 }
