@@ -31,7 +31,7 @@ merge_module(input_file, output_directory, log_directory = tempdir())
 
 quickcalibrate_module(uncalibrated_ages_BP, standard_deviations)
 
-summarise_module(input_janno_file_or_packages)
+summarise_module(input_janno_file_or_packages, validate = F)
 
 validate_module(input_janno_file_or_packages)
 }
