@@ -1,4 +1,7 @@
-validate_POSEIDON_yml <- function(POSEIDON_yml_file, input_package) {
+validate_POSEIDON_yml <- function(
+  POSEIDON_yml_file, input_package, ignore_genotype_files = FALSE
+) {
+  
   cli::cli_alert_info(basename(POSEIDON_yml_file))
   if ( !can_POSEIDON_yml_be_read(POSEIDON_yml_file) ) {
     return(FALSE)
@@ -6,7 +9,9 @@ validate_POSEIDON_yml <- function(POSEIDON_yml_file, input_package) {
   pyml <- yaml::read_yaml(POSEIDON_yml_file)
   return(
     has_POSEIDON_yml_the_necessary_elements(pyml) &&
-      check_POSEIDON_yml_elements(pyml, input_package)
+      check_POSEIDON_yml_elements(
+        pyml, input_package, ignore_genotype_files = ignore_genotype_files
+      )
   )
 }
 
@@ -49,7 +54,7 @@ has_POSEIDON_yml_the_necessary_elements <- function(
   return(TRUE)
 }
 
-check_POSEIDON_yml_elements <- function(x, package_path) {
+check_POSEIDON_yml_elements <- function(x, package_path, ignore_genotype_files = FALSE) {
   return(
     positioned_feedback(x$poseidonVersion, is_valid_poseidon_version, "poseidonVersion") &
     positioned_feedback(x$title, is_valid_string, "title") &
@@ -57,9 +62,19 @@ check_POSEIDON_yml_elements <- function(x, package_path) {
     positioned_feedback(x$lastModified, is_valid_date, "lastModified") &
     positioned_feedback(x$bibFile, produce_check_for_valid_file(package_path), "bibFile") &
     positioned_feedback(x$genotypeData$format, is_valid_string, "genotypeData > format") &
-    positioned_feedback(x$genotypeData$genoFile, produce_check_for_valid_file(package_path), "genotypeData > genoFile") &
-    positioned_feedback(x$genotypeData$snpFile, produce_check_for_valid_file(package_path), "genotypeData > snpFile") &
-    positioned_feedback(x$genotypeData$indFile, produce_check_for_valid_file(package_path), "genotypeData > indFile") &
+    ifelse(
+      !ignore_genotype_files,
+      positioned_feedback(
+        x$genotypeData$genoFile, produce_check_for_valid_file(package_path), "genotypeData > genoFile"
+      ) &
+      positioned_feedback(
+        x$genotypeData$snpFile, produce_check_for_valid_file(package_path), "genotypeData > snpFile"
+      ) &
+      positioned_feedback(
+        x$genotypeData$indFile, produce_check_for_valid_file(package_path), "genotypeData > indFile"
+      ),
+      TRUE
+    ) &
     positioned_feedback(x$jannoFile, produce_check_for_valid_file(package_path), "jannoFile")
   )
 }
