@@ -7,6 +7,7 @@
 #' @param file character. Path to a .janno file
 #' @param validate logical. Should the janno file be validated upon reading
 #' @param to_janno logical. Should the read function transform the input file to a janno object
+#' @param only_header logical. Should only the header be printed.
 #' @param ... further arguments passed to or from other methods
 #'
 #' @rdname janno
@@ -76,8 +77,8 @@ format.janno <- function(x, ...) {
   out_str$sites <- print_number_and_name(unique(x[["Site"]]), "Sites")
   out_str$age <- paste0(
     "\tMean age BC/AD: ",
-    round(mean(x[["Date_BC_AD_Median"]], na.rm = T)), " ± ",
-    round(sd(x[["Date_BC_AD_Median"]], na.rm = T))
+    round(mean(x[["Date_BC_AD_Median"]], na.rm = T)), " \u00B1 ",
+    round(stats::sd(x[["Date_BC_AD_Median"]], na.rm = T))
   )
   out_str$publications <- print_number_and_name(unique(x[["Publication_Status"]]), "Publications")
   out_str$sep2 <- "--"
@@ -103,7 +104,7 @@ print_number_and_name <- function(x, name) {
 
 print_table <- function(x, name) {
   tab <- table(x, useNA = "ifany")
-  string_tab <- paste(names(tab), tab, sep = " → ", collapse = ", ")
+  string_tab <- paste(names(tab), tab, sep = " \u2192 ", collapse = ", ")
   paste0(name, ": ", string_tab)
 }
 
@@ -111,12 +112,12 @@ print_min_mean_max <- function(x, name) {
   if (!all(is.na(x))) {
     paste0(
       name, ": \t", 
-      "min → ", round(min(x, na.rm = T), 3), ", ",
-      "mean → ", round(mean(x, na.rm = T), 3), ", ",
-      "max → ", round(max(x, na.rm = T), 3), " "
+      "min \u2192 ", round(min(x, na.rm = T), 3), ", ",
+      "mean \u2192 ", round(mean(x, na.rm = T), 3), ", ",
+      "max \u2192 ", round(max(x, na.rm = T), 3), " "
     )
   } else {
-    paste0(name, ": \t", "min → NA, mean → NA, max → NA")
+    paste0(name, ": \t", "min \u2192 NA, mean \u2192 NA, max \u2192 NA")
   }
 }
 

@@ -30,6 +30,8 @@ read_janno(
 \item{validate}{logical. Should the janno file be validated upon reading}
 
 \item{to_janno}{logical. Should the read function transform the input file to a janno object}
+
+\item{only_header}{logical. Should only the header be printed.}
 }
 \description{
 ...

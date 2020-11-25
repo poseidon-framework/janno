@@ -53,6 +53,8 @@ validate_module(input_janno_file_or_packages)
 \item{standard_deviations}{character. One or multiple standard deviations (1 sigma ±) (e.g. "30" or "30,40,50" or c("20", "20,30,70"))}
 
 \item{input_janno_file_or_packages}{character. Path to input janno file or poseidon2 package}
+
+\item{validate}{logical. Should the input be explicitly validated?}
 }
 \description{
 poseidon2 command line interface module functions

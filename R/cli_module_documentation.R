@@ -9,6 +9,8 @@
 #' @param input_janno_file_or_packages character. Path to input janno file or poseidon2 package
 #' @param uncalibrated_ages_BP character. One or multiple radiocarbon date ages BP (e.g. "3000" or "3000,3100,3050" or c("2000", "2000,2300,2100"))
 #' @param standard_deviations character. One or multiple standard deviations (1 sigma ±) (e.g. "30" or "30,40,50" or c("20", "20,30,70"))
+#' @param validate logical. Should the input be explicitly validated?
 #' 
+#' @rdname cli_modules
 #' @name cli_modules
 NULL

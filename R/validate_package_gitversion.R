@@ -3,7 +3,7 @@
 #' Special version of the package validation for the reduced representation
 #' of the packages on github.
 #'
-#' @param input_packages Character vector. Paths to poseidon packages
+#' @param package_search_path Character vector. Paths to poseidon packages
 #'
 #' @export
 validate_packages_gitversion <- function(package_search_path) {

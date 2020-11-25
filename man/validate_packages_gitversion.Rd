@@ -7,7 +7,7 @@
 validate_packages_gitversion(package_search_path)
 }
 \arguments{
-\item{input_packages}{Character vector. Paths to poseidon packages}
+\item{package_search_path}{Character vector. Paths to poseidon packages}
 }
 \description{
 Special version of the package validation for the reduced representation
