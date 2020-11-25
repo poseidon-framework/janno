@@ -45,7 +45,7 @@ poseidon2 extract <filter_file> <input_package> <output_directory> [--log_direct
 
 Extract individuals from a Poseidon v.2 package and create a new subset package (uses plink1.9).
 
-- **filter_file**: Text file with the individuals that should be kept. [A space/tab-delimited text file with family IDs in the first column and within-family IDs in the second column](https://www.cog-genomics.org/plink/1.9/filter#indiv)
+- **filter_file**: Text file with the individuals that should be kept. [A space-delimited text file with family IDs in the first column and within-family IDs in the second column](https://www.cog-genomics.org/plink/1.9/filter#indiv). Only space-delimited works!
 - **input_package**: Path to the input package directory
 - **output_directory**: Path to the output directory
 - **log_directory**: Path to the directory for log files and temporary data
