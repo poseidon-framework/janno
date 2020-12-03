@@ -43,6 +43,7 @@ process_age.janno <- function(
   
   if ("Date_BC_AD_Prob" %in% choices) {
     x$Date_BC_AD_Prob <- age_probability_master(
+      individual_id = x[["Individual_ID"]],
       date_type = x[["Date_Type"]],
       c14bp = x[["Date_C14_Uncal_BP"]], c14std = x[["Date_C14_Uncal_BP_Err"]],
       startbcad = x[["Date_BC_AD_Start"]], stopbcad = x[["Date_BC_AD_Stop"]]
@@ -85,7 +86,7 @@ get_center_age <- function(prob) {
   )
 }
 
-age_probability_master <- function(date_type, c14bp, c14std, startbcad, stopbcad) {
+age_probability_master <- function(individual_id, date_type, c14bp, c14std, startbcad, stopbcad) {
   
   res_list <- lapply(seq_along(date_type), function(i) {NA})
   
@@ -94,14 +95,17 @@ age_probability_master <- function(date_type, c14bp, c14std, startbcad, stopbcad
     sapply(c14bp, function(x) { !any(is.na(x)) }) &
     sapply(c14std, function(x) { !any(is.na(x)) })
   
-  is_contextual <- !is.na(date_type) & date_type == "contextual" & 
-    sapply(startbcad, function(x) { !any(is.na(x)) }) &
-    sapply(stopbcad, function(x) { !any(is.na(x)) })
-  
   res_list[is_c14] <- sumcal_list_of_multiple_dates(
+    individual_id_list = individual_id[is_c14],
     age_list = c14bp[is_c14], 
     err_list = c14std[is_c14]
   )
+  
+  is_contextual <- !is.na(date_type) & 
+    # also include samples for which calibration failed
+    (date_type == "contextual" | (date_type == "C14" & is.na(res_list))) & 
+    sapply(startbcad, function(x) { !any(is.na(x)) }) &
+    sapply(stopbcad, function(x) { !any(is.na(x)) })
   
   res_list[is_contextual] <- contextual_date_uniform(
     startbcad = startbcad[is_contextual], 
@@ -125,7 +129,7 @@ contextual_date_uniform <- function(startbcad, stopbcad) {
   
 }
 
-sumcal_list_of_multiple_dates <- function(age_list, err_list) {
+sumcal_list_of_multiple_dates <- function(individual_id_list, age_list, err_list) {
   
   bol <- 1950 # c14 reference zero
   #threshold <- (1 - 0.9545) / 2 # 2sigma range probability threshold
@@ -133,7 +137,7 @@ sumcal_list_of_multiple_dates <- function(age_list, err_list) {
   pb <- progress::progress_bar$new(total = length(age_list))
   
   # run for each date collection
-  Map(function(cur_xs, cur_errs) {
+  Map(function(individual_id, cur_xs, cur_errs) {
     
     pb$tick()
     
@@ -149,12 +153,21 @@ sumcal_list_of_multiple_dates <- function(age_list, err_list) {
     #   return(NA)
     # }
     
-    cur_raw_calibration_output <- Bchron::BchronCalibrate(
-      ages      = cur_xs,
-      ageSds    = cur_errs,
-      calCurves = rep("intcal13", length(cur_xs))
+    cur_raw_calibration_output <- tryCatch(
+      Bchron::BchronCalibrate(
+        ages      = cur_xs,
+        ageSds    = cur_errs,
+        calCurves = rep("intcal20", length(cur_xs))
+      ),
+      error = function(e){
+        message("\nAn error occurred when calibrating C14 age for individual ", individual_id, " - ", e)
+      }
     )
-    
+     
+    if (is.null(cur_raw_calibration_output)) {
+      return(NA)
+    }
+
     density_tables <- lapply(
       cur_raw_calibration_output,
       function(y) { 
@@ -192,7 +205,7 @@ sumcal_list_of_multiple_dates <- function(age_list, err_list) {
     
     return(result_table)
     
-  }, age_list, err_list)
+  }, individual_id_list, age_list, err_list)
   
 }
 
