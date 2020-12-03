@@ -10,11 +10,7 @@
 \usage{
 as.janno(x, ...)
 
-read_janno(
-  file = "test_data/1_good_test_package/file1.janno",
-  validate = TRUE,
-  to_janno = TRUE
-)
+read_janno(path = "test_data/1_good_test_package/file1.janno", to_janno = TRUE)
 
 \method{format}{janno}(x, ...)
 
@@ -25,9 +21,7 @@ read_janno(
 
 \item{...}{further arguments passed to or from other methods}
 
-\item{file}{character. Path to a .janno file}
-
-\item{validate}{logical. Should the janno file be validated upon reading}
+\item{path}{character. Path to a .janno file or a directory that should be recursively searched for .janno files}
 
 \item{to_janno}{logical. Should the read function transform the input file to a janno object}
 

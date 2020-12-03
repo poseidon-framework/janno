@@ -4,8 +4,7 @@
 #' @description ...
 #'
 #' @param x an object
-#' @param file character. Path to a .janno file
-#' @param validate logical. Should the janno file be validated upon reading
+#' @param path character. Path to a .janno file or a directory that should be recursively searched for .janno files
 #' @param to_janno logical. Should the read function transform the input file to a janno object
 #' @param only_header logical. Should only the header be printed.
 #' @param ... further arguments passed to or from other methods
@@ -40,23 +39,23 @@ check_if_all_columns_present <- function(x) {
 #' @rdname janno
 #' @export
 read_janno <- function(
-  file = "test_data/1_good_test_package/file1.janno", 
-  validate = TRUE, 
+  path = "test_data/1_good_test_package/file1.janno", 
   to_janno = TRUE
 ) {
-  # input checks
-  checkmate::assert_file_exists(file)
-  # validation
-  if (validate) {
-  validation_result <- validate_janno(file)
-    if (validation_result == 1) {
-      stop("Input janno file has significant shortcomings and can't be loaded as a janno object in R.")
-    } else if (validation_result == 2) {
-      message("Input janno file has shortcomings, but loading is attempted anyway.")
-    }
+  # input checks and search for janno files
+  if (strsplit(path, "\\.") %>% unlist %>% tail(1) == "janno") {
+    checkmate::assert_file_exists(path)
+    janno_files <- path
+  } else {
+    checkmate::assert_directory_exists(path)
+    janno_files <- list.files(path, pattern = "\\.janno", full.names = T, recursive = T)
   }
-  # read file
-  input_file <- readr::read_tsv(file, col_types = readr::cols(.default = readr::col_character()), na = "n/a") 
+  # read files
+  lapply(janno_files, read_one_janno, to_janno) %>% dplyr::bind_rows()
+}
+
+read_one_janno <- function(x, to_janno) {
+  input_file <- readr::read_tsv(x, col_types = readr::cols(.default = readr::col_character()), na = "n/a") 
   if (to_janno) {
     as.janno(input_file)
   } else {
