@@ -16,7 +16,7 @@ summarise_module <- function(input_janno_file_or_packages, validate = F) {
   }
   all_janno_files <- unique(unlist(list_of_janno_files))
   for (i in all_janno_files) {cli::cli_alert_info(i)}
-  list_of_janno_tables <- lapply(all_janno_files, function(y) {read_janno(y, validate = validate)})
+  list_of_janno_tables <- lapply(all_janno_files, function(y) {read_janno(y)})
   superjanno <- dplyr::bind_rows(list_of_janno_tables)
   cat("\n")
   print(superjanno, only_header = T)

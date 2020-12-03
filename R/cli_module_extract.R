@@ -43,7 +43,7 @@ filter_and_copy_janno <- function(filter_file, input_package, output_directory, 
   cli::cli_alert_info("Subsetting janno file...")
   # collect data
   janno_file <- list.files(input_package, "\\.janno", full.names = T)
-  janno <- read_janno(janno_file, validate = F, to_janno = F)
+  janno <- read_janno(janno_file, to_janno = F)
   filter_list <- readr::read_delim(filter_file, " ", col_names = FALSE, col_types = readr::cols(
     readr::col_character(),
     readr::col_character()

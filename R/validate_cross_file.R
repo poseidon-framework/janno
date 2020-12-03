@@ -6,7 +6,7 @@ validate_fam_janno_interaction <- function(fam_file, janno_file) {
     col_types = readr::cols(.default = readr::col_character()),
     col_names = F
   )
-  janno <- read_janno(janno_file, validate = F, to_janno = F)
+  janno <- read_janno(janno_file, to_janno = F)
   # extract relevant information
   fam_ind <- fam[[2]]
   fam_group <- fam[[1]]
@@ -26,7 +26,7 @@ validate_fam_janno_interaction <- function(fam_file, janno_file) {
 validate_bib_janno_interaction <- function(bib_file, janno_file) {
   # read files
   bib <- bibtex::read.bib(bib_file)
-  janno <- read_janno(janno_file, validate = F, to_janno = F)
+  janno <- read_janno(janno_file, to_janno = F)
   # extract relevant information
   bib_keys <- names(bib)
   janno_keys <- janno[["Publication_Status"]]
