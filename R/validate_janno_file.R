@@ -41,14 +41,14 @@ validate_one_janno <- function(path) {
     # get necessary information to check column
     cur_constraints <- get_column_constraints(cur_col)
     # column wise checks
-    if (!cur_constraints$bonus) {
-      if (only_na_in_column(character_janno, cur_constraints)) {
-        issues <- issues %>% append_issue(
-          column = cur_col,
-          issue = "Only n/a values in column"
-        )
-      }
-    }
+    # if (!cur_constraints$bonus) {
+    #   if (only_na_in_column(character_janno, cur_constraints)) {
+    #     issues <- issues %>% append_issue(
+    #       column = cur_col,
+    #       issue = "Only n/a values in column"
+    #     )
+    #   }
+    # }
     if (cur_constraints$no_dupli) {
       if (has_duplicates(character_janno, cur_constraints)) {
         issues <- issues %>% append_issue(
