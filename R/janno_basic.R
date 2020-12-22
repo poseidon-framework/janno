@@ -88,21 +88,13 @@ format.janno <- function(x, ...) {
   out_str$individuals <- paste(nrow(x), "\tIndividuals")
   groups <- unique(sapply(x[["Group_Name"]], function(y) {y[1]}))
   out_str$groups <- print_number_and_name(groups, "Populations")
-  out_str$sep1 <- "--"
   out_str$countries <- print_number_and_name(unique(x[["Country"]]), "Countries")
-  out_str$sites <- print_number_and_name(unique(x[["Site"]]), "Sites")
   out_str$age <- paste0(
     "\tMean age BC/AD: ",
     round(mean(x[["Date_BC_AD_Median"]], na.rm = T)), " \u00B1 ",
     round(stats::sd(x[["Date_BC_AD_Median"]], na.rm = T))
   )
   out_str$publications <- print_number_and_name(unique(x[["Publication_Status"]]), "Publications")
-  out_str$sep2 <- "--"
-  out_str$endogenous <- print_min_mean_max(x[["Endogenous"]], "% endogenous human DNA")
-  out_str$snps1240K <- print_min_mean_max(x[["Nr_autosomal_SNPs"]], "Number of SNPs on 1240K")
-  out_str$coverage1240K <- print_min_mean_max(x[["Coverage_1240K"]], "Mean coverage of 1240K SNPs")
-  out_str$udg <- print_table(x[["UDG"]], "UDG treatment")
-  out_str$library_built <- print_table(x[["Library_Built"]], "Library building process")
   # merge information
   return_value <- paste(out_str, collapse = "\n", sep = "")
   invisible(return_value)
