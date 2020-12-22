@@ -5,120 +5,148 @@
 #' @param x Character. Path to a .janno file
 #'
 #' @export
-validate_janno_file <- function(x) {
-  cli::cli_alert_info(basename(x))
+validate_janno_file <- function(path) {
+  # the issues are stored in a data.frame:
+  issues <- tibble::tibble(
+    row = integer(),
+    column = character(),
+    value = character(),
+    issue = character()
+  )
   # does it exist?
-  if ( !checkmate::test_file_exists(x, access = "r", extension = "janno") ) {
-    cli::cli_alert_danger("The janno file does not exist")
-    stop("Validation failed.")
+  if ( !check_if_file_exists(path) ) {
+    stop("Input file does not exist")
   }
   # does it contain tab separated columns?
-  if ( !is_tab_separated_file(x) ) {
-    stop("Validation failed.")
+  if ( !is_tab_separated_file(path) ) {
+    stop("Input file is not a valid tab separated file")
   }
   # read file
-  character_janno <- readr::read_tsv(x, col_types = readr::cols(.default = "c"))
+  character_janno <- readr::read_tsv(path, col_types = readr::cols(.default = "c"))
   # are the necessary columns present?
-  if (!has_necessary_columns(character_janno)) {
-    stop("Validation failed.")
+  column_check <- has_necessary_columns(character_janno)
+  if (!is.na(column_check)) {
+    stop(column_check)
   }
-  # from here onwards check conditions become less mandatory
-  everything_fine_flag <- TRUE
-  # check values in janno file
-  # loop through each column
+  # column wise check: loop through each column
   for (cur_col in colnames(character_janno)) {
-    # get basic column background information
-    expected_type <- hash::values(janno_column_name_data_type, cur_col)
-    multi <- cur_col %in% janno_multi_value_columns
-    mandatory <- cur_col %in% janno_mandatory_columns
-    no_dupli <- cur_col %in% janno_unique_columns
-    with_choices <- cur_col %in% janno_choice_columns
-    with_range <- cur_col %in% janno_range_columns
-    bonus <- cur_col %in% janno_bonus_columns
-    # get derived column background information
-    type_check_function <- type_string_to_type_check_function(expected_type)
-    if (with_choices) {
-      expected_choices <- unlist(strsplit(
-        hash::values(janno_column_name_choices, cur_col), 
-        ";"
-      ))
-    } else {
-      expected_choices <- NA
-    }
-    if (with_range) {
-      expected_range <- c(
-        hash::values(janno_column_name_range_lower, cur_col),
-        hash::values(janno_column_name_range_upper, cur_col)
-      )
-    } else {
-      expected_range <- c(-Inf, Inf)
-    }
+    # get necessary information to check column
+    cur_constraints <- get_column_constraints(cur_col)
     # column wise checks
-    if (!bonus & all(character_janno[[cur_col]] == "n/a")) {
-      cli::cli_alert_warning(paste0(
-        "Only n/a values in Column [", 
-        cur_col, 
-        "]"
-      ))
+    if (!cur_constraints$bonus) {
+      if (only_na_in_column(character_janno, cur_constraints)) {
+        issues <- issues %>% append_issue(
+          column = cur_col,
+          issue = "Only n/a values in column"
+        )
+      }
     }
-    if (no_dupli) {
-      if ( !no_duplicates(character_janno, cur_col) ) {
-        everything_fine_flag <- FALSE
+    if (cur_constraints$no_dupli) {
+      if (has_duplicates(character_janno, cur_constraints)) {
+        issues <- issues %>% append_issue(
+          column = cur_col,
+          issue = "Duplicates are not allowed in this column"
+        )
       }
     }
     # cell wise checks: loop through each cell
     for (cur_row in 1:nrow(character_janno)) {
-      #print(paste(cur_col, cur_row))
       cur_cell <- character_janno[[cur_col]][cur_row]
-      # general cell wise checks
-      if ( !positioned_feedback(cur_cell, is_not_empty, position_in_table_string(cur_col, cur_row)) ) {
-        everything_fine_flag <- FALSE
+      # empty cell
+      if (is_empty(cur_cell)) {
+        issues <- issues %>% append_issue(
+          row = cur_row,
+          column = cur_col,
+          value = cur_cell,
+          issue = "Empty cells are not allowed, please fill with n/a"
+        )
         next
-        # special case: n/a
-      } else if (is_n_a(cur_cell)) {
-        if (mandatory) {
-          cli::cli_alert_danger("n/a in a mandatory column")
-          cat("  in", position_in_table_string(cur_col, cur_row), "\n")
-          everything_fine_flag <- FALSE
-          next
-        } else {
+      }
+      # n/a in mandatory column
+      if (cur_constraints$mandatory) {
+        if (is_n_a(cur_cell)) {
+          issues <- issues %>% append_issue(
+            row = cur_row,
+            column = cur_col,
+            value = cur_cell,
+            issue = "n/a in a mandatory column"
+          )
           next
         }
       }
-      # leading or trailing whitespace
-      positioned_feedback(
-        cur_cell, 
-        has_no_leading_or_trailing_whitespace, 
-        position_in_table_string(cur_col, cur_row)
-      )
-      # specific column type checks
-      if ( 
-        !positioned_feedback(
-          cur_cell, type_check_function,
-          position_in_table_string(cur_col, cur_row),
-          multi = multi,
-          expected_choices = expected_choices,
-          expected_range = expected_range
-        )
-      ) {
-        everything_fine_flag <- FALSE
+      if (!is_n_a(cur_cell)) {
+        # type check
+        type_check <- cur_constraints$type_check_function(cur_cell, cur_constraints)
+        if (!is.na(type_check)) {
+          issues <- issues %>% append_issue(
+            row = cur_row,
+            column = cur_col,
+            value = cur_cell,
+            issue = type_check
+          )
+          next
+        }
+        # leading or trailing whitespaces
+        if (has_leading_or_trailing_whitespace(cur_cell)) {
+          issues <- issues %>% append_issue(
+            row = cur_row,
+            column = cur_col,
+            value = cur_cell,
+            issue = "Cell has leading or trailing whitespaces"
+          )
+          next
+        }
       }
     }
   }
   # final output
-  if ( everything_fine_flag ) {
-    cli::cli_alert_success("Validation succeeded.")
-  } else {
-    warning("Validation indicated issues with this .janno file.")
-  }
+  return(issues)
 }
 
-has_no_leading_or_trailing_whitespace <- function(x) {
-  check <- any(grepl("(*UCP)^\\s+", x, perl = T) | grepl("(*UCP)\\s+$", x, perl = T))
-  if ( check ) {
-    cli::cli_alert_warning("Cell has leading or trailing whitespaces")
+check_if_file_exists <- function(x) {
+  checkmate::test_file_exists(x, access = "r", extension = "janno")
+}
+
+get_column_constraints <- function(cur_col) {
+  constraints <- list(
+    column              = cur_col,
+    expected_type       = hash::values(janno_column_name_data_type, cur_col),
+    multi               = cur_col %in% janno_multi_value_columns,
+    mandatory           = cur_col %in% janno_mandatory_columns,
+    no_dupli            = cur_col %in% janno_unique_columns,
+    with_choices        = cur_col %in% janno_choice_columns,
+    with_range          = cur_col %in% janno_range_columns,
+    bonus               = cur_col %in% janno_bonus_columns,
+    type_check_function = type_string_to_type_check_function(
+      hash::values(janno_column_name_data_type, cur_col)
+    ),
+    expected_choices    = NA,
+    expected_range      = c(-Inf, Inf)
+  )
+  if (constraints$with_choices) {
+    constraints$expected_choices <- unlist(strsplit(
+      hash::values(janno_column_name_choices, cur_col), 
+      ";"
+    ))
+  } 
+  if (constraints$with_range) {
+    constraints$expected_range <- c(
+      hash::values(janno_column_name_range_lower, cur_col),
+      hash::values(janno_column_name_range_upper, cur_col)
+    )
   }
-  return(!check)
+  return(constraints)
+}
+
+append_issue <- function(x, row = NA, column = NA, value = NA, issue = NA) {
+  rbind(
+    x,
+    tibble::tibble(row = row, column = column, value = value, issue = issue)
+  )
+}
+
+has_leading_or_trailing_whitespace <- function(x) {
+  any(grepl("(*UCP)^\\s+", x, perl = T) | grepl("(*UCP)\\s+$", x, perl = T))
 }
 
 is_n_a <- function(x) {
@@ -129,54 +157,32 @@ position_in_table_string <- function(cur_col, cur_row) {
   paste0("[", cur_row, " | ", cur_col, "]")
 }
 
-positioned_feedback <- function(x, type_check_function, position_string, ...) {
-  check_result <- type_check_function(x, ...)
-  if ( !check_result ) {
-    cat("  in ")
-    cat(position_string)
-    cat(": ")
-    cat(x)
-    cat("\n")
-  }
-  return(check_result)
+is_empty <- function(x) {
+  (is.na(x) | x == "")
 }
 
-is_not_empty <- function(x) {
-  check <- !(is.na(x) | x == "")
-  if ( !check ) {
-    cli::cli_alert_danger("Empty cells are not allowed, please fill with n/a")
-  }
-  return(check)
+only_na_in_column <- function(x, co) {
+  all(x[[co$column]] == "n/a")
 }
 
-no_duplicates <- function(x, column) {
-  check <- length(unique(x[[column]])) == length(x[[column]])
-  if ( !check ) {
-    cli::cli_alert_danger(paste(
-      "Duplicates are not allowed in column", column
-    ))
-  }
-  return(check)
+has_duplicates <- function(x, co) {
+  length(unique(x[[co$column]])) != length(x[[co$column]])
 }
 
 has_necessary_columns <- function(x, columns = janno_column_names) {
   check <- all(columns %in% colnames(x))
   if ( !check ) {
-    cli::cli_alert_danger(paste(
+    return(paste(
       "The janno file lacks the following columns: ", 
       paste(columns[!(columns %in% colnames(x))], collapse = ", ")
     ))
   }
-  return(check)
+  return(NA)
 }
 
 is_tab_separated_file <- function(x) {
   x_linewise <- readr::read_lines(x, n_max = 50)
-  check <- all(grepl(".*\\t.*", x_linewise))
-  if ( !check ) {
-    cli::cli_alert_danger("The janno file is not a valid tab separated file with")
-  }
-  return(check)
+  all(grepl(".*\\t.*", x_linewise))
 }
 
 type_string_to_type_check_function <- function(x) {
@@ -190,38 +196,35 @@ type_string_to_type_check_function <- function(x) {
   )
 }
 
-is_valid_string <- function(x, multi = FALSE, expected_choices = NA, ...) {
+is_valid_string <- function(x, co) {
   # is string?
   check_1 <- checkmate::test_string(x, min.chars = 1)
   if ( !check_1 ) {
-    cli::cli_alert_danger("Not a valid string")
-    return(check_1)
+    return("Not a valid string")
   }
   # is multi?
-  if (multi) {
+  if (co$multi) {
     # is without superfluous white space?
     check_2 <- !grepl(".*;+?\\s+.*|.*\\s+;+?.*", x)
     if( !check_2 ) {
-      cli::cli_alert_danger("Superfluous white space around separator ;")
-      return(check_2)
+      return("Superfluous white space around separator ;")
     }
     # split to true multi
     x <- unlist(strsplit(x, ";"))
   }
   # is choices?
-  if (length(expected_choices) > 1 || !is.na(expected_choices)) {
-    check_3 <- all(sapply(x, function(y) { checkmate::test_choice(y, expected_choices) }))
+  if (length(co$expected_choices) > 1 || !is.na(co$expected_choices)) {
+    check_3 <- all(sapply(x, function(y) { checkmate::test_choice(y, co$expected_choices) }))
     if ( !check_3 ) {
-      cli::cli_alert_danger(paste("At least one value not in", paste(expected_choices, collapse = ", ")))
-      return(check_3)
+      return(paste("At least one value not in", paste(co$expected_choices, collapse = ", ")))
     }
   }
-  return(TRUE)
+  return(NA)
 }
 
-is_valid_integer <- function(x, multi = FALSE, expected_range = c(-Inf, Inf), ...) {
+is_valid_integer <- function(x, co) {
   # is multi?
-  if (multi) {
+  if (co$multi) {
     # split to true multi
     x <- unlist(strsplit(x, ";"))
   }
@@ -230,25 +233,23 @@ is_valid_integer <- function(x, multi = FALSE, expected_range = c(-Inf, Inf), ..
     all(!grepl("\\.", x)) &&
     !any(is.na(suppressWarnings(as.integer(x))))
   if ( !check_1 ) {
-    cli::cli_alert_danger("One or multiple values are not valid integer numbers")
-    return(check_1)
+    return("One or multiple values are not valid integer numbers")
   }
   # is in range?
   check_2 <- checkmate::test_integer(
-    as.integer(x), lower = expected_range[1], upper = expected_range[2]
+    as.integer(x), lower = co$expected_range[1], upper = co$expected_range[2]
   )
   if ( !check_2 ) {
-    cli::cli_alert_danger(
-      paste("One or multiple values not in range", expected_range[1], "to", expected_range[2])
+    return(
+      paste("One or multiple values not in range", co$expected_range[1], "to", co$expected_range[2])
     )
-    return(check_2)
   }
-  return(TRUE)
+  return(NA)
 }
 
-is_valid_float <- function(x, multi = FALSE, expected_range = c(-Inf, Inf), ...) {
+is_valid_float <- function(x, co) {
   # is multi?
-  if (multi) {
+  if (co$multi) {
     # split to true multi
     x <- unlist(strsplit(x, ";"))
   }
@@ -256,18 +257,16 @@ is_valid_float <- function(x, multi = FALSE, expected_range = c(-Inf, Inf), ...)
   check_1 <- all(grepl("^[0-9\\.e-]+$", x)) &&
     !any(is.na(suppressWarnings(as.double(x))))
   if ( !check_1 ) {
-    cli::cli_alert_danger("One or multiple values are not valid floating point numbers")
-    return(check_1)
+    return("One or multiple values are not valid floating point numbers")
   }
   # is in range?
   check_2 <- checkmate::test_numeric(
-    as.double(x), lower = expected_range[1], upper = expected_range[2]
+    as.double(x), lower = co$expected_range[1], upper = co$expected_range[2]
   )
   if ( !check_2 ) {
-    cli::cli_alert_danger(
-      paste("One or multiple values not in range", expected_range[1], "to", expected_range[2])
+    return(
+      paste("One or multiple values not in range", co$expected_range[1], "to", co$expected_range[2])
     )
-    return(check_2)
   }
-  return(TRUE)
+  return(NA)
 }

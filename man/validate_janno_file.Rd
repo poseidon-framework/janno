@@ -4,7 +4,7 @@
 \alias{validate_janno_file}
 \title{validate_janno_file}
 \usage{
-validate_janno_file(x)
+validate_janno_file(path)
 }
 \arguments{
 \item{x}{Character. Path to a .janno file}
