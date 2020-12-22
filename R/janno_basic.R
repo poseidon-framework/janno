@@ -62,7 +62,7 @@ read_janno <- function(
     if (nrow(validation_result) > 0) {
       print(validation_result)
       message(paste0(
-        "Run validate_janno(\"", path, "\") to see the full list of issues\n"
+        "Run validate_janno(\"", path, "\") to get the table of issues\n"
       ))
     } else {
       message("No issues with these janno files\n")
