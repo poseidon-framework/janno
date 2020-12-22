@@ -2,7 +2,7 @@
 #'
 #' Validate structural aspects of .janno files.
 #'
-#' @param x Character. Path to a .janno file
+#' @param path Character. Path to a .janno file
 #'
 #' @export
 validate_janno_file <- function(path) {

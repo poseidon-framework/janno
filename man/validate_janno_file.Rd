@@ -7,7 +7,7 @@
 validate_janno_file(path)
 }
 \arguments{
-\item{x}{Character. Path to a .janno file}
+\item{path}{Character. Path to a .janno file}
 }
 \description{
 Validate structural aspects of .janno files.
