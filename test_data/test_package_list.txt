@@ -1,5 +1,0 @@
-../test_data/1_good_test_package
-# this is a comment and a following empty line
-
-../test_data/2_good_test_package
-# and another comment

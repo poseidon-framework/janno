@@ -1,3 +1,0 @@
-popT indT
-popA inda
-
