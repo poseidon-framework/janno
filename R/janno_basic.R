@@ -6,8 +6,12 @@
 #' .janno files in R.
 #'
 #' @param x an object
-#' @param path character. Path to a .janno file or a directory that should be recursively searched for .janno files
-#' @param to_janno logical. Should the read function transform the input file to a janno object
+#' @param path character. Path to a .janno file or a directory that should 
+#' be recursively searched for .janno files
+#' @param to_janno logical. Should the read function transform the input 
+#' file to a janno object
+#' @param validate logical. Run the file validation as part of the reading 
+#' process
 #' @param only_header logical. Should only the header be printed.
 #' @param ... further arguments passed to or from other methods
 #' 
@@ -39,8 +43,9 @@ check_if_all_columns_present <- function(x) {
 #' @rdname janno
 #' @export
 read_janno <- function(
-  path = "test_data/1_good_test_package/file1.janno", 
-  to_janno = TRUE
+  path,
+  to_janno = TRUE,
+  validate = TRUE
 ) {
   # input checks and search for janno files
   if (strsplit(path, "\\.") %>% unlist %>% utils::tail(1) == "janno") {
@@ -51,6 +56,18 @@ read_janno <- function(
     janno_files <- list.files(path, pattern = "\\.janno", full.names = T, recursive = T)
   }
   # read files
+  if (validate) {
+    message("Running validation")
+    validation_result <- validate_janno(janno_files)
+    if (nrow(validation_result) > 0) {
+      print(validation_result)
+      message(paste0(
+        "Run validate_janno(\"", path, "\") to see the full list of issues\n"
+      ))
+    } else {
+      message("No issues with these janno files\n")
+    }
+  }
   lapply(janno_files, read_one_janno, to_janno) %>% dplyr::bind_rows()
 }
 

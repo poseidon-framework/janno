@@ -1,11 +1,19 @@
-#' validate_janno_file
-#'
-#' Validate structural aspects of .janno files.
-#'
-#' @param path Character. Path to a .janno file
-#'
+#' @rdname janno
 #' @export
-validate_janno_file <- function(path) {
+validate_janno <- function(path) {
+  # input checks and search for janno files
+  if (strsplit(path, "\\.") %>% unlist %>% utils::tail(1) == "janno") {
+    checkmate::assert_file_exists(path)
+    janno_files <- path
+  } else {
+    checkmate::assert_directory_exists(path)
+    janno_files <- list.files(path, pattern = "\\.janno", full.names = T, recursive = T)
+  }
+  # validate files
+  lapply(janno_files, validate_one_janno) %>% dplyr::bind_rows()
+}
+
+validate_one_janno <- function(path) {
   # the issues are stored in a data.frame:
   issues <- tibble::tibble(
     row = integer(),
@@ -100,6 +108,7 @@ validate_janno_file <- function(path) {
     }
   }
   # final output
+  issues$file <- basename(path)
   return(issues)
 }
 
@@ -151,10 +160,6 @@ has_leading_or_trailing_whitespace <- function(x) {
 
 is_n_a <- function(x) {
   x == "n/a"
-}
-
-position_in_table_string <- function(cur_col, cur_row) {
-  paste0("[", cur_row, " | ", cur_col, "]")
 }
 
 is_empty <- function(x) {
