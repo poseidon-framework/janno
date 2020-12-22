@@ -1,17 +1,15 @@
-#### process_age ####
-
 #' @name process_age
-#' @title Process all valid dates in a \strong{janno} table
+#' @title process_age
 #'
+#' @description Process all valid dates in a \strong{janno} table
+#' 
 #' @param x an object of class janno
 #' @param choices character vector. Which output columns should be added?
 #' @param n integer. If "Date_BC_AD_Sample" in choices, then how many samples should be drawn? Default: 100
 #' @param ... further arguments passed to or from other methods
 #' 
-#' @export
-#'
 #' @rdname process_age
-#'
+#' @export
 process_age <- function(
   x, 
   choices = c("Date_BC_AD_Prob", "Date_BC_AD_Median_Derived", "Date_BC_AD_Sample"),

@@ -1,6 +1,9 @@
-#' quickcalibrate
+#' @name quickcalibrate
+#' @title quickcalibrate
 #' 
-#' ...
+#' @description Get values for the .janno file columns Date_BC_AD_Median,
+#' Date_BC_AD_Start and Date_BC_AD_Stop from radiocarbon ages with mean
+#' and sd.
 #' 
 #' @param uncalibrated_ages_BP character. One or multiple radiocarbon date ages BP 
 #' (e.g. "3000" or "3000,3100,3050" or c("2000", "2000,2300,2100"))

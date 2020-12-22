@@ -26,7 +26,12 @@ read_janno(path = "test_data/1_good_test_package/file1.janno", to_janno = TRUE)
 \item{to_janno}{logical. Should the read function transform the input file to a janno object}
 
 \item{only_header}{logical. Should only the header be printed.}
+
+\item{suppress_na_introduced_warnings}{suppress warnings caused by data removal in
+type transformation due to wrong database entries (such as text in a number column)}
 }
 \description{
-...
+The \strong{janno} S3 class provides a data structure
+derived from \link[tibble]{tibble} to represent the content of poseidon
+.janno files in R.
 }

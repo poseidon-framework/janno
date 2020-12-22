@@ -1,19 +1,26 @@
-validate_janno <- function(input_janno) {
-  cli::cli_alert_info(basename(input_janno))
+#' validate_janno_file
+#'
+#' Validate structural aspects of .janno files.
+#'
+#' @param x Character. Path to a .janno file
+#'
+#' @export
+validate_janno_file <- function(x) {
+  cli::cli_alert_info(basename(x))
   # does it exist?
-  if ( !checkmate::test_file_exists(input_janno, access = "r", extension = "janno") ) {
+  if ( !checkmate::test_file_exists(x, access = "r", extension = "janno") ) {
     cli::cli_alert_danger("The janno file does not exist")
-    return(1)
+    stop("Validation failed.")
   }
   # does it contain tab separated columns?
-  if ( !is_tab_separated_file(input_janno) ) {
-    return(1)
+  if ( !is_tab_separated_file(x) ) {
+    stop("Validation failed.")
   }
   # read file
-  character_janno <- readr::read_tsv(input_janno, col_types = readr::cols(.default = "c"))
+  character_janno <- readr::read_tsv(x, col_types = readr::cols(.default = "c"))
   # are the necessary columns present?
   if (!has_necessary_columns(character_janno)) {
-    return(1)
+    stop("Validation failed.")
   }
   # from here onwards check conditions become less mandatory
   everything_fine_flag <- TRUE
@@ -100,9 +107,9 @@ validate_janno <- function(input_janno) {
   }
   # final output
   if ( everything_fine_flag ) {
-    return(0)
+    cli::cli_alert_success("Validation succeeded.")
   } else {
-    return(2)
+    warning("Validation indicated issues with this .janno file.")
   }
 }
 
@@ -164,8 +171,8 @@ has_necessary_columns <- function(x, columns = janno_column_names) {
 }
 
 is_tab_separated_file <- function(x) {
-  input_janno_linewise <- readr::read_lines(x, n_max = 50)
-  check <- all(grepl(".*\\t.*", input_janno_linewise))
+  x_linewise <- readr::read_lines(x, n_max = 50)
+  check <- all(grepl(".*\\t.*", x_linewise))
   if ( !check ) {
     cli::cli_alert_danger("The janno file is not a valid tab separated file with")
   }

@@ -4,10 +4,9 @@
 \name{poseidon2-package}
 \alias{poseidon2}
 \alias{poseidon2-package}
-\title{poseidon2: Poseidon v.2 Package Management}
+\title{poseidon2: Poseidon v.2 data handling in R}
 \description{
-Validation, merging, subsetting and conversion of Poseidon
-        v.2 packages both in R and on the command line.
+Interaction with Poseidon v.2 packages in R, mostly focused on .janno files.
 }
 \author{
 \strong{Maintainer}: Clemens Schmid \email{clemens@nevrome.de} (\href{https://orcid.org/0000-0003-3448-5715}{ORCID}) [copyright holder]

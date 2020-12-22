@@ -1,14 +1,18 @@
 #' @name janno
 #' @title \strong{janno}
 #'
-#' @description ...
+#' @description The \strong{janno} S3 class provides a data structure 
+#' derived from \link[tibble]{tibble} to represent the content of poseidon
+#' .janno files in R.
 #'
 #' @param x an object
 #' @param path character. Path to a .janno file or a directory that should be recursively searched for .janno files
 #' @param to_janno logical. Should the read function transform the input file to a janno object
 #' @param only_header logical. Should only the header be printed.
+#' @param suppress_na_introduced_warnings suppress warnings caused by data removal in
+#' type transformation due to wrong database entries (such as text in a number column)
 #' @param ... further arguments passed to or from other methods
-#'
+#' 
 #' @rdname janno
 #'
 NULL
@@ -25,7 +29,7 @@ as.janno <- function(x, ...) {
   x %>%
     #poseidon2::order_variables() %>%
     tibble::new_tibble(., nrow = nrow(.), class = "janno") %>%
-    poseidon2::enforce_types() %>%
+    enforce_types() %>%
     tibble::new_tibble(., nrow = nrow(.), class = "janno")
 
 }

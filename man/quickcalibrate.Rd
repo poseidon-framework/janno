@@ -14,5 +14,7 @@ quickcalibrate(uncalibrated_ages_BP, standard_deviations)
 (1 sigma ±) (e.g. "30" or "30,40,50" or c("20", "20,30,70"))}
 }
 \description{
-...
+Get values for the .janno file columns Date_BC_AD_Median,
+Date_BC_AD_Start and Date_BC_AD_Stop from radiocarbon ages with mean
+and sd.
 }

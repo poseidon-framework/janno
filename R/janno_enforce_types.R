@@ -1,23 +1,11 @@
-#' enforce_types
-#' 
-#' @param x object of class janno.
-#' @param suppress_na_introduced_warnings suppress warnings caused by data removal in
-#' type transformation due to wrong database entries (such as text in a number column)
-#' 
-#' @export
-#' @rdname enforce_types
 enforce_types <- function(x, suppress_na_introduced_warnings = TRUE) {
   UseMethod("enforce_types")
 }
 
-#' @rdname enforce_types
-#' @export
 enforce_types.default <- function(x, suppress_na_introduced_warnings = TRUE) {
   stop("x is not an object of class janno")
 }
 
-#' @rdname enforce_types
-#' @export
 enforce_types.janno <- function(x, suppress_na_introduced_warnings = TRUE) {
   
   res <- Map(

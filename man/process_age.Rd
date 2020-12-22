@@ -4,7 +4,7 @@
 \alias{process_age}
 \alias{process_age.default}
 \alias{process_age.janno}
-\title{Process all valid dates in a \strong{janno} table}
+\title{process_age}
 \usage{
 process_age(
   x,
