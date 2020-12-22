@@ -1,12 +1,4 @@
 enforce_types <- function(x, suppress_na_introduced_warnings = TRUE) {
-  UseMethod("enforce_types")
-}
-
-enforce_types.default <- function(x, suppress_na_introduced_warnings = TRUE) {
-  stop("x is not an object of class janno")
-}
-
-enforce_types.janno <- function(x, suppress_na_introduced_warnings = TRUE) {
   
   res <- Map(
     apply_col_types,

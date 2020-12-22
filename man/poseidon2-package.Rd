@@ -6,7 +6,8 @@
 \alias{poseidon2-package}
 \title{poseidon2: Poseidon v.2 data handling in R}
 \description{
-Interaction with Poseidon v.2 packages in R, mostly focused on .janno files.
+Interaction with Poseidon v.2 packages in R, mostly
+        focused on .janno files.
 }
 \author{
 \strong{Maintainer}: Clemens Schmid \email{clemens@nevrome.de} (\href{https://orcid.org/0000-0003-3448-5715}{ORCID}) [copyright holder]
