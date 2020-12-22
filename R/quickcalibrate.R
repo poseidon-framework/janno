@@ -1,6 +1,14 @@
-#' @rdname cli_modules
+#' quickcalibrate
+#' 
+#' ...
+#' 
+#' @param uncalibrated_ages_BP character. One or multiple radiocarbon date ages BP 
+#' (e.g. "3000" or "3000,3100,3050" or c("2000", "2000,2300,2100"))
+#' @param standard_deviations character. One or multiple standard deviations 
+#' (1 sigma ±) (e.g. "30" or "30,40,50" or c("20", "20,30,70"))
+#' 
 #' @export
-quickcalibrate_module <- function(uncalibrated_ages_BP, standard_deviations) {
+quickcalibrate <- function(uncalibrated_ages_BP, standard_deviations) {
   # check equal length of input
   checkmate::assert_true(length(uncalibrated_ages_BP) == length(standard_deviations))
   # transform to numeric vector if it is not already a numeric scalar

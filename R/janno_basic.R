@@ -43,7 +43,7 @@ read_janno <- function(
   to_janno = TRUE
 ) {
   # input checks and search for janno files
-  if (strsplit(path, "\\.") %>% unlist %>% tail(1) == "janno") {
+  if (strsplit(path, "\\.") %>% unlist %>% utils::tail(1) == "janno") {
     checkmate::assert_file_exists(path)
     janno_files <- path
   } else {
