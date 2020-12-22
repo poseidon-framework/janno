@@ -85,16 +85,16 @@ read_one_janno <- function(x, to_janno) {
 format.janno <- function(x, ...) {
   out_str <- list()
   # compile information
-  out_str$individuals <- paste(nrow(x), "\tIndividuals")
+  out_str$individuals <- print_number_and_name(unique(x[["Individual_ID"]]), "individuals")
   groups <- unique(sapply(x[["Group_Name"]], function(y) {y[1]}))
-  out_str$groups <- print_number_and_name(groups, "Populations")
-  out_str$countries <- print_number_and_name(unique(x[["Country"]]), "Countries")
+  out_str$groups <- print_number_and_name(groups, "populations")
+  out_str$countries <- print_number_and_name(unique(x[["Country"]]), "countries")
   out_str$age <- paste0(
-    "\tMean age BC/AD: ",
     round(mean(x[["Date_BC_AD_Median"]], na.rm = T)), " \u00B1 ",
-    round(stats::sd(x[["Date_BC_AD_Median"]], na.rm = T))
+    round(stats::sd(x[["Date_BC_AD_Median"]], na.rm = T)),
+    " mean age BC/AD"
   )
-  out_str$publications <- print_number_and_name(unique(x[["Publication_Status"]]), "Publications")
+  out_str$publications <- print_number_and_name(unique(x[["Publication_Status"]]), "publications")
   # merge information
   return_value <- paste(out_str, collapse = "\n", sep = "")
   invisible(return_value)
@@ -104,29 +104,8 @@ print_number_and_name <- function(x, name) {
   show_number <- if (length(x) > 3) {3} else {length(x)}
   paste0(
     length(x), 
-    paste0("\t", name, ": "),
-    paste0(x[1:show_number], collapse = ", "),
-    if (length(x) > 3) {", ..."}
+    paste0(" ", name)
   )
-}
-
-print_table <- function(x, name) {
-  tab <- table(x, useNA = "ifany")
-  string_tab <- paste(names(tab), tab, sep = " \u2192 ", collapse = ", ")
-  paste0(name, ": ", string_tab)
-}
-
-print_min_mean_max <- function(x, name) {
-  if (!all(is.na(x))) {
-    paste0(
-      name, ": \t", 
-      "min \u2192 ", round(min(x, na.rm = T), 3), ", ",
-      "mean \u2192 ", round(mean(x, na.rm = T), 3), ", ",
-      "max \u2192 ", round(max(x, na.rm = T), 3), " "
-    )
-  } else {
-    paste0(name, ": \t", "min \u2192 NA, mean \u2192 NA, max \u2192 NA")
-  }
 }
 
 #' @rdname janno
