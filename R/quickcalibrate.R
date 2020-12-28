@@ -5,9 +5,9 @@
 #' Date_BC_AD_Start and Date_BC_AD_Stop from radiocarbon ages with mean
 #' and sd.
 #' 
-#' @param uncalibrated_ages_BP list. List of one or multiple radiocarbon date ages BP 
+#' @param ages list. List of one or multiple radiocarbon date ages BP 
 #' (e.g. list(3000) or list(2000, c(2000, 2300, 2100)))
-#' @param standard_deviations list. One or multiple standard deviations 
+#' @param sds list. One or multiple standard deviations 
 #' (1 sigma ±) (e.g. list(30) or list(20, c(20, 30, 70)))
 #' 
 #' @export

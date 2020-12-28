@@ -7,10 +7,10 @@
 quickcalibrate(ages, sds)
 }
 \arguments{
-\item{uncalibrated_ages_BP}{list. List of one or multiple radiocarbon date ages BP
+\item{ages}{list. List of one or multiple radiocarbon date ages BP
 (e.g. list(3000) or list(2000, c(2000, 2300, 2100)))}
 
-\item{standard_deviations}{list. One or multiple standard deviations
+\item{sds}{list. One or multiple standard deviations
 (1 sigma ±) (e.g. list(30) or list(20, c(20, 30, 70)))}
 }
 \description{
