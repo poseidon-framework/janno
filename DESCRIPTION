@@ -1,6 +1,6 @@
 Package: poseidon2
 Title: Poseidon v.2 data handling in R
-Version: 0.2.27
+Version: 0.2.28
 Authors@R: c(person(given = "Clemens", family = "Schmid", role =
         c("aut", "cre", "cph"), email = "clemens@nevrome.de", comment =
         c(ORCID = "0000-0003-3448-5715")), person(given = "Ayshin",

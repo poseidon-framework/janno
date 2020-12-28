@@ -20,30 +20,30 @@ remotes::install_github('poseidon-framework/poseidon2')
 ### Read janno files
 
 ```
-my_janno <- read_janno("path/to/my/janno_file.janno")
+my_janno_object <- read_janno("path/to/my/janno_file.janno")
 ```
 
 `read_janno` also takes directories and searches recursively for `.janno` files.
 
-### Dating information processing
+### Validate janno files
+
+```
+my_janno_issues <- validate_janno("path/to/my/janno_file.janno")
+```
+
+Returns a list of issues with the respective .janno file.
+
+### Process age information in janno objects
 
 ```
 process_age(
-  my_janno,
+  my_janno_object,
   choices = c("Date_BC_AD_Prob", "Date_BC_AD_Median_Derived", "Date_BC_AD_Sample"),
   n = 100
 )
 ```
 
 Process age information stored in .janno files. E.g. apply sum calibration on radiocarbon dates to get proper median ages and to draw samples from the post-calibration probability distribution.
-
-### ...
-
-More to be developed...
-
-```
-...
-```
 
 ### Helper functions
 
@@ -56,6 +56,6 @@ Helper function for janno file preparation
 ## For developers
 
 - When pushing to this repository this [pre-commit hook shared by Robert M Flight](https://rmflight.github.io/post/package-version-increment-pre-and-post-commit-hooks) should be used to increment the R package version number in the DESCRIPTION on every commit automatically. Use `doIncrement=FALSE git commit -m "commit message"` to avoid this behaviour for individual commits.
-- `tests/testthat/poseidonTestData` is a [git submodule](https://github.blog/2016-02-01-working-with-submodules/). It mirrors a certain stage of [poseidon-framework/poseidonTestData](https://github.com/poseidon-framework/poseidonTestData) but has to be updated manually.
+- `tests/testthat/poseidonTestData` is a [git submodule](https://github.blog/2016-02-01-working-with-submodules/). It mirrors a certain state of [poseidon-framework/poseidonTestData](https://github.com/poseidon-framework/poseidonTestData) but has to be updated manually with `git pull`.
 
 
