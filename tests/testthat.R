@@ -1,4 +1,4 @@
 library(testthat)
-library(poseidon2)
+library(poseidonR)
 
-test_check("poseidon2")
+test_check("poseidonR")

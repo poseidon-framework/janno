@@ -1,18 +1,18 @@
 [![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
-[![Travis-CI Build Status](https://travis-ci.com/poseidon-framework/poseidon2.svg?branch=master)](https://travis-ci.com/poseidon-framework/poseidon2)
-[![Coverage Status](https://img.shields.io/codecov/c/github/poseidon-framework/poseidon2/master.svg)](https://codecov.io/github/poseidon-framework/poseidon2?branch=master)
+[![Travis-CI Build Status](https://travis-ci.com/poseidon-framework/poseidonR.svg?branch=master)](https://travis-ci.com/poseidon-framework/poseidonR)
+[![Coverage Status](https://img.shields.io/codecov/c/github/poseidon-framework/poseidonR/master.svg)](https://codecov.io/github/poseidon-framework/poseidonR?branch=master)
 
-# poseidon2
+# poseidonR
 
-poseidon2 provides a dedicated R S3 class `janno` that inherits from `tibble` and allows to tidily read and manipulate `.janno` files.
+poseidonR provides a dedicated R S3 class `janno` that inherits from `tibble` and allows to tidily read and manipulate `.janno` files.
 
 ## Installation
 
-Install the poseidon2 package from github with the following command in R:
+Install the poseidonR package from github with the following command in R:
 
 ```
 if(!require('remotes')) install.packages('remotes')
-remotes::install_github('poseidon-framework/poseidon2')
+remotes::install_github('poseidon-framework/poseidonR')
 ```
 
 ## Quickstart
