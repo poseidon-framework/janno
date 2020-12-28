@@ -1,7 +1,6 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
 ^LICENSE\.md$
-^test_data$
 ^singularity$
 ^data-raw$
 ^\.travis\.yml$
