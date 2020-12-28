@@ -6,3 +6,4 @@
 ^\.travis\.yml$
 ^discussion$
 ^anno2janno$
+^tests/testthat/poseidonTestData/\.git$
