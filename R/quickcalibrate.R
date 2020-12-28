@@ -5,30 +5,21 @@
 #' Date_BC_AD_Start and Date_BC_AD_Stop from radiocarbon ages with mean
 #' and sd.
 #' 
-#' @param uncalibrated_ages_BP character. One or multiple radiocarbon date ages BP 
-#' (e.g. "3000" or "3000,3100,3050" or c("2000", "2000,2300,2100"))
-#' @param standard_deviations character. One or multiple standard deviations 
-#' (1 sigma ±) (e.g. "30" or "30,40,50" or c("20", "20,30,70"))
+#' @param uncalibrated_ages_BP list. List of one or multiple radiocarbon date ages BP 
+#' (e.g. list(3000) or list(2000, c(2000, 2300, 2100)))
+#' @param standard_deviations list. One or multiple standard deviations 
+#' (1 sigma ±) (e.g. list(30) or list(20, c(20, 30, 70)))
 #' 
 #' @export
-quickcalibrate <- function(uncalibrated_ages_BP, standard_deviations) {
+quickcalibrate <- function(ages, sds) {
   # check equal length of input
-  checkmate::assert_true(length(uncalibrated_ages_BP) == length(standard_deviations))
-  # transform to numeric vector if it is not already a numeric scalar
-  ages_list <- lapply(uncalibrated_ages_BP, function(x){
-    if (grepl(",", x)) { y <- as.integer(unlist(strsplit(x, ","))) } else { y <- as.integer(x) }
-  })
-  sds_list <- lapply(standard_deviations, function(x){
-    if (grepl(",", x)) { y <- as.integer(unlist(strsplit(x, ","))) } else { y <- as.integer(x) }
-  })
+  checkmate::assert_true(length(ages) == length(sds))
   # check input
-  sapply(unlist(ages_list), function(x) { checkmate::assert_count(x) })
-  sapply(unlist(sds_list), function(x) { checkmate::assert_count(x) })
-  Map(function(x,y) { checkmate::assert_true(length(x) == length(y)) }, ages_list, sds_list)
+  sapply(unlist(ages), function(x) { checkmate::assert_count(x) })
+  sapply(unlist(sds), function(x) { checkmate::assert_count(x) })
+  Map(function(x,y) { checkmate::assert_true(length(x) == length(y)) }, ages, sds)
   # run sumcalibration
-  sumcul_res_list <- Map(function(x,y) { sumcal(x, y) }, ages_list, sds_list)
-  # start message
-  quickcalibrate_start_message()
+  sumcul_res_list <- Map(function(x,y) { sumcal(x, y) }, ages, sds)
   # prepare output table
   result_table <- lapply(sumcul_res_list, function(x) {
     data.frame(
@@ -37,15 +28,8 @@ quickcalibrate <- function(uncalibrated_ages_BP, standard_deviations) {
       Date_BC_AD_Stop = utils::tail(x[["age"]][x[["two_sigma"]]], 1)
     )
   }) %>% dplyr::bind_rows()
-  # print output
-  utils::write.table(result_table, row.names = F, quote = F, sep = '\t')
-}
-
-quickcalibrate_start_message <- function() {
-  cli::cli_h1(paste(
-    "quickcalibrate => Simplifies filling the .janno file dating columns"
-  ))
-  cat("\n")
+  # return output
+  return(result_table)
 }
 
 sumcal <- function(xs, errs) {

@@ -4,14 +4,14 @@
 \alias{quickcalibrate}
 \title{quickcalibrate}
 \usage{
-quickcalibrate(uncalibrated_ages_BP, standard_deviations)
+quickcalibrate(ages, sds)
 }
 \arguments{
-\item{uncalibrated_ages_BP}{character. One or multiple radiocarbon date ages BP
-(e.g. "3000" or "3000,3100,3050" or c("2000", "2000,2300,2100"))}
+\item{uncalibrated_ages_BP}{list. List of one or multiple radiocarbon date ages BP
+(e.g. list(3000) or list(2000, c(2000, 2300, 2100)))}
 
-\item{standard_deviations}{character. One or multiple standard deviations
-(1 sigma ±) (e.g. "30" or "30,40,50" or c("20", "20,30,70"))}
+\item{standard_deviations}{list. One or multiple standard deviations
+(1 sigma ±) (e.g. list(30) or list(20, c(20, 30, 70)))}
 }
 \description{
 Get values for the .janno file columns Date_BC_AD_Median,
