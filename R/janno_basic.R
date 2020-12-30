@@ -4,6 +4,7 @@
 #' @description The \strong{janno} S3 class provides a data structure 
 #' derived from \link[tibble]{tibble} to represent the content of Poseidon
 #' .janno files in R.
+#' See the package README for more information.
 #'
 #' @param x an object
 #' @param path character vector. Paths to one or multiple .janno files or 

@@ -50,6 +50,10 @@ my_janno_issues <- validate_janno("path/to/my/janno_file.janno")
 
 ### Process age information in janno objects
 
+`.janno` files contain age information in multiple different columns. The function `poseidonR::process_age()` works with this age information to calculate different derived columns, which are then added to the input `janno` object. 
+
+You can run it with
+
 ```
 process_age(
   my_janno_object,
@@ -58,7 +62,28 @@ process_age(
 )
 ```
 
-Process age information stored in .janno files. E.g. apply sum calibration on radiocarbon dates to get proper median ages and to draw samples from the post-calibration probability distribution.
+The `choices` argument contains the list of columns that should be calculated and added. `n` is the number of samples that should be drawn for `Date_BC_AD_Sample`.
+
+#### Output column `Date_BC_AD_Prob`
+
+`Date_BC_AD_Prob` is a list column with a data.frame for each `janno` row ("samples"). This data.frame stores a density distribution (`sum_dens`) over a set of years (`age`) with the information of a given year is within two standard deviations (`two_sigma`) from the median age (`center`). 
+
+| age   | sum_dens   | two_sigma | center |
+|-------|------------|-----------|--------|
+| -1506 | 0.00000456 | FALSE     | FALSE  |
+| -1505 | 0.00000622 | FALSE     | FALSE  |
+| -1504 | 0.00000907 | FALSE     | FALSE  |
+| ...   | ...        | ...       | ...    |
+
+The density distributions are either the result of (sum) calibration on radiocarbon dates or -- for samples that are only contextually dated -- a uniform distribution over the archaeologically determined age.
+
+#### Output column `Date_BC_AD_Median_Derived`
+
+`Date_BC_AD_Median_Derived` is a simple integer column with the median age (in years) as determined for `Date_BC_AD_Prob`.
+
+#### Output column `Date_BC_AD_Sample`
+
+`Date_BC_AD_Sample` is again a list column with a vector of `n` ages (in years) for each sample. These ages are drawn with `sample(prob = ...)` considering the probability distribution calculated for `Date_BC_AD_Prob`.
 
 ### Helper functions
 
