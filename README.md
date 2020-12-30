@@ -1,10 +1,11 @@
 [![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
+![GitHub R package version](https://img.shields.io/github/r-package/v/poseidon-framework/poseidonR)
 [![Travis-CI Build Status](https://travis-ci.com/poseidon-framework/poseidonR.svg?branch=master)](https://travis-ci.com/poseidon-framework/poseidonR)
 [![Coverage Status](https://img.shields.io/codecov/c/github/poseidon-framework/poseidonR/master.svg)](https://codecov.io/github/poseidon-framework/poseidonR?branch=master)
 
 # poseidonR
 
-poseidonR provides a dedicated R S3 class `janno` that inherits from `tibble` and allows to tidily read and manipulate `.janno` files.
+poseidonR is an R package to simplify the interaction with Poseidon packages. So far it mostly focusses on `.janno` files and provides a dedicated R S3 class `janno` that inherits from `tibble` and allows to tidily read and manipulate the context information stored in them.
 
 ## Installation
 
@@ -19,11 +20,23 @@ remotes::install_github('poseidon-framework/poseidonR')
 
 ### Read janno files
 
+You can read `.janno` files with
+
 ```
-my_janno_object <- read_janno("path/to/my/janno_file.janno")
+my_janno_object <- poseidonR::read_janno(
+  path = "path/to/my/janno_file.janno",
+  to_janno = TRUE,
+  validate = TRUE
+)
 ```
 
-`read_janno` also takes directories and searches recursively for `.janno` files.
+The path argument takes one or multiple file paths or directory paths. `read_janno()` searches recursively for `.janno` files in the directory paths.
+
+Before loading the `.janno` files are validated with `poseidonR::validate_janno()`. You can avoid this potentially time consuming step with `validate = FALSE`.
+
+Usually the `.janno` files are loaded as normal `.tsv` files with every column type set to `character` and then the columns are transformed to the intended types. This transformation can be turned off with `to_janno = FALSE`.
+
+`read_janno()` returns an object of class `janno`.
 
 ### Validate janno files
 
