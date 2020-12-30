@@ -10,7 +10,7 @@
 \alias{validate_janno}
 \title{\strong{janno}}
 \usage{
-as.janno(x, ...)
+as.janno(x, source_janno_file = NA_character_, ...)
 
 \method{format}{janno}(x, ...)
 
@@ -22,6 +22,8 @@ validate_janno(path)
 }
 \arguments{
 \item{x}{an object}
+
+\item{source_janno_file}{character. Path to the source .janno file.}
 
 \item{...}{further arguments passed to or from other methods}
 

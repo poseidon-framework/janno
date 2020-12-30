@@ -30,3 +30,14 @@ get_janno_file_paths <- function(path) {
     }
   ) %>% unlist()
 }
+
+get_last_two_elements_of_path <- function(x) {
+  if (is.na(x)) {
+    x
+  } else {
+    file.path(
+      basename(dirname(x)),
+      basename(x)
+    )
+  }
+}

@@ -1,6 +1,7 @@
 #' @rdname janno
 #' @export
 validate_janno <- function(path) {
+  message("Validating .janno files...")
   # input checks and search for janno files
   janno_file_paths <- get_janno_file_paths(path)
   # validate files
@@ -102,8 +103,9 @@ validate_one_janno <- function(path) {
     }
   }
   # final output
-  issues$file <- basename(path)
-  return(issues)
+  source_janno_short <- get_last_two_elements_of_path(path)
+  issues %>%
+    tibble::add_column(source_file = source_janno_short, .before = 1)
 }
 
 check_if_file_exists <- function(x) {
