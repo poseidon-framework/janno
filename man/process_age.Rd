@@ -28,11 +28,13 @@ process_age(
 )
 }
 \arguments{
-\item{x}{an object of class janno}
+\item{x}{an object of class \strong{janno}}
 
-\item{choices}{character vector. Which output columns should be added?}
+\item{choices}{character vector. Which output columns should be added?
+By default all possible columns are added.}
 
-\item{n}{integer. If "Date_BC_AD_Sample" in choices, then how many samples should be drawn? Default: 100}
+\item{n}{integer. If "Date_BC_AD_Sample" is in \code{choices},
+then how many samples should be drawn?}
 
 \item{...}{further arguments passed to or from other methods}
 }
