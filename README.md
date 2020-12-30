@@ -43,7 +43,7 @@ Usually the `.janno` files are loaded as normal `.tsv` files with every column t
 You can validate `.janno` files with
 
 ```
-my_janno_issues <- validate_janno("path/to/my/janno_file.janno")
+my_janno_issues <- poseidonR::validate_janno("path/to/my/janno_file.janno")
 ```
 
 `validate_janno` returns a tibble with issues in the respective `.janno` files.
@@ -55,7 +55,7 @@ my_janno_issues <- validate_janno("path/to/my/janno_file.janno")
 You can run it with
 
 ```
-process_age(
+poseidonR::process_age(
   my_janno_object,
   choices = c("Date_BC_AD_Prob", "Date_BC_AD_Median_Derived", "Date_BC_AD_Sample"),
   n = 100
@@ -87,11 +87,22 @@ The density distributions are either the result of (sum) calibration on radiocar
 
 ### Helper functions
 
+When you're preparing a `.janno` file and want to determine the entries for the columns `Date_BC_AD_Median`, `Date_BC_AD_Start` and `Date_BC_AD_Stop` from radiocarbon dates, then `poseidonR::quickcalibrate()` might come in handy.
+
 ```
-quickcalibrate()
+poseidonR::quickcalibrate(ages, sds)
 ```
 
-Helper function for janno file preparation
+`ages` takes a list of uncalibrated ages BP and `sds` a list of standard deviations. If multiple ages are provided for one sample, then the function automatically performs a sum calibration. 
+
+`quickcalibrate(list(1000, c(2000, 3000)), list(20, c(30, 40)))` for example returns a data.frame like this: 
+
+| Date_BC_AD_Median | Date_BC_AD_Start | Date_BC_AD_Stop |
+|-------------------|------------------|-----------------|
+| 1029              | 996              | 1144            |
+| -153              | -1370            | -165            |
+
+This output can be copied to the new `.janno` file.
 
 ## For developers
 

@@ -39,5 +39,6 @@ then how many samples should be drawn?}
 \item{...}{further arguments passed to or from other methods}
 }
 \description{
-Process all valid dates in a \strong{janno} table
+Process all valid dates in a \strong{janno} table.
+See the package README for more information.
 }

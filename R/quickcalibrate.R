@@ -4,6 +4,7 @@
 #' @description Get values for the .janno file columns Date_BC_AD_Median,
 #' Date_BC_AD_Start and Date_BC_AD_Stop from radiocarbon ages with mean
 #' and sd.
+#' See the package README for more information.
 #' 
 #' @param ages list. List of one or multiple radiocarbon date ages BP 
 #' (e.g. list(3000) or list(2000, c(2000, 2300, 2100)))
