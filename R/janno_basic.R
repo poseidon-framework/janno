@@ -50,17 +50,27 @@ check_if_all_columns_present <- function(x) {
 format.janno <- function(x, ...) {
   out_str <- list()
   # compile information
-  out_str$source_files <- print_number_and_name(unique(x[["source_file"]]), "files")
-  out_str$individuals <- print_number_and_name(unique(x[["Individual_ID"]]), "individuals")
-  groups <- unique(sapply(x[["Group_Name"]], function(y) {y[1]}))
-  out_str$groups <- print_number_and_name(groups, "populations")
-  out_str$countries <- print_number_and_name(unique(x[["Country"]]), "countries")
-  out_str$age <- paste0(
-    round(mean(x[["Date_BC_AD_Median"]], na.rm = T)), " \u00B1 ",
-    round(stats::sd(x[["Date_BC_AD_Median"]], na.rm = T)),
-    " mean age BC/AD"
+  out_str$title <- "\033[1mjanno object\033[22m"
+  out_str$first_row <- paste(
+    print_number_and_name(unique(x[["source_file"]]), "files"), 
+    "|",
+    print_number_and_name(unique(x[["Publication_Status"]]), "publications")
   )
-  out_str$publications <- print_number_and_name(unique(x[["Publication_Status"]]), "publications")
+  groups <- unique(sapply(x[["Group_Name"]], function(y) {y[1]}))
+  out_str$second_row <- paste(
+    print_number_and_name(unique(x[["Individual_ID"]]), "individuals"),
+    "|",
+    print_number_and_name(groups, "populations")
+  )
+  out_str$third_row <- paste(
+    print_number_and_name(unique(x[["Country"]]), "countries"),
+    "|",
+    paste0(
+      round(mean(x[["Date_BC_AD_Median"]], na.rm = T)), " \u00B1 ",
+      round(stats::sd(x[["Date_BC_AD_Median"]], na.rm = T)),
+      " mean age BC/AD"
+    )
+  )
   # merge information
   return_value <- paste(out_str, collapse = "\n", sep = "")
   invisible(return_value)
