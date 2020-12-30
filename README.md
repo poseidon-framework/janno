@@ -40,11 +40,13 @@ Usually the `.janno` files are loaded as normal `.tsv` files with every column t
 
 ### Validate janno files
 
+You can validate `.janno` files with
+
 ```
 my_janno_issues <- validate_janno("path/to/my/janno_file.janno")
 ```
 
-Returns a list of issues with the respective .janno file.
+`validate_janno` returns a tibble with issues in the respective `.janno` files.
 
 ### Process age information in janno objects
 
