@@ -6,7 +6,7 @@
         "names": {
           "type": "character",
           "attributes": {},
-          "value": ["row", "column", "value", "issue", "file"]
+          "value": ["source_file", "row", "column", "value", "issue"]
         },
         "row.names": {
           "type": "integer",
@@ -21,12 +21,12 @@
       },
       "value": [
         {
-          "type": "integer",
+          "type": "character",
           "attributes": {},
           "value": []
         },
         {
-          "type": "character",
+          "type": "integer",
           "attributes": {},
           "value": []
         },
@@ -56,7 +56,7 @@
         "names": {
           "type": "character",
           "attributes": {},
-          "value": ["row", "column", "value", "issue", "file"]
+          "value": ["source_file", "row", "column", "value", "issue"]
         },
         "row.names": {
           "type": "integer",
@@ -71,12 +71,12 @@
       },
       "value": [
         {
-          "type": "integer",
+          "type": "character",
           "attributes": {},
           "value": []
         },
         {
-          "type": "character",
+          "type": "integer",
           "attributes": {},
           "value": []
         },
@@ -106,7 +106,7 @@
         "names": {
           "type": "character",
           "attributes": {},
-          "value": ["row", "column", "value", "issue", "file"]
+          "value": ["source_file", "row", "column", "value", "issue"]
         },
         "row.names": {
           "type": "integer",
@@ -120,6 +120,11 @@
         }
       },
       "value": [
+        {
+          "type": "character",
+          "attributes": {},
+          "value": ["testJannoFiles/borked.janno", "testJannoFiles/borked.janno", "testJannoFiles/borked.janno", "testJannoFiles/borked.janno", "testJannoFiles/borked.janno", "testJannoFiles/borked.janno", "testJannoFiles/borked.janno", "testJannoFiles/borked.janno", "testJannoFiles/borked.janno", "testJannoFiles/borked.janno", "testJannoFiles/borked.janno", "testJannoFiles/borked.janno", "testJannoFiles/borked.janno", "testJannoFiles/borked.janno", "testJannoFiles/borked.janno", "testJannoFiles/borked.janno", "testJannoFiles/borked.janno", "testJannoFiles/borked.janno", "testJannoFiles/borked.janno", "testJannoFiles/borked.janno", "testJannoFiles/borked.janno", "testJannoFiles/borked.janno"]
+        },
         {
           "type": "integer",
           "attributes": {},
@@ -139,11 +144,6 @@
           "type": "character",
           "attributes": {},
           "value": ["n/a in a mandatory column", "One or multiple values not in range -90 to 90", "One or multiple values not in range -180 to 180", "One or multiple values are not valid integer numbers", "One or multiple values are not valid integer numbers", "One or multiple values are not valid integer numbers", "At least one value not in C14, contextual, modern", "One or multiple values are not valid integer numbers", "At least one value not in Shotgun, 1240K, OtherCapture, ReferenceGenome", "At least one value not in diploid, haploid", "n/a in a mandatory column", "n/a in a mandatory column", "One or multiple values are not valid integer numbers", "One or multiple values are not valid floating point numbers", "One or multiple values are not valid floating point numbers", "At least one value not in minus, half, plus, mixed", "At least one value not in ds, ss, other", "One or multiple values are not valid floating point numbers", "One or multiple values are not valid floating point numbers", "One or multiple values are not valid floating point numbers", "One or multiple values are not valid floating point numbers", "One or multiple values are not valid floating point numbers"]
-        },
-        {
-          "type": "character",
-          "attributes": {},
-          "value": ["borked.janno", "borked.janno", "borked.janno", "borked.janno", "borked.janno", "borked.janno", "borked.janno", "borked.janno", "borked.janno", "borked.janno", "borked.janno", "borked.janno", "borked.janno", "borked.janno", "borked.janno", "borked.janno", "borked.janno", "borked.janno", "borked.janno", "borked.janno", "borked.janno", "borked.janno"]
         }
       ]
     }

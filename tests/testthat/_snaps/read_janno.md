@@ -6,7 +6,7 @@
         "names": {
           "type": "character",
           "attributes": {},
-          "value": ["Individual_ID", "Collection_ID", "Source_Tissue", "Country", "Location", "Site", "Latitude", "Longitude", "Date_C14_Labnr", "Date_C14_Uncal_BP", "Date_C14_Uncal_BP_Err", "Date_BC_AD_Median", "Date_BC_AD_Start", "Date_BC_AD_Stop", "Date_Type", "No_of_Libraries", "Data_Type", "Genotype_Ploidy", "Group_Name", "Genetic_Sex", "Nr_autosomal_SNPs", "Coverage_1240K", "MT_Haplogroup", "Y_Haplogroup", "Endogenous", "UDG", "Library_Built", "Damage", "Xcontam", "Xcontam_stderr", "mtContam", "mtContam_stderr", "Primary_Contact", "Publication_Status", "Note", "Keywords"]
+          "value": ["source_file", "Individual_ID", "Collection_ID", "Source_Tissue", "Country", "Location", "Site", "Latitude", "Longitude", "Date_C14_Labnr", "Date_C14_Uncal_BP", "Date_C14_Uncal_BP_Err", "Date_BC_AD_Median", "Date_BC_AD_Start", "Date_BC_AD_Stop", "Date_Type", "No_of_Libraries", "Data_Type", "Genotype_Ploidy", "Group_Name", "Genetic_Sex", "Nr_autosomal_SNPs", "Coverage_1240K", "MT_Haplogroup", "Y_Haplogroup", "Endogenous", "UDG", "Library_Built", "Damage", "Xcontam", "Xcontam_stderr", "mtContam", "mtContam_stderr", "Primary_Contact", "Publication_Status", "Note", "Keywords"]
         },
         "row.names": {
           "type": "integer",
@@ -20,6 +20,11 @@
         }
       },
       "value": [
+        {
+          "type": "character",
+          "attributes": {},
+          "value": ["testJannoFiles/minimal.janno", "testJannoFiles/minimal.janno", "testJannoFiles/minimal.janno"]
+        },
         {
           "type": "character",
           "attributes": {},
@@ -323,7 +328,7 @@
         "names": {
           "type": "character",
           "attributes": {},
-          "value": ["Individual_ID", "Collection_ID", "Source_Tissue", "Country", "Location", "Site", "Latitude", "Longitude", "Date_C14_Labnr", "Date_C14_Uncal_BP", "Date_C14_Uncal_BP_Err", "Date_BC_AD_Median", "Date_BC_AD_Start", "Date_BC_AD_Stop", "Date_Type", "No_of_Libraries", "Data_Type", "Genotype_Ploidy", "Group_Name", "Genetic_Sex", "Nr_autosomal_SNPs", "Coverage_1240K", "MT_Haplogroup", "Y_Haplogroup", "Endogenous", "UDG", "Library_Built", "Damage", "Xcontam", "Xcontam_stderr", "mtContam", "mtContam_stderr", "Primary_Contact", "Publication_Status", "Note", "Keywords"]
+          "value": ["source_file", "Individual_ID", "Collection_ID", "Source_Tissue", "Country", "Location", "Site", "Latitude", "Longitude", "Date_C14_Labnr", "Date_C14_Uncal_BP", "Date_C14_Uncal_BP_Err", "Date_BC_AD_Median", "Date_BC_AD_Start", "Date_BC_AD_Stop", "Date_Type", "No_of_Libraries", "Data_Type", "Genotype_Ploidy", "Group_Name", "Genetic_Sex", "Nr_autosomal_SNPs", "Coverage_1240K", "MT_Haplogroup", "Y_Haplogroup", "Endogenous", "UDG", "Library_Built", "Damage", "Xcontam", "Xcontam_stderr", "mtContam", "mtContam_stderr", "Primary_Contact", "Publication_Status", "Note", "Keywords"]
         },
         "row.names": {
           "type": "integer",
@@ -337,6 +342,11 @@
         }
       },
       "value": [
+        {
+          "type": "character",
+          "attributes": {},
+          "value": ["testJannoFiles/normal.janno", "testJannoFiles/normal.janno", "testJannoFiles/normal.janno"]
+        },
         {
           "type": "character",
           "attributes": {},
@@ -640,7 +650,7 @@
         "names": {
           "type": "character",
           "attributes": {},
-          "value": ["Individual_ID", "Collection_ID", "Source_Tissue", "Country", "Location", "Site", "Latitude", "Longitude", "Date_C14_Labnr", "Date_C14_Uncal_BP", "Date_C14_Uncal_BP_Err", "Date_BC_AD_Median", "Date_BC_AD_Start", "Date_BC_AD_Stop", "Date_Type", "No_of_Libraries", "Data_Type", "Genotype_Ploidy", "Group_Name", "Genetic_Sex", "Nr_autosomal_SNPs", "Coverage_1240K", "MT_Haplogroup", "Y_Haplogroup", "Endogenous", "UDG", "Library_Built", "Damage", "Xcontam", "Xcontam_stderr", "mtContam", "mtContam_stderr", "Primary_Contact", "Publication_Status", "Note", "Keywords"]
+          "value": ["source_file", "Individual_ID", "Collection_ID", "Source_Tissue", "Country", "Location", "Site", "Latitude", "Longitude", "Date_C14_Labnr", "Date_C14_Uncal_BP", "Date_C14_Uncal_BP_Err", "Date_BC_AD_Median", "Date_BC_AD_Start", "Date_BC_AD_Stop", "Date_Type", "No_of_Libraries", "Data_Type", "Genotype_Ploidy", "Group_Name", "Genetic_Sex", "Nr_autosomal_SNPs", "Coverage_1240K", "MT_Haplogroup", "Y_Haplogroup", "Endogenous", "UDG", "Library_Built", "Damage", "Xcontam", "Xcontam_stderr", "mtContam", "mtContam_stderr", "Primary_Contact", "Publication_Status", "Note", "Keywords"]
         },
         "row.names": {
           "type": "integer",
@@ -654,6 +664,11 @@
         }
       },
       "value": [
+        {
+          "type": "character",
+          "attributes": {},
+          "value": ["testJannoFiles/borked.janno", "testJannoFiles/borked.janno", "testJannoFiles/borked.janno", "testJannoFiles/borked.janno", "testJannoFiles/borked.janno", "testJannoFiles/borked.janno", "testJannoFiles/borked.janno", "testJannoFiles/borked.janno", "testJannoFiles/borked.janno", "testJannoFiles/borked.janno", "testJannoFiles/borked.janno", "testJannoFiles/borked.janno", "testJannoFiles/borked.janno", "testJannoFiles/borked.janno", "testJannoFiles/borked.janno", "testJannoFiles/borked.janno", "testJannoFiles/borked.janno", "testJannoFiles/borked.janno", "testJannoFiles/borked.janno", "testJannoFiles/borked.janno", "testJannoFiles/borked.janno", "testJannoFiles/borked.janno", "testJannoFiles/borked.janno"]
+        },
         {
           "type": "character",
           "attributes": {},
