@@ -18,7 +18,7 @@ read_janno <- function(
         ")\n"
       ))
     } else {
-      message("No issues with these .janno files\n")
+      message("No issues with these .janno files")
     }
   }
   message("Reading .janno files...")
