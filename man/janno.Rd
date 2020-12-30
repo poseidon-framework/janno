@@ -27,8 +27,8 @@ validate_janno(path)
 
 \item{only_header}{logical. Should only the header be printed.}
 
-\item{path}{character. Path to a .janno file or a directory that should
-be recursively searched for .janno files}
+\item{path}{character vector. Paths to one or multiple .janno files or
+directories that should be recursively searched for .janno files}
 
 \item{to_janno}{logical. Should the read function transform the input
 file to a janno object}
@@ -38,6 +38,6 @@ process}
 }
 \description{
 The \strong{janno} S3 class provides a data structure
-derived from \link[tibble]{tibble} to represent the content of poseidon
+derived from \link[tibble]{tibble} to represent the content of Poseidon
 .janno files in R.
 }

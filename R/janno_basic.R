@@ -2,12 +2,12 @@
 #' @title \strong{janno}
 #'
 #' @description The \strong{janno} S3 class provides a data structure 
-#' derived from \link[tibble]{tibble} to represent the content of poseidon
+#' derived from \link[tibble]{tibble} to represent the content of Poseidon
 #' .janno files in R.
 #'
 #' @param x an object
-#' @param path character. Path to a .janno file or a directory that should 
-#' be recursively searched for .janno files
+#' @param path character vector. Paths to one or multiple .janno files or 
+#' directories that should be recursively searched for .janno files
 #' @param to_janno logical. Should the read function transform the input 
 #' file to a janno object
 #' @param validate logical. Run the file validation as part of the reading 

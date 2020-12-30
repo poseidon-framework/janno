@@ -6,27 +6,23 @@ read_janno <- function(
   validate = TRUE
 ) {
   # input checks and search for janno files
-  if (strsplit(path, "\\.") %>% unlist %>% utils::tail(1) == "janno") {
-    checkmate::assert_file_exists(path)
-    janno_files <- path
-  } else {
-    checkmate::assert_directory_exists(path)
-    janno_files <- list.files(path, pattern = "\\.janno", full.names = T, recursive = T)
-  }
+  janno_file_paths <- get_janno_file_paths(path)
   # read files
   if (validate) {
     message("Running validation")
-    validation_result <- validate_janno(janno_files)
+    validation_result <- validate_janno(janno_file_paths)
     if (nrow(validation_result) > 0) {
       print(validation_result)
       message(paste0(
-        "Run validate_janno(\"", path, "\") to get the table of issues\n"
+        "Run this to get the table of issues: \nposeidonR::validate_janno(",
+        paste(utils::capture.output(dput(path)), collapse = ""),
+        ")\n"
       ))
     } else {
       message("No issues with these janno files\n")
     }
   }
-  lapply(janno_files, read_one_janno, to_janno) %>% dplyr::bind_rows()
+  lapply(janno_file_paths, read_one_janno, to_janno) %>% dplyr::bind_rows()
 }
 
 read_one_janno <- function(x, to_janno) {

@@ -2,15 +2,9 @@
 #' @export
 validate_janno <- function(path) {
   # input checks and search for janno files
-  if (strsplit(path, "\\.") %>% unlist %>% utils::tail(1) == "janno") {
-    checkmate::assert_file_exists(path)
-    janno_files <- path
-  } else {
-    checkmate::assert_directory_exists(path)
-    janno_files <- list.files(path, pattern = "\\.janno", full.names = T, recursive = T)
-  }
+  janno_file_paths <- get_janno_file_paths(path)
   # validate files
-  lapply(janno_files, validate_one_janno) %>% dplyr::bind_rows()
+  lapply(janno_file_paths, validate_one_janno) %>% dplyr::bind_rows()
 }
 
 validate_one_janno <- function(path) {
