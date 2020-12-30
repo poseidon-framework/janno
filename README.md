@@ -95,12 +95,12 @@ poseidonR::quickcalibrate(ages, sds)
 
 `ages` takes a list of uncalibrated ages BP and `sds` a list of standard deviations. If multiple ages are provided for one sample, then the function automatically performs a sum calibration. 
 
-`quickcalibrate(list(1000, c(2000, 3000)), list(20, c(30, 40)))` for example returns a data.frame like this: 
+`quickcalibrate(list(1000, c(2000, 2200)), list(20, c(30, 40)))` for example returns a data.frame like this: 
 
 | Date_BC_AD_Median | Date_BC_AD_Start | Date_BC_AD_Stop |
 |-------------------|------------------|-----------------|
 | 1029              | 996              | 1144            |
-| -153              | -1370            | -165            |
+| -88               | -364             | 98              |
 
 This output can be copied to the new `.janno` file.
 
