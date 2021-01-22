@@ -7,6 +7,14 @@
 
 poseidonR is an R package to simplify the interaction with Poseidon packages. So far it mostly focusses on `.janno` files and provides a dedicated R S3 class `janno` that inherits from `tibble` and allows to tidily read and manipulate the context information stored in them.
 
+* [Installation](#installation)
+* [Quickstart](#quickstart)
+  + [Read janno files](#read-janno-files)
+  + [Validate janno files](#validate-janno-files)
+  + [Process age information in janno objects](#process-age-information-in-janno-objects)
+  + [General helper functions](#general-helper-functions)
+* [For developers](#for-developers)
+
 ## Installation
 
 Install the poseidonR package from github with the following command in R:
@@ -85,7 +93,7 @@ The density distributions are either the result of (sum) calibration on radiocar
 
 `Date_BC_AD_Sample` is again a list column with a vector of `n` ages (in years) for each sample. These ages are drawn with `sample(prob = ...)` considering the probability distribution calculated for `Date_BC_AD_Prob`.
 
-### Helper functions
+### General helper functions
 
 When you're preparing a `.janno` file and want to determine the entries for the columns `Date_BC_AD_Median`, `Date_BC_AD_Start` and `Date_BC_AD_Stop` from radiocarbon dates, then `poseidonR::quickcalibrate()` might come in handy.
 
