@@ -1,3 +1,0 @@
-[submodule "tests/testthat/poseidonTestData"]
-	path = tests/testthat/poseidonTestData
-	url = https://github.com/poseidon-framework/poseidonTestData.git
