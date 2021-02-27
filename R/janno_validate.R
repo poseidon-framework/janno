@@ -170,7 +170,7 @@ has_duplicates <- function(x, co) {
   length(unique(x[[co$column]])) != length(x[[co$column]])
 }
 
-has_necessary_columns <- function(x, columns = janno_column_names) {
+has_necessary_columns <- function(x, columns = janno_mandatory_columns) {
   check <- all(columns %in% colnames(x))
   if ( !check ) {
     return(paste(

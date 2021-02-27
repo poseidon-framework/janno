@@ -27,7 +27,7 @@ as.janno <- function(x, source_janno_file = NA_character_, ...) {
   
   # input checks
   checkmate::assert_data_frame(x)
-  check_if_all_columns_present(x)
+  check_if_all_mandatory_columns_present(x)
   
   # extract last two elements of file path in source_janno_file
   source_janno_short <- get_last_two_elements_of_path(source_janno_file)
@@ -40,8 +40,8 @@ as.janno <- function(x, source_janno_file = NA_character_, ...) {
 
 }
 
-check_if_all_columns_present <- function(x) {
-  if ( !all(janno_column_names %in% names(x)) ) {
+check_if_all_mandatory_columns_present <- function(x) {
+  if ( !all(janno_mandatory_columns %in% names(x)) ) {
     stop("columns missing")
   }
 }
@@ -52,25 +52,14 @@ format.janno <- function(x, ...) {
   out_str <- list()
   # compile information
   out_str$title <- "\033[1mjanno object\033[22m"
-  out_str$first_row <- paste(
-    print_number_and_name(unique(x[["source_file"]]), "files"), 
-    "|",
-    print_number_and_name(unique(x[["Publication_Status"]]), "publications")
-  )
   groups <- unique(sapply(x[["Group_Name"]], function(y) {y[1]}))
-  out_str$second_row <- paste(
+  sex <- table(x[["Genetic_Sex"]])
+  out_str$first_row <- paste(
     print_number_and_name(unique(x[["Individual_ID"]]), "individuals"),
     "|",
-    print_number_and_name(groups, "populations")
-  )
-  out_str$third_row <- paste(
-    print_number_and_name(unique(x[["Country"]]), "countries"),
+    print_number_and_name(groups, "populations"),
     "|",
-    paste0(
-      round(mean(x[["Date_BC_AD_Median"]], na.rm = T)), " \u00B1 ",
-      round(stats::sd(x[["Date_BC_AD_Median"]], na.rm = T)),
-      " mean age BC/AD"
-    )
+    paste(Map(function(x, y) {paste0(x, ": ", y)}, names(sex), sex), collapse = ", ")
   )
   # merge information
   return_value <- paste(out_str, collapse = "\n", sep = "")
