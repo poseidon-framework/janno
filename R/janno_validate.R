@@ -27,10 +27,7 @@ validate_one_janno <- function(path) {
   # read file
   character_janno <- readr::read_tsv(path, col_types = readr::cols(.default = readr::col_character()))
   # are the necessary columns present?
-  column_check <- has_necessary_columns(character_janno)
-  if (!is.na(column_check)) {
-    stop(column_check)
-  }
+  check_if_all_mandatory_columns_present(character_janno)
   # separate defined and undefined columns
   undefined_janno_columns <- character_janno %>% dplyr::select(-tidyselect::any_of(janno_column_names))
   character_janno <- character_janno %>% dplyr::select(tidyselect::any_of(janno_column_names))
@@ -172,7 +169,7 @@ has_necessary_columns <- function(x, columns = janno_mandatory_columns) {
   check <- all(columns %in% colnames(x))
   if ( !check ) {
     return(paste(
-      "The janno file lacks the following columns: ", 
+      "The janno file lacks the following columns:", 
       paste(columns[!(columns %in% colnames(x))], collapse = ", ")
     ))
   }

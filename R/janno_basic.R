@@ -41,9 +41,8 @@ as.janno <- function(x, source_janno_file = NA_character_, ...) {
 }
 
 check_if_all_mandatory_columns_present <- function(x) {
-  if ( !all(janno_mandatory_columns %in% names(x)) ) {
-    stop("columns missing")
-  }
+  has_columns <- has_necessary_columns(x, janno_mandatory_columns)
+  if (!is.na(has_columns)) { stop(has_columns) }
 }
 
 #' @rdname janno
