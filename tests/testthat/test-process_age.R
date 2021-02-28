@@ -1,6 +1,6 @@
 test_that("processing age in a normal janno file works as expected", {
   set.seed(123)
-  normal_janno <- suppressMessages(read_janno(path_janno_normal, validate = F))
+  normal_janno <- suppressMessages(read_janno(path_janno_normal_full, validate = F))
   expect_snapshot_value(
     process_age(normal_janno) %>%
       dplyr::mutate(

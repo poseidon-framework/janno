@@ -23,7 +23,7 @@
         {
           "type": "character",
           "attributes": {},
-          "value": ["testJannoFiles/normal.janno", "testJannoFiles/normal.janno", "testJannoFiles/normal.janno"]
+          "value": ["testJannoFiles/normal_full.janno", "testJannoFiles/normal_full.janno", "testJannoFiles/normal_full.janno"]
         },
         {
           "type": "character",
@@ -33,7 +33,7 @@
         {
           "type": "character",
           "attributes": {},
-          "value": ["xxx", "xxx", "xxx"]
+          "value": [null, null, null]
         },
         {
           "type": "list",

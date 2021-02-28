@@ -42,6 +42,15 @@ process_age.janno <- function(
   ...
 ) {
   
+  has_columns <- has_necessary_columns(
+    x, 
+    c("Individual_ID", "Date_Type", "Date_C14_Uncal_BP_Err", 
+      "Date_C14_Uncal_BP_Err", "Date_BC_AD_Start", "Date_BC_AD_Stop")
+  )
+  if (!is.na(has_columns)) {
+    stop(has_columns)
+  }
+  
   if ("Date_BC_AD_Prob" %in% choices) {
     x$Date_BC_AD_Prob <- age_probability_master(
       individual_id = x[["Individual_ID"]],
