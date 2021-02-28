@@ -29,7 +29,7 @@ read_one_janno <- function(x, to_janno) {
   input_file <- readr::read_tsv(
     x, 
     col_types = readr::cols(.default = readr::col_character()), 
-    na = "n/a"
+    na = c("", "n/a")
   )
   if (to_janno) {
     as.janno(input_file, source_janno_file = x)

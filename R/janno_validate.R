@@ -18,18 +18,30 @@ validate_one_janno <- function(path) {
   )
   # does it exist?
   if ( !check_if_file_exists(path) ) {
-    stop("Input file does not exist")
+    stop("Input file does not exist: ", path)
   }
   # does it contain tab separated columns?
   if ( !is_tab_separated_file(path) ) {
-    stop("Input file is not a valid tab separated file")
+    stop("Input file is not a valid tab separated file: ", path)
   }
   # read file
-  character_janno <- readr::read_tsv(path, col_types = readr::cols(.default = "c"))
+  character_janno <- readr::read_tsv(path, col_types = readr::cols(.default = readr::col_character()))
   # are the necessary columns present?
   column_check <- has_necessary_columns(character_janno)
   if (!is.na(column_check)) {
     stop(column_check)
+  }
+  # separate defined and undefined columns
+  undefined_janno_columns <- character_janno %>% dplyr::select(-tidyselect::any_of(janno_column_names))
+  character_janno <- character_janno %>% dplyr::select(tidyselect::any_of(janno_column_names))
+  if (length(undefined_janno_columns) > 0) {
+    message(
+      "There are undefined columns (", 
+      paste(names(undefined_janno_columns), collapse = ", "),
+      ") in this janno file: ",
+      path,
+      " - They are read as character columns."
+    )
   }
   # column wise check: loop through each column
   for (cur_col in colnames(character_janno)) {
@@ -55,16 +67,6 @@ validate_one_janno <- function(path) {
     # cell wise checks: loop through each cell
     for (cur_row in 1:nrow(character_janno)) {
       cur_cell <- character_janno[[cur_col]][cur_row]
-      # empty cell
-      if (is_empty(cur_cell)) {
-        issues <- issues %>% append_issue(
-          row = cur_row,
-          column = cur_col,
-          value = cur_cell,
-          issue = "Empty cells are not allowed, please fill with n/a"
-        )
-        next
-      }
       # n/a in mandatory column
       if (cur_constraints$mandatory) {
         if (is_n_a(cur_cell)) {
@@ -155,15 +157,11 @@ has_leading_or_trailing_whitespace <- function(x) {
 }
 
 is_n_a <- function(x) {
-  x == "n/a"
-}
-
-is_empty <- function(x) {
-  (is.na(x) | x == "")
+  x == "n/a" | is.na(x) | x == ""
 }
 
 only_na_in_column <- function(x, co) {
-  all(x[[co$column]] == "n/a")
+  all(is_n_a(x[[co$column]]))
 }
 
 has_duplicates <- function(x, co) {

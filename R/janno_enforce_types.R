@@ -1,12 +1,20 @@
 enforce_types <- function(x, suppress_na_introduced_warnings = TRUE) {
   
-  res <- Map(
+  defined_janno_columns <- x %>% dplyr::select(tidyselect::any_of(janno_column_names))
+  undefined_janno_columns <- x %>% dplyr::select(-tidyselect::any_of(janno_column_names))
+  
+  defined_janno_columns_typed <- Map(
     apply_col_types,
-    as.list(x), 
-    names(x), 
+    as.list(defined_janno_columns), 
+    names(defined_janno_columns), 
     suppress_na_introduced_warnings = suppress_na_introduced_warnings
   )
-  res <- tibble::as_tibble(res)
+  defined_janno_columns_typed <- tibble::as_tibble(defined_janno_columns_typed)
+  
+  res <- cbind(
+    defined_janno_columns_typed,
+    undefined_janno_columns
+  )
   
   return(res %>% tibble::new_tibble(., nrow = nrow(.), class = "janno"))
 }
