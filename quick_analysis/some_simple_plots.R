@@ -1,9 +1,18 @@
 library(magrittr)
 library(ggplot2)
 
-ancient <- poseidonR::read_janno("~/agora/data_ancient/")
+published_data <- poseidonR::read_janno("~/agora/published_data")
 
-ancient_filtered <- ancient %>% dplyr::filter(
+dating_distribution <- published_data$Date_Type %>% table(useNA = "always")
+dating_distribution["C14"] + dating_distribution["contextual"]
+dating_distribution["modern"]
+
+ancient_with_coordinates <- published_data %>% dplyr::filter(
+  Date_Type %in% c("C14", "contextual"),
+  !is.na(Latitude) & !is.na(Longitude)
+)
+
+published_data_filtered <- published_data %>% dplyr::filter(
   !is.na(Latitude) & !is.na(Longitude)
 ) %>% poseidonR::process_age() %>%
   dplyr::filter(
@@ -12,11 +21,18 @@ ancient_filtered <- ancient %>% dplyr::filter(
 
 countries <- rnaturalearth::ne_countries(returnclass = "sf")
 
-p_map <- ggplot() +
+data_sf <- published_data_filtered %>% sf::st_as_sf(
+  coords = c("Longitude", "Latitude"),
+  crs = 4326
+) %>%
+  sf::st_transform(
+    crs = "+proj=robin +lon_0=0 +x_0=0 +y_0=0 +ellps=WGS84 +datum=WGS84 +units=m no_defs"
+  )
+
+ggplot() +
   geom_sf(data = countries, fill = "white", size = 0.1) +
-  geom_point(
-    data = ancient_filtered, 
-    aes(x = Longitude, y = Latitude),
+  geom_sf(
+    data = data_sf,
     size = 0.3,
     color = "red"
   ) +
@@ -25,10 +41,10 @@ p_map <- ggplot() +
     panel.background = element_rect(fill = "#BFD5E3"),
     panel.spacing = unit(c(0, 0, 0, 0), "cm")
   ) +
-  coord_sf(expand = F)
+  coord_sf(expand = F, crs = "+proj=robin +lon_0=0 +x_0=0 +y_0=0 +ellps=WGS84 +datum=WGS84 +units=m no_defs")
 
 ggsave(
-  "~/Desktop/ancient_map.png",
+  "quick_analysis/published_data_map.png",
   plot = p_map,
   device = "png",
   width = 10,
@@ -37,7 +53,7 @@ ggsave(
   scale = 2
 )
 
-p_hist <- ancient_filtered %>%
+p_hist <- published_data_filtered %>%
   ggplot() +
   geom_histogram(
     aes(x = Date_BC_AD_Median_Derived),
@@ -52,7 +68,7 @@ p_hist <- ancient_filtered %>%
   xlab("age [calBC/AD]")
 
 ggsave(
-  "~/Desktop/ancient_hist.png",
+  "quick_analysis/published_data_hist.png",
   plot = p_hist,
   device = "png",
   width = 10,
