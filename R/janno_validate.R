@@ -249,8 +249,8 @@ is_valid_float <- function(x, co) {
     # split to true multi
     x <- unlist(strsplit(x, ";"))
   }
-  # is integer?
-  check_1 <- all(grepl("^[0-9\\.e-]+$", x)) &&
+  # is valid floating point number?
+  check_1 <- all(grepl("^[0-9\\.eE-]+$", x)) &&
     !any(is.na(suppressWarnings(as.double(x))))
   if ( !check_1 ) {
     return("One or multiple values are not valid floating point numbers")
