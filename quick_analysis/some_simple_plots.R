@@ -3,21 +3,21 @@ library(ggplot2)
 
 published_data <- poseidonR::read_janno("~/agora/published_data")
 
-dating_distribution <- published_data$Date_Type %>% table(useNA = "always")
-dating_distribution["C14"] + dating_distribution["contextual"]
-dating_distribution["modern"]
-
-ancient_with_coordinates <- published_data %>% dplyr::filter(
+ancient_with_spatiotemporal_postion <- published_data %>% dplyr::filter(
   Date_Type %in% c("C14", "contextual"),
   !is.na(Latitude) & !is.na(Longitude)
 )
 
-published_data_filtered <- published_data %>% dplyr::filter(
-  !is.na(Latitude) & !is.na(Longitude)
-) %>% poseidonR::process_age() %>%
+ancient_data_filtered <- ancient_with_spatiotemporal_postion %>% 
+  poseidonR::process_age() %>%
   dplyr::filter(
     !is.na(Date_BC_AD_Median_Derived)
   )
+
+ancient_data_filtered %>% dplyr::group_by(
+  Date_Type
+) %>%
+  dplyr::tally()
 
 countries <- rnaturalearth::ne_countries(returnclass = "sf")
 
@@ -81,3 +81,44 @@ ggsave(
   units = "cm",
   scale = 3
 )
+
+###
+
+p_nr_automsomal_snps <- published_data_filtered %>%
+  ggplot() +
+  geom_histogram(
+    aes(x = Nr_autosomal_SNPs),
+    boundary = 0, closed = "left",
+    binwidth = 100000,
+    fill = "red",
+    color = "white"
+  ) +
+  theme_bw() +
+  scale_x_continuous(labels = scales::comma) +
+  xlab("Number of 1240k SNPs covered at least once")
+
+p_coverage1240k <- published_data_filtered %>%
+  dplyr::filter(Coverage_1240K < 7) %>%
+  ggplot() +
+  geom_histogram(
+    aes(x = Coverage_1240K),
+    boundary = 0, closed = "left",
+    binwidth = 0.5,
+    fill = "red",
+    color = "white"
+  ) +
+  theme_bw() +
+  xlab("Mean coverage on 1240k")
+
+p2 <- cowplot::plot_grid(p_nr_automsomal_snps, p_coverage1240k, nrow = 1, rel_widths = c(0.5, 0.5))
+
+ggsave(
+  "quick_analysis/coverage.png",
+  plot = p2,
+  device = "png",
+  width = 10,
+  height = 5,
+  units = "cm",
+  scale = 2
+)
+
