@@ -29,7 +29,7 @@ data_sf <- published_data_filtered %>% sf::st_as_sf(
     crs = "+proj=robin +lon_0=0 +x_0=0 +y_0=0 +ellps=WGS84 +datum=WGS84 +units=m no_defs"
   )
 
-ggplot() +
+p_map <- ggplot() +
   geom_sf(data = countries, fill = "white", size = 0.1) +
   geom_sf(
     data = data_sf,
@@ -39,42 +39,45 @@ ggplot() +
   theme_bw() +
   theme(
     panel.background = element_rect(fill = "#BFD5E3"),
-    panel.spacing = unit(c(0, 0, 0, 0), "cm")
+    panel.spacing = unit(c(0, 0, 0, 0), "cm"),
+    axis.text = element_blank(),
+    axis.ticks = element_blank()
   ) +
   coord_sf(expand = F, crs = "+proj=robin +lon_0=0 +x_0=0 +y_0=0 +ellps=WGS84 +datum=WGS84 +units=m no_defs")
 
-ggsave(
-  "quick_analysis/published_data_map.png",
-  plot = p_map,
-  device = "png",
-  width = 10,
-  height = 5,
-  units = "cm",
-  scale = 2
-)
-
 p_hist <- published_data_filtered %>%
+  dplyr::mutate(
+    age_cut = cut(
+      Date_BC_AD_Median_Derived, 
+      breaks = c(
+        min(published_data_filtered$Date_BC_AD_Median_Derived), 
+        seq(-10000, 2000, 500)
+      ),
+      labels = c("< -10000", paste0("> ", seq(-10000, 1500, 500))),
+      include.lowest = T
+    )
+  ) %>%
   ggplot() +
   geom_histogram(
-    aes(x = Date_BC_AD_Median_Derived),
-    binwidth = 1000,
-    fill = "red"
+    aes(x = age_cut),
+    fill = "red",
+    color = "white",
+    stat = "count"
   ) +
   theme_bw() +
-  scale_x_continuous(breaks = seq(-50000, 2000, 2000)) +
   theme(
     axis.text.x = element_text(angle = 45, hjust = 1, vjust = 1)
   ) +
   xlab("age [calBC/AD]")
 
+p <- cowplot::plot_grid(p_map, p_hist, ncol = 1, rel_heights = c(0.7, 0.34))
+
 ggsave(
-  "quick_analysis/published_data_hist.png",
-  plot = p_hist,
+  "quick_analysis/spatiotemporal_overview.png",
+  plot = p,
   device = "png",
-  width = 10,
+  width = 6.5,
   height = 5,
   units = "cm",
-  scale = 2
+  scale = 3
 )
-
-
