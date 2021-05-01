@@ -887,9 +887,125 @@
           "value": [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null]
         },
         {
-          "type": "character",
+          "type": "list",
           "attributes": {},
-          "value": [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null]
+          "value": [
+            {
+              "type": "character",
+              "attributes": {},
+              "value": [null]
+            },
+            {
+              "type": "character",
+              "attributes": {},
+              "value": [null]
+            },
+            {
+              "type": "character",
+              "attributes": {},
+              "value": [null]
+            },
+            {
+              "type": "character",
+              "attributes": {},
+              "value": [null]
+            },
+            {
+              "type": "character",
+              "attributes": {},
+              "value": [null]
+            },
+            {
+              "type": "character",
+              "attributes": {},
+              "value": [null]
+            },
+            {
+              "type": "character",
+              "attributes": {},
+              "value": [null]
+            },
+            {
+              "type": "character",
+              "attributes": {},
+              "value": [null]
+            },
+            {
+              "type": "character",
+              "attributes": {},
+              "value": [null]
+            },
+            {
+              "type": "character",
+              "attributes": {},
+              "value": [null]
+            },
+            {
+              "type": "character",
+              "attributes": {},
+              "value": [null]
+            },
+            {
+              "type": "character",
+              "attributes": {},
+              "value": [null]
+            },
+            {
+              "type": "character",
+              "attributes": {},
+              "value": [null]
+            },
+            {
+              "type": "character",
+              "attributes": {},
+              "value": [null]
+            },
+            {
+              "type": "character",
+              "attributes": {},
+              "value": [null]
+            },
+            {
+              "type": "character",
+              "attributes": {},
+              "value": [null]
+            },
+            {
+              "type": "character",
+              "attributes": {},
+              "value": [null]
+            },
+            {
+              "type": "character",
+              "attributes": {},
+              "value": [null]
+            },
+            {
+              "type": "character",
+              "attributes": {},
+              "value": [null]
+            },
+            {
+              "type": "character",
+              "attributes": {},
+              "value": [null]
+            },
+            {
+              "type": "character",
+              "attributes": {},
+              "value": [null]
+            },
+            {
+              "type": "character",
+              "attributes": {},
+              "value": [null]
+            },
+            {
+              "type": "character",
+              "attributes": {},
+              "value": [null]
+            }
+          ]
         },
         {
           "type": "character",
@@ -1475,9 +1591,25 @@
           "value": [null, null, null]
         },
         {
-          "type": "character",
+          "type": "list",
           "attributes": {},
-          "value": [null, null, null]
+          "value": [
+            {
+              "type": "character",
+              "attributes": {},
+              "value": [null]
+            },
+            {
+              "type": "character",
+              "attributes": {},
+              "value": [null]
+            },
+            {
+              "type": "character",
+              "attributes": {},
+              "value": [null]
+            }
+          ]
         },
         {
           "type": "character",
@@ -1929,9 +2061,25 @@
           "value": ["Ich", "Du", "Müllers Kuh"]
         },
         {
-          "type": "character",
+          "type": "list",
           "attributes": {},
-          "value": ["unpublished", "PaulNature2026", "BovineCell1618"]
+          "value": [
+            {
+              "type": "character",
+              "attributes": {},
+              "value": ["unpublished"]
+            },
+            {
+              "type": "character",
+              "attributes": {},
+              "value": ["PaulNature2026"]
+            },
+            {
+              "type": "character",
+              "attributes": {},
+              "value": ["BovineCell1618"]
+            }
+          ]
         },
         {
           "type": "character",
@@ -2246,9 +2394,25 @@
           "value": ["Ich", "Du", "Müllers Kuh"]
         },
         {
-          "type": "character",
+          "type": "list",
           "attributes": {},
-          "value": ["unpublished", "PaulNature2026", "BovineCell1618"]
+          "value": [
+            {
+              "type": "character",
+              "attributes": {},
+              "value": ["unpublished"]
+            },
+            {
+              "type": "character",
+              "attributes": {},
+              "value": ["PaulNature2026"]
+            },
+            {
+              "type": "character",
+              "attributes": {},
+              "value": ["BovineCell1618"]
+            }
+          ]
         },
         {
           "type": "character",

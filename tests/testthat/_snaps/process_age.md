@@ -287,9 +287,25 @@
           "value": ["Ich", "Du", "Müllers Kuh"]
         },
         {
-          "type": "character",
+          "type": "list",
           "attributes": {},
-          "value": ["unpublished", "PaulNature2026", "BovineCell1618"]
+          "value": [
+            {
+              "type": "character",
+              "attributes": {},
+              "value": ["unpublished"]
+            },
+            {
+              "type": "character",
+              "attributes": {},
+              "value": ["PaulNature2026"]
+            },
+            {
+              "type": "character",
+              "attributes": {},
+              "value": ["BovineCell1618"]
+            }
+          ]
         },
         {
           "type": "character",
