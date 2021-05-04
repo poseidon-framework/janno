@@ -1,12 +1,24 @@
 library(magrittr)
 library(ggplot2)
 
-published_data <- poseidonR::read_janno("~/agora/published_data")
+published_data <- poseidonR::read_janno("~/agora/published_data", validate = F)
 
 ancient_with_spatiotemporal_postion <- published_data %>% dplyr::filter(
   Date_Type %in% c("C14", "contextual"),
   !is.na(Latitude) & !is.na(Longitude)
 )
+
+ancient_with_spatiotemporal_postion %>% dplyr::mutate(
+  year_of_publication = readr::parse_number(Publication_Status)
+) %>%
+  dplyr::mutate(
+    dplyr::across(
+      where(is.list),
+      function(x) { Map(function(y) { paste(y, collapse = ";") }, x) %>% unlist() }
+    )
+  ) %>%
+  readr::write_csv(file = "quick_analysis/poseidon_05_2020_with_spatiotemporal_info.csv")
+  
 
 ancient_data_filtered <- ancient_with_spatiotemporal_postion %>% 
   poseidonR::process_age() %>%
@@ -21,7 +33,7 @@ ancient_data_filtered %>% dplyr::group_by(
 
 countries <- rnaturalearth::ne_countries(returnclass = "sf")
 
-data_sf <- published_data_filtered %>% sf::st_as_sf(
+data_sf <- ancient_data_filtered %>% sf::st_as_sf(
   coords = c("Longitude", "Latitude"),
   crs = 4326
 ) %>%
@@ -45,12 +57,12 @@ p_map <- ggplot() +
   ) +
   coord_sf(expand = F, crs = "+proj=robin +lon_0=0 +x_0=0 +y_0=0 +ellps=WGS84 +datum=WGS84 +units=m no_defs")
 
-p_hist <- published_data_filtered %>%
+p_hist <- ancient_data_filtered %>%
   dplyr::mutate(
     age_cut = cut(
       Date_BC_AD_Median_Derived, 
       breaks = c(
-        min(published_data_filtered$Date_BC_AD_Median_Derived), 
+        min(ancient_data_filtered$Date_BC_AD_Median_Derived), 
         seq(-10000, 2000, 500)
       ),
       labels = c("< -10000", paste0("> ", seq(-10000, 1500, 500))),
@@ -84,7 +96,7 @@ ggsave(
 
 ###
 
-p_nr_automsomal_snps <- published_data_filtered %>%
+p_nr_automsomal_snps <- ancient_data_filtered %>%
   ggplot() +
   geom_histogram(
     aes(x = Nr_autosomal_SNPs),
@@ -97,7 +109,7 @@ p_nr_automsomal_snps <- published_data_filtered %>%
   scale_x_continuous(labels = scales::comma) +
   xlab("Number of 1240k SNPs covered at least once")
 
-p_coverage1240k <- published_data_filtered %>%
+p_coverage1240k <- ancient_data_filtered %>%
   dplyr::filter(Coverage_1240K < 7) %>%
   ggplot() +
   geom_histogram(
