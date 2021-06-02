@@ -16,8 +16,8 @@ quickcalibrate <- function(ages, sds) {
   # check equal length of input
   checkmate::assert_true(length(ages) == length(sds))
   # check input
-  sapply(unlist(ages), function(x) { checkmate::assert_count(x) })
-  sapply(unlist(sds), function(x) { checkmate::assert_count(x) })
+  sapply(unlist(ages), function(x) { checkmate::assert_count(x, na.ok = T) })
+  sapply(unlist(sds), function(x) { checkmate::assert_count(x, na.ok = T) })
   Map(function(x,y) { checkmate::assert_true(length(x) == length(y)) }, ages, sds)
   # run sumcalibration
   sumcul_res_list <- Map(function(x,y) { sumcal(x, y) }, ages, sds)
@@ -34,6 +34,17 @@ quickcalibrate <- function(ages, sds) {
 }
 
 sumcal <- function(xs, errs) {
+  
+  if (any(is.na(xs)) | any(is.na(errs))) {
+    return(
+      data.frame(
+        age = NA,
+        sum_dens = NA,
+        center = NA,
+        two_sigma = NA
+      )
+    )
+  }
   
   bol <- 1950
   threshold <- 0.025
