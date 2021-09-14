@@ -8,3 +8,4 @@
 ^anno2janno$
 ^tests/testthat/poseidonTestData/\.git$
 ^quick_analysis$
+^\.github$
