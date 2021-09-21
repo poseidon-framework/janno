@@ -1,0 +1,1 @@
+- V 0.4.0: Introduced a function to easily write janno objects back to .janno files: `write_janno`

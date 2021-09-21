@@ -22,7 +22,6 @@ process_age <- function(
   UseMethod("process_age")
 }
 
-#' @rdname process_age
 #' @export
 process_age.default <- function(
   x, 
@@ -33,7 +32,6 @@ process_age.default <- function(
   stop("x is not an object of class janno")
 }
 
-#' @rdname process_age
 #' @export
 process_age.janno <- function(
   x, 

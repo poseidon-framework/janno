@@ -7,7 +7,20 @@
 write_janno <- function(
   x, path, remove_source_file_column = TRUE
 ) {
-  checkmate::assert_class(x, classes = "janno")
+  UseMethod("write_janno")
+}
+
+#' @export
+write_janno.default <- function(
+  x, path, remove_source_file_column = TRUE
+) {
+  stop("x is not an object of class janno")
+}
+
+#' @export
+write_janno.janno <- function(
+  x, path, remove_source_file_column = TRUE
+) {
   if (remove_source_file_column) {
     x <- x %>% dplyr::select(-.data[["source_file"]])
   }
@@ -23,8 +36,21 @@ write_janno <- function(
 #' @details \code{flatten_janno} transforms list columns to string lists (separated by ;)
 #' 
 #' @export
-flatten_janno <- function(x) {
-  checkmate::assert_class(x, classes = "janno")
+flatten_janno <- function(
+  x, path, remove_source_file_column = TRUE
+) {
+  UseMethod("flatten_janno")
+}
+
+#' @export
+flatten_janno.default <- function(
+  x, path, remove_source_file_column = TRUE
+) {
+  stop("x is not an object of class janno")
+}
+
+#' @export
+flatten_janno.janno <- function(x) {
   x %>%
     dplyr::mutate(
       dplyr::across(

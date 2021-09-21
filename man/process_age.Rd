@@ -2,25 +2,9 @@
 % Please edit documentation in R/janno_process_age.R
 \name{process_age}
 \alias{process_age}
-\alias{process_age.default}
-\alias{process_age.janno}
 \title{process_age}
 \usage{
 process_age(
-  x,
-  choices = c("Date_BC_AD_Prob", "Date_BC_AD_Median_Derived", "Date_BC_AD_Sample"),
-  n = 100,
-  ...
-)
-
-\method{process_age}{default}(
-  x,
-  choices = c("Date_BC_AD_Prob", "Date_BC_AD_Median_Derived", "Date_BC_AD_Sample"),
-  n = 100,
-  ...
-)
-
-\method{process_age}{janno}(
   x,
   choices = c("Date_BC_AD_Prob", "Date_BC_AD_Median_Derived", "Date_BC_AD_Sample"),
   n = 100,
