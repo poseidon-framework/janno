@@ -36,16 +36,12 @@ write_janno.janno <- function(
 #' @details \code{flatten_janno} transforms list columns to string lists (separated by ;)
 #' 
 #' @export
-flatten_janno <- function(
-  x, path, remove_source_file_column = TRUE
-) {
+flatten_janno <- function(x) {
   UseMethod("flatten_janno")
 }
 
 #' @export
-flatten_janno.default <- function(
-  x, path, remove_source_file_column = TRUE
-) {
+flatten_janno.default <- function(x) {
   stop("x is not an object of class janno")
 }
 

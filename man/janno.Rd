@@ -24,7 +24,7 @@ validate_janno(path)
 
 write_janno(x, path, remove_source_file_column = TRUE)
 
-flatten_janno(x, path, remove_source_file_column = TRUE)
+flatten_janno(x)
 }
 \arguments{
 \item{x}{an object}

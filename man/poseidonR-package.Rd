@@ -4,7 +4,7 @@
 \name{poseidonR-package}
 \alias{poseidonR}
 \alias{poseidonR-package}
-\title{poseidonR: Poseidon Data Handling in R}
+\title{poseidonR: Poseidon data handling in R}
 \description{
 Interaction with Poseidon packages in R, mostly focused on
         .janno files.
