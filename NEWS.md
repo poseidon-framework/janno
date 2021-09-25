@@ -1,1 +1,2 @@
+- V 0.4.1: Improved the message for additional columns in `validate_janno` with a suggestion mechanism
 - V 0.4.0: Introduced a function to easily write janno objects back to .janno files: `write_janno`

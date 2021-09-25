@@ -25,21 +25,32 @@ validate_one_janno <- function(path) {
     stop("Input file is not a valid tab separated file: ", path)
   }
   # read file
-  character_janno <- readr::read_tsv(path, col_types = readr::cols(.default = readr::col_character()))
+  raw_janno <- readr::read_tsv(path, col_types = readr::cols(.default = readr::col_character()))
   # are the necessary columns present?
-  check_if_all_mandatory_columns_present(character_janno)
-  # separate defined and undefined columns
-  undefined_janno_columns <- character_janno %>% dplyr::select(-tidyselect::any_of(janno_column_names))
-  character_janno <- character_janno %>% dplyr::select(tidyselect::any_of(janno_column_names))
+  check_if_all_mandatory_columns_present(raw_janno)
+  # report undefined columns
+  undefined_janno_columns <- raw_janno %>% 
+    dplyr::select(-tidyselect::any_of(janno_column_names)) %>%
+    colnames()
   if (length(undefined_janno_columns) > 0) {
+    # search for possible column name suggestions
+    string_comparison_indizes <- apply(
+      utils::adist(undefined_janno_columns, janno_column_names), 
+      1, 
+      which.min
+    )
+    closest_colnames <- janno_column_names[string_comparison_indizes]
     message(
-      "There are undefined columns (", 
-      paste(names(undefined_janno_columns), collapse = ", "),
-      ") in this janno file: ",
-      path,
-      " - They are read as character columns."
+      "[", path, "] ",
+      "There are undefined columns in this janno file: ",
+      paste(undefined_janno_columns, collapse = ", "), ". ",
+      "They are read as character columns. ",
+      "Maybe you mean: ",
+      paste(closest_colnames, collapse = ", ")
     )
   }
+  # keep all valid columns for further inspection
+  character_janno <- raw_janno %>% dplyr::select(tidyselect::any_of(janno_column_names))
   # column wise check: loop through each column
   for (cur_col in colnames(character_janno)) {
     # get necessary information to check column
