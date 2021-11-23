@@ -10,7 +10,7 @@
 \alias{validate_janno}
 \alias{write_janno}
 \alias{flatten_janno}
-\title{\strong{janno}}
+\title{The janno class}
 \usage{
 as.janno(x, source_janno_file = NA_character_, ...)
 
@@ -51,7 +51,7 @@ from the janno object before writing?}
 The \strong{janno} S3 class provides a data structure
 derived from \link[tibble]{tibble} to represent the content of Poseidon
 .janno files in R.
-See the package README for more information.
+Look here for more information: \url{https://poseidon-framework.github.io/#/poseidonR}
 }
 \details{
 \code{flatten_janno} transforms list columns to string lists (separated by ;)

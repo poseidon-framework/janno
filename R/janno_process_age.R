@@ -2,7 +2,7 @@
 #' @title process_age
 #'
 #' @description Process all valid dates in a \strong{janno} table. 
-#' See the package README for more information.
+#' Look here for more information: \url{https://poseidon-framework.github.io/#/poseidonR}
 #' 
 #' @param x an object of class \strong{janno}
 #' @param choices character vector. Which output columns should be added? 

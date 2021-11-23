@@ -24,5 +24,5 @@ then how many samples should be drawn?}
 }
 \description{
 Process all valid dates in a \strong{janno} table.
-See the package README for more information.
+Look here for more information: \url{https://poseidon-framework.github.io/#/poseidonR}
 }

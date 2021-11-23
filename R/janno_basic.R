@@ -1,10 +1,10 @@
 #' @name janno
-#' @title \strong{janno}
+#' @title The janno class
 #'
 #' @description The \strong{janno} S3 class provides a data structure 
 #' derived from \link[tibble]{tibble} to represent the content of Poseidon
 #' .janno files in R.
-#' See the package README for more information.
+#' Look here for more information: \url{https://poseidon-framework.github.io/#/poseidonR}
 #'
 #' @param x an object
 #' @param path character vector. Paths to one or multiple .janno files or 
