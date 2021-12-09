@@ -4,18 +4,32 @@
 \alias{quickcalibrate}
 \title{quickcalibrate}
 \usage{
-quickcalibrate(ages, sds)
+quickcalibrate(ages, sds, cal_curves = rep("intcal20", length(ages)), ...)
 }
 \arguments{
 \item{ages}{list. List of one or multiple radiocarbon date ages BP
 (e.g. list(3000) or list(2000, c(2000, 2300, 2100)))}
 
 \item{sds}{list. One or multiple standard deviations
-(1 sigma ±) (e.g. list(30) or list(20, c(20, 30, 70)))}
+(±1 sigma) (e.g. list(30) or list(20, c(20, 30, 70)))}
+
+\item{cal_curves}{character vector. Calibration curves to be used for the calibration.
+See the argument \code{calCurves} for \link[Bchron]{BchronCalibrate}}
+
+\item{...}{additional arguments are passed to \link[Bchron]{BchronCalibrate}
+(will not work for the \code{dfs} argument and multiple dates)}
 }
 \description{
 Get values for the .janno file columns Date_BC_AD_Median,
 Date_BC_AD_Start and Date_BC_AD_Stop from radiocarbon ages with mean
-and sd.
+and sd. Uses \link[Bchron]{Bchron} for the calibration.
 Look here for more information: \url{https://poseidon-framework.github.io/#/poseidonR}
+}
+\examples{
+quickcalibrate(
+  ages = list(c(3000,3100), 4000), 
+  sds = list(c(100,30), 50),
+  cal_curves = c("shcal20", "intcal20")
+)
+
 }

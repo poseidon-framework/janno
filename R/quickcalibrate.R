@@ -3,24 +3,36 @@
 #' 
 #' @description Get values for the .janno file columns Date_BC_AD_Median,
 #' Date_BC_AD_Start and Date_BC_AD_Stop from radiocarbon ages with mean
-#' and sd.
+#' and sd. Uses \link[Bchron]{Bchron} for the calibration.
 #' Look here for more information: \url{https://poseidon-framework.github.io/#/poseidonR}
 #' 
 #' @param ages list. List of one or multiple radiocarbon date ages BP 
 #' (e.g. list(3000) or list(2000, c(2000, 2300, 2100)))
 #' @param sds list. One or multiple standard deviations 
-#' (1 sigma ±) (e.g. list(30) or list(20, c(20, 30, 70)))
+#' (±1 sigma) (e.g. list(30) or list(20, c(20, 30, 70)))
+#' @param cal_curves character vector. Calibration curves to be used for the calibration.
+#' See the argument \code{calCurves} for \link[Bchron]{BchronCalibrate}
+#' @param ... additional arguments are passed to \link[Bchron]{BchronCalibrate}
+#' (will not work for the \code{dfs} argument and multiple dates)
+#'  
+#' @examples
+#' quickcalibrate(
+#'   ages = list(c(3000,3100), 4000), 
+#'   sds = list(c(100,30), 50),
+#'   cal_curves = c("shcal20", "intcal20")
+#' )
 #' 
 #' @export
-quickcalibrate <- function(ages, sds) {
+quickcalibrate <- function(ages, sds, cal_curves = rep("intcal20", length(ages)), ...) {
   # check equal length of input
   checkmate::assert_true(length(ages) == length(sds))
   # check input
   sapply(unlist(ages), function(x) { checkmate::assert_count(x, na.ok = T) })
   sapply(unlist(sds), function(x) { checkmate::assert_count(x, na.ok = T) })
   Map(function(x,y) { checkmate::assert_true(length(x) == length(y)) }, ages, sds)
+  checkmate::assert_true(length(ages) == length(cal_curves))
   # run sumcalibration
-  sumcul_res_list <- Map(function(x,y) { sumcal(x, y) }, ages, sds)
+  sumcul_res_list <- Map(function(x,y,z) { sumcal(x, y, z, ...) }, ages, sds, cal_curves)
   # prepare output table
   result_table <- lapply(sumcul_res_list, function(x) {
     data.frame(
@@ -33,7 +45,7 @@ quickcalibrate <- function(ages, sds) {
   return(result_table)
 }
 
-sumcal <- function(xs, errs) {
+sumcal <- function(xs, errs, cal_curve, ...) {
   
   if (any(is.na(xs)) | any(is.na(errs))) {
     return(
@@ -52,7 +64,8 @@ sumcal <- function(xs, errs) {
   raw_calibration_output <- Bchron::BchronCalibrate(
     ages      = xs,
     ageSds    = errs,
-    calCurves = rep("intcal20", length(xs))
+    calCurves = rep(cal_curve, length(xs)),
+    ...
   )
   
   density_tables <- lapply(
