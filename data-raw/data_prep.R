@@ -1,5 +1,5 @@
 janno_columns <- readr::read_tsv(
-  "https://raw.githubusercontent.com/poseidon-framework/poseidon2-schema/master/janno_columns.tsv"
+  "https://raw.githubusercontent.com/poseidon-framework/poseidon2-schema/janno_column_names_and_order/janno_columns.tsv" # this is only in a PR
 )
 
 # column names
@@ -23,9 +23,6 @@ janno_mandatory_columns <- janno_columns$janno_column_name[janno_columns$mandato
 
 # unique columns
 janno_unique_columns <- janno_columns$janno_column_name[janno_columns$unique]
-
-# bonus columns
-janno_bonus_columns <- janno_columns$janno_column_name[janno_columns$bonus]
 
 # range columns
 janno_range_columns <- janno_columns$janno_column_name[janno_columns$range]
