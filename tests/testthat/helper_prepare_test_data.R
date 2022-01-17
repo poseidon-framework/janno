@@ -1,5 +1,3 @@
-path_ancient_repo <- "poseidon_test_data/testModules/ancient/"
-
 path_janno_borked_full <- "poseidon_test_data/testJannoFiles/borked_full.janno"
 path_janno_borked_partial <- "poseidon_test_data/testJannoFiles/borked_partial.janno"
 path_janno_borked_wrong_name <- "poseidon_test_data/testJannoFiles/borked_wrong_name.janno"
