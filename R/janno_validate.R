@@ -56,14 +56,6 @@ validate_one_janno <- function(path) {
     # get necessary information to check column
     cur_constraints <- get_column_constraints(cur_col)
     # column wise checks
-    # if (!cur_constraints$bonus) {
-    #   if (only_na_in_column(character_janno, cur_constraints)) {
-    #     issues <- issues %>% append_issue(
-    #       column = cur_col,
-    #       issue = "Only n/a values in column"
-    #     )
-    #   }
-    # }
     if (cur_constraints$no_dupli) {
       if (has_duplicates(character_janno, cur_constraints)) {
         issues <- issues %>% append_issue(
@@ -131,7 +123,6 @@ get_column_constraints <- function(cur_col) {
     no_dupli            = cur_col %in% janno_unique_columns,
     with_choices        = cur_col %in% janno_choice_columns,
     with_range          = cur_col %in% janno_range_columns,
-    bonus               = cur_col %in% janno_bonus_columns,
     type_check_function = type_string_to_type_check_function(
       hash::values(janno_column_name_data_type, cur_col)
     ),

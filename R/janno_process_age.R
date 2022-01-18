@@ -42,7 +42,7 @@ process_age.janno <- function(
   
   has_columns <- has_necessary_columns(
     x, 
-    c("Individual_ID", "Date_Type", "Date_C14_Uncal_BP_Err", 
+    c("Poseidon_ID", "Date_Type", "Date_C14_Uncal_BP_Err", 
       "Date_C14_Uncal_BP_Err", "Date_BC_AD_Start", "Date_BC_AD_Stop")
   )
   if (!is.na(has_columns)) {
@@ -51,7 +51,7 @@ process_age.janno <- function(
   
   if ("Date_BC_AD_Prob" %in% choices) {
     x$Date_BC_AD_Prob <- age_probability_master(
-      individual_id = x[["Individual_ID"]],
+      poseidon_id = x[["Poseidon_ID"]],
       date_type = x[["Date_Type"]],
       c14bp = x[["Date_C14_Uncal_BP"]], c14std = x[["Date_C14_Uncal_BP_Err"]],
       startbcad = x[["Date_BC_AD_Start"]], stopbcad = x[["Date_BC_AD_Stop"]]
@@ -94,7 +94,7 @@ get_center_age <- function(prob) {
   )
 }
 
-age_probability_master <- function(individual_id, date_type, c14bp, c14std, startbcad, stopbcad) {
+age_probability_master <- function(poseidon_id, date_type, c14bp, c14std, startbcad, stopbcad) {
   
   res_list <- lapply(seq_along(date_type), function(i) {NA})
   
@@ -104,7 +104,7 @@ age_probability_master <- function(individual_id, date_type, c14bp, c14std, star
     sapply(c14std, function(x) { !any(is.na(x)) })
   
   res_list[is_c14] <- sumcal_list_of_multiple_dates(
-    individual_id_list = individual_id[is_c14],
+    poseidon_id_list = poseidon_id[is_c14],
     age_list = c14bp[is_c14], 
     err_list = c14std[is_c14]
   )
@@ -137,7 +137,7 @@ contextual_date_uniform <- function(startbcad, stopbcad) {
   
 }
 
-sumcal_list_of_multiple_dates <- function(individual_id_list, age_list, err_list) {
+sumcal_list_of_multiple_dates <- function(poseidon_id_list, age_list, err_list) {
   
   bol <- 1950 # c14 reference zero
   threshold <- (1 - 0.9545) / 2 # 2sigma range probability threshold
@@ -145,7 +145,7 @@ sumcal_list_of_multiple_dates <- function(individual_id_list, age_list, err_list
   pb <- progress::progress_bar$new(total = length(age_list))
   
   # run for each date collection
-  Map(function(individual_id, cur_xs, cur_errs) {
+  Map(function(poseidon_id, cur_xs, cur_errs) {
     
     pb$tick()
     
@@ -168,7 +168,7 @@ sumcal_list_of_multiple_dates <- function(individual_id_list, age_list, err_list
         calCurves = rep("intcal20", length(cur_xs))
       ),
       error = function(e){
-        message("\nAn error occurred when calibrating C14 age for individual ", individual_id, " - ", e)
+        message("\nAn error occurred when calibrating C14 age for individual ", poseidon_id, " - ", e)
       }
     )
      
@@ -213,7 +213,7 @@ sumcal_list_of_multiple_dates <- function(individual_id_list, age_list, err_list
     
     return(result_table)
     
-  }, individual_id_list, age_list, err_list)
+  }, poseidon_id_list, age_list, err_list)
   
 }
 
