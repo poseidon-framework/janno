@@ -12,12 +12,6 @@ test_that("reading broken_partial.janno works", {
   )
 })
 
-test_that("reading borked_wrong_name.janno fails", {
-  expect_error(
-    suppressMessages(read_janno(path_janno_borked_wrong_name, validate = F))
-  )
-})
-
 test_that("reading minimal_full.janno works", {
   expect_snapshot_value(
     suppressMessages(read_janno(path_janno_minimal_full, validate = F)),
@@ -53,3 +47,10 @@ test_that("reading normal_partial.janno works", {
   )
 })
 
+### specifically borked files
+
+test_that("reading borked_wrong_name.janno fails", {
+  expect_error(
+    suppressMessages(read_janno(path_janno_borked_wrong_name, validate = F))
+  )
+})
