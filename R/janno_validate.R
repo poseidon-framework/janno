@@ -1,3 +1,17 @@
+informative_validation <- function(paths) {
+  validation_result <- validate_janno(paths)
+  if (nrow(validation_result) > 0) {
+    print(validation_result)
+    message(paste0(
+      "Run this to get the table of issues: \nposeidonR::validate_janno(",
+      paste(utils::capture.output(dput(unique(validation_result$source_file))), collapse = ""),
+      ")\n"
+    ))
+  } else {
+    message("No issues with these .janno files")
+  }
+}
+
 #' @rdname janno
 #' @export
 validate_janno <- function(path) {
