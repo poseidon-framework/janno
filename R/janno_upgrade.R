@@ -41,7 +41,7 @@ upgrade_janno <- function(
   ) {
     message(counter, ": ", paste(in_path, out_path, sep = " ~> "))
     # read janno files
-    in_janno <- readr::read_tsv(in_path, show_col_types = FALSE)
+    in_janno <- readr::read_tsv(in_path, show_col_types = FALSE, col_types = readr::cols(.default = "c"))
     # run upgrade
     out_janno <- performUpgrade24to25(in_janno)
     # write result file
