@@ -1,3 +1,4 @@
+- V 0.6.0: Added a function `upgrade_janno` to update janno files from Poseidon v2.4.0 to v2.5.0
 - V 0.5.0: Added support for additional arguments to be passed to Bchron in `quickcalibrate`
 - V 0.4.2: Fixed link in documentation
 - V 0.4.1: Improved the message for additional columns in `validate_janno` with a suggestion mechanism
