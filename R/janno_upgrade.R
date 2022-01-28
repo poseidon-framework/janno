@@ -57,8 +57,9 @@ performUpgrade24to25 <- function(x) {
   colnames(jannoNewColNames) <- sapply(colnames(jannoNewColNames), lookupName)
   # enable new contamination column setup
   jannoContam <- dplyr::bind_cols(jannoNewColNames, constructNewContamCols(jannoNewColNames))
+  jannoContamErrorsFilled <- fillMissingContamErrors(jannoContam)
   # remove columns with only empty values
-  jannoWithoutNA <- jannoContam %>% dplyr::select(
+  jannoWithoutNA <- jannoContamErrorsFilled %>% dplyr::select(
     tidyselect::vars_select_helpers$where( function(x) { !isPoseidonNA(x) } )
   )
   # reorder columns
@@ -71,7 +72,7 @@ performUpgrade24to25 <- function(x) {
 
 isPoseidonNA <- function(x) { all(is_n_a(x)) }
 
-uniteWithoutNA <- function(x, y, toUniteFirst = x, toUniteSecond = y) {
+uniteContam <- function(x, y, toUniteFirst = x, toUniteSecond = y) {
   purrr::pmap_chr(
     list(x, y, toUniteFirst, toUniteSecond), \(a, b, tF, tS) {
       if (isPoseidonNA(a) & isPoseidonNA(b)) {
@@ -120,14 +121,36 @@ constructNewContamCols <- function(janno) {
       .data[["mtContam_stderr"]]
     ) %>%
     dplyr::transmute(
-      Contamination = uniteWithoutNA(
+      Contamination = uniteContam(
         .data[["Xcontam"]], .data[["mtContam"]]
       ),
-      Contamination_Err = uniteWithoutNA(
+      Contamination_Err = uniteContam(
         .data[["Xcontam"]], .data[["mtContam"]], .data[["Xcontam_stderr"]], .data[["mtContam_stderr"]]
       ),
-      Contamination_Meas = uniteWithoutNA(
+      Contamination_Meas = uniteContam(
         .data[["Xcontam"]], .data[["mtContam"]], "X-based (unknown software)", "mt-based (unknown software)"
       )
     )
+  
+}
+
+fillMissingContamErrors <- function(x) {
+  
+  # loop through the contamination columns and replace missing errors with 0.1*estimate
+  for (i in 1:nrow(x)) {
+    contam <- x$Contamination[i] %>% strsplit(";") %>% unlist %>% as.numeric()
+    error_start <- x$Contamination_Err[i]
+    error <- error_start %>% strsplit(";") %>% unlist
+    error_approx <- contam[is_n_a(error)] * 0.1
+    error[is_n_a(error)] <- error_approx %>% as.character()
+    x$Contamination_Err[i] <- paste(error, collapse = ";")
+    if (x$Contamination_Err[i] != error_start & !all(error_approx == 0)) {
+      if (!"Contamination_Note" %in% colnames(x)) {
+        x$Contamination_Note <- NA_character_
+      }
+      x$Contamination_Note[i] <- "missing errors automatically filled (0.1*the estimate)"
+    }
+  }
+  
+  return(x)
 }
