@@ -1,4 +1,4 @@
-Individual_ID	Group_Name	Genetic_Sex	Testcolumn1	Testcolumn2
-XXX011	POP1	M	13	test1
-XXX012	POP2	F	n/a	
-XXX013	POP1	M	23	test3
+Poseidon_ID	Testcolumn1	Group_Name	Genetic_Sex	Tesctolumn2
+XXX011	Ich	POP1	M	n/a
+XXX012	mag	POP2	F	
+XXX013	Birnen	POP1	M	Wurst;Bananen

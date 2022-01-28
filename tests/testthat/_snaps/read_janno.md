@@ -6,12 +6,12 @@
         "names": {
           "type": "character",
           "attributes": {},
-          "value": ["source_file", "Individual_ID", "Collection_ID", "Source_Tissue", "Country", "Location", "Site", "Latitude", "Longitude", "Date_C14_Labnr", "Date_C14_Uncal_BP", "Date_C14_Uncal_BP_Err", "Date_BC_AD_Median", "Date_BC_AD_Start", "Date_BC_AD_Stop", "Date_Type", "No_of_Libraries", "Data_Type", "Genotype_Ploidy", "Group_Name", "Genetic_Sex", "Nr_autosomal_SNPs", "Coverage_1240K", "MT_Haplogroup", "Y_Haplogroup", "Endogenous", "UDG", "Library_Built", "Damage", "Xcontam", "Xcontam_stderr", "mtContam", "mtContam_stderr", "Primary_Contact", "Publication_Status", "Note", "Keywords"]
+          "value": ["source_file", "Poseidon_ID", "Genetic_Sex", "Group_Name", "Latitude", "Longitude", "Date_Type", "Date_C14_Labnr", "Date_C14_Uncal_BP", "Date_C14_Uncal_BP_Err", "Date_BC_AD_Start", "Date_BC_AD_Median", "Date_BC_AD_Stop", "Nr_Libraries", "Capture_Type", "UDG", "Library_Built", "Genotype_Ploidy", "Data_Preparation_Pipeline_URL", "Endogenous", "Nr_SNPs", "Coverage_on_Target_SNPs", "Damage"]
         },
         "row.names": {
           "type": "integer",
           "attributes": {},
-          "value": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23]
+          "value": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24]
         },
         "class": {
           "type": "character",
@@ -23,17 +23,17 @@
         {
           "type": "character",
           "attributes": {},
-          "value": ["testJannoFiles/borked_full.janno", "testJannoFiles/borked_full.janno", "testJannoFiles/borked_full.janno", "testJannoFiles/borked_full.janno", "testJannoFiles/borked_full.janno", "testJannoFiles/borked_full.janno", "testJannoFiles/borked_full.janno", "testJannoFiles/borked_full.janno", "testJannoFiles/borked_full.janno", "testJannoFiles/borked_full.janno", "testJannoFiles/borked_full.janno", "testJannoFiles/borked_full.janno", "testJannoFiles/borked_full.janno", "testJannoFiles/borked_full.janno", "testJannoFiles/borked_full.janno", "testJannoFiles/borked_full.janno", "testJannoFiles/borked_full.janno", "testJannoFiles/borked_full.janno", "testJannoFiles/borked_full.janno", "testJannoFiles/borked_full.janno", "testJannoFiles/borked_full.janno", "testJannoFiles/borked_full.janno", "testJannoFiles/borked_full.janno"]
+          "value": ["testJannoFiles/borked_full.janno", "testJannoFiles/borked_full.janno", "testJannoFiles/borked_full.janno", "testJannoFiles/borked_full.janno", "testJannoFiles/borked_full.janno", "testJannoFiles/borked_full.janno", "testJannoFiles/borked_full.janno", "testJannoFiles/borked_full.janno", "testJannoFiles/borked_full.janno", "testJannoFiles/borked_full.janno", "testJannoFiles/borked_full.janno", "testJannoFiles/borked_full.janno", "testJannoFiles/borked_full.janno", "testJannoFiles/borked_full.janno", "testJannoFiles/borked_full.janno", "testJannoFiles/borked_full.janno", "testJannoFiles/borked_full.janno", "testJannoFiles/borked_full.janno", "testJannoFiles/borked_full.janno", "testJannoFiles/borked_full.janno", "testJannoFiles/borked_full.janno", "testJannoFiles/borked_full.janno", "testJannoFiles/borked_full.janno", "testJannoFiles/borked_full.janno"]
         },
         {
           "type": "character",
           "attributes": {},
-          "value": [null, "XXX017", "XXX018", "XXX019", "XXX022", "XXX023", "XXX024", "XXX025", "XXX026", "XXX027", "XXX028", "XXX029", "XXX030", "XXX031", "XXX032", "XXX035", "XXX036", "XXX037", "XXX038", "XXX039", "XXX040", "XXX041", "XXX042"]
+          "value": [null, "XXX017", "XXX018", "XXX019", "XXX022", "XXX023", "XXX024", "XXX025", "XXX026", "XXX027", "XXX028", "XXX029", "XXX030", "XXX031", "XXX032", "XXX035", "XXX036", "XXX037", "XXX038", "XXX039", "XXX040", "XXX041", "XXX042", "XXX044"]
         },
         {
           "type": "character",
           "attributes": {},
-          "value": [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null]
+          "value": ["M", "M", "M", "M", "M", "M", "M", "M", "M", "M", "M", "M", null, "M", "M", "M", "M", "M", "M", "M", "M", "M", "M", "M"]
         },
         {
           "type": "list",
@@ -42,7 +42,57 @@
             {
               "type": "character",
               "attributes": {},
-              "value": [null]
+              "value": ["POP1"]
+            },
+            {
+              "type": "character",
+              "attributes": {},
+              "value": ["POP5"]
+            },
+            {
+              "type": "character",
+              "attributes": {},
+              "value": ["POP6"]
+            },
+            {
+              "type": "character",
+              "attributes": {},
+              "value": ["POP7"]
+            },
+            {
+              "type": "character",
+              "attributes": {},
+              "value": ["POP10"]
+            },
+            {
+              "type": "character",
+              "attributes": {},
+              "value": ["POP11"]
+            },
+            {
+              "type": "character",
+              "attributes": {},
+              "value": ["POP12"]
+            },
+            {
+              "type": "character",
+              "attributes": {},
+              "value": ["POP13"]
+            },
+            {
+              "type": "character",
+              "attributes": {},
+              "value": ["POP14"]
+            },
+            {
+              "type": "character",
+              "attributes": {},
+              "value": ["POP15"]
+            },
+            {
+              "type": "character",
+              "attributes": {},
+              "value": ["POP16"]
             },
             {
               "type": "character",
@@ -52,134 +102,79 @@
             {
               "type": "character",
               "attributes": {},
-              "value": [null]
+              "value": ["POP18"]
             },
             {
               "type": "character",
               "attributes": {},
-              "value": [null]
+              "value": ["POP19"]
             },
             {
               "type": "character",
               "attributes": {},
-              "value": [null]
+              "value": ["POP20"]
             },
             {
               "type": "character",
               "attributes": {},
-              "value": [null]
+              "value": ["POP23"]
             },
             {
               "type": "character",
               "attributes": {},
-              "value": [null]
+              "value": ["POP24"]
             },
             {
               "type": "character",
               "attributes": {},
-              "value": [null]
+              "value": ["POP25"]
             },
             {
               "type": "character",
               "attributes": {},
-              "value": [null]
+              "value": ["POP26"]
             },
             {
               "type": "character",
               "attributes": {},
-              "value": [null]
+              "value": ["POP27"]
             },
             {
               "type": "character",
               "attributes": {},
-              "value": [null]
+              "value": ["POP28"]
             },
             {
               "type": "character",
               "attributes": {},
-              "value": [null]
+              "value": ["POP29"]
             },
             {
               "type": "character",
               "attributes": {},
-              "value": [null]
+              "value": ["POP30"]
             },
             {
               "type": "character",
               "attributes": {},
-              "value": [null]
-            },
-            {
-              "type": "character",
-              "attributes": {},
-              "value": [null]
-            },
-            {
-              "type": "character",
-              "attributes": {},
-              "value": [null]
-            },
-            {
-              "type": "character",
-              "attributes": {},
-              "value": [null]
-            },
-            {
-              "type": "character",
-              "attributes": {},
-              "value": [null]
-            },
-            {
-              "type": "character",
-              "attributes": {},
-              "value": [null]
-            },
-            {
-              "type": "character",
-              "attributes": {},
-              "value": [null]
-            },
-            {
-              "type": "character",
-              "attributes": {},
-              "value": [null]
-            },
-            {
-              "type": "character",
-              "attributes": {},
-              "value": [null]
-            },
-            {
-              "type": "character",
-              "attributes": {},
-              "value": [null]
+              "value": ["POP32"]
             }
           ]
         },
         {
-          "type": "character",
+          "type": "double",
           "attributes": {},
-          "value": [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null]
-        },
-        {
-          "type": "character",
-          "attributes": {},
-          "value": [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null]
-        },
-        {
-          "type": "character",
-          "attributes": {},
-          "value": [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null]
+          "value": ["NA", 1000, "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA"]
         },
         {
           "type": "double",
           "attributes": {},
-          "value": ["NA", 1000, "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA"]
+          "value": ["NA", "NA", -1000, "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA"]
         },
         {
-          "type": "double",
+          "type": "character",
           "attributes": {},
-          "value": ["NA", "NA", -1000, "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA"]
+          "value": [null, null, null, null, null, null, null, "something", null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null]
         },
         {
           "type": "list",
@@ -204,6 +199,11 @@
               "type": "character",
               "attributes": {},
               "value": ["A-1", "A-2", "A-3"]
+            },
+            {
+              "type": "character",
+              "attributes": {},
+              "value": [null]
             },
             {
               "type": "character",
@@ -420,6 +420,11 @@
               "type": "integer",
               "attributes": {},
               "value": ["NA"]
+            },
+            {
+              "type": "integer",
+              "attributes": {},
+              "value": ["NA"]
             }
           ]
         },
@@ -541,33 +546,33 @@
               "type": "integer",
               "attributes": {},
               "value": ["NA"]
+            },
+            {
+              "type": "integer",
+              "attributes": {},
+              "value": ["NA"]
             }
           ]
         },
         {
           "type": "integer",
           "attributes": {},
-          "value": ["NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA"]
+          "value": ["NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA"]
         },
         {
           "type": "integer",
           "attributes": {},
-          "value": ["NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA"]
+          "value": ["NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA"]
         },
         {
           "type": "integer",
           "attributes": {},
-          "value": ["NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA"]
-        },
-        {
-          "type": "character",
-          "attributes": {},
-          "value": [null, null, null, null, null, null, null, "something", null, null, null, null, null, null, null, null, null, null, null, null, null, null, null]
+          "value": ["NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA"]
         },
         {
           "type": "integer",
           "attributes": {},
-          "value": ["NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA"]
+          "value": ["NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA"]
         },
         {
           "type": "list",
@@ -687,451 +692,53 @@
               "type": "character",
               "attributes": {},
               "value": [null]
-            }
-          ]
-        },
-        {
-          "type": "character",
-          "attributes": {},
-          "value": [null, null, null, null, null, null, null, null, null, null, "something", null, null, null, null, null, null, null, null, null, null, null, null]
-        },
-        {
-          "type": "list",
-          "attributes": {},
-          "value": [
-            {
-              "type": "character",
-              "attributes": {},
-              "value": ["POP1"]
-            },
-            {
-              "type": "character",
-              "attributes": {},
-              "value": ["POP5"]
-            },
-            {
-              "type": "character",
-              "attributes": {},
-              "value": ["POP6"]
-            },
-            {
-              "type": "character",
-              "attributes": {},
-              "value": ["POP7"]
-            },
-            {
-              "type": "character",
-              "attributes": {},
-              "value": ["POP10"]
-            },
-            {
-              "type": "character",
-              "attributes": {},
-              "value": ["POP11"]
-            },
-            {
-              "type": "character",
-              "attributes": {},
-              "value": ["POP12"]
-            },
-            {
-              "type": "character",
-              "attributes": {},
-              "value": ["POP13"]
-            },
-            {
-              "type": "character",
-              "attributes": {},
-              "value": ["POP14"]
-            },
-            {
-              "type": "character",
-              "attributes": {},
-              "value": ["POP15"]
-            },
-            {
-              "type": "character",
-              "attributes": {},
-              "value": ["POP16"]
             },
             {
               "type": "character",
               "attributes": {},
               "value": [null]
-            },
-            {
-              "type": "character",
-              "attributes": {},
-              "value": ["POP18"]
-            },
-            {
-              "type": "character",
-              "attributes": {},
-              "value": ["POP19"]
-            },
-            {
-              "type": "character",
-              "attributes": {},
-              "value": ["POP20"]
-            },
-            {
-              "type": "character",
-              "attributes": {},
-              "value": ["POP23"]
-            },
-            {
-              "type": "character",
-              "attributes": {},
-              "value": ["POP24"]
-            },
-            {
-              "type": "character",
-              "attributes": {},
-              "value": ["POP25"]
-            },
-            {
-              "type": "character",
-              "attributes": {},
-              "value": ["POP26"]
-            },
-            {
-              "type": "character",
-              "attributes": {},
-              "value": ["POP27"]
-            },
-            {
-              "type": "character",
-              "attributes": {},
-              "value": ["POP28"]
-            },
-            {
-              "type": "character",
-              "attributes": {},
-              "value": ["POP29"]
-            },
-            {
-              "type": "character",
-              "attributes": {},
-              "value": ["POP30"]
             }
           ]
         },
         {
           "type": "character",
           "attributes": {},
-          "value": ["M", "M", "M", "M", "M", "M", "M", "M", "M", "M", "M", "M", null, "M", "M", "M", "M", "M", "M", "M", "M", "M", "M"]
+          "value": [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, "something", null, null, null, null, null, null, null]
+        },
+        {
+          "type": "character",
+          "attributes": {},
+          "value": [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, "something", null, null, null, null, null, null]
+        },
+        {
+          "type": "character",
+          "attributes": {},
+          "value": [null, null, null, null, null, null, null, null, null, null, "something", null, null, null, null, null, null, null, null, null, null, null, null, null]
+        },
+        {
+          "type": "character",
+          "attributes": {},
+          "value": [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, "something"]
+        },
+        {
+          "type": "double",
+          "attributes": {},
+          "value": ["NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA"]
         },
         {
           "type": "integer",
           "attributes": {},
-          "value": ["NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA"]
+          "value": ["NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA"]
         },
         {
           "type": "double",
           "attributes": {},
-          "value": ["NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA"]
-        },
-        {
-          "type": "character",
-          "attributes": {},
-          "value": [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null]
-        },
-        {
-          "type": "character",
-          "attributes": {},
-          "value": [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null]
+          "value": ["NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA"]
         },
         {
           "type": "double",
           "attributes": {},
-          "value": ["NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA"]
-        },
-        {
-          "type": "character",
-          "attributes": {},
-          "value": [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, "something", null, null, null, null, null, null]
-        },
-        {
-          "type": "character",
-          "attributes": {},
-          "value": [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, "something", null, null, null, null, null]
-        },
-        {
-          "type": "double",
-          "attributes": {},
-          "value": ["NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA"]
-        },
-        {
-          "type": "double",
-          "attributes": {},
-          "value": ["NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA"]
-        },
-        {
-          "type": "double",
-          "attributes": {},
-          "value": ["NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA"]
-        },
-        {
-          "type": "double",
-          "attributes": {},
-          "value": ["NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA"]
-        },
-        {
-          "type": "double",
-          "attributes": {},
-          "value": ["NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA"]
-        },
-        {
-          "type": "character",
-          "attributes": {},
-          "value": [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null]
-        },
-        {
-          "type": "list",
-          "attributes": {},
-          "value": [
-            {
-              "type": "character",
-              "attributes": {},
-              "value": [null]
-            },
-            {
-              "type": "character",
-              "attributes": {},
-              "value": [null]
-            },
-            {
-              "type": "character",
-              "attributes": {},
-              "value": [null]
-            },
-            {
-              "type": "character",
-              "attributes": {},
-              "value": [null]
-            },
-            {
-              "type": "character",
-              "attributes": {},
-              "value": [null]
-            },
-            {
-              "type": "character",
-              "attributes": {},
-              "value": [null]
-            },
-            {
-              "type": "character",
-              "attributes": {},
-              "value": [null]
-            },
-            {
-              "type": "character",
-              "attributes": {},
-              "value": [null]
-            },
-            {
-              "type": "character",
-              "attributes": {},
-              "value": [null]
-            },
-            {
-              "type": "character",
-              "attributes": {},
-              "value": [null]
-            },
-            {
-              "type": "character",
-              "attributes": {},
-              "value": [null]
-            },
-            {
-              "type": "character",
-              "attributes": {},
-              "value": [null]
-            },
-            {
-              "type": "character",
-              "attributes": {},
-              "value": [null]
-            },
-            {
-              "type": "character",
-              "attributes": {},
-              "value": [null]
-            },
-            {
-              "type": "character",
-              "attributes": {},
-              "value": [null]
-            },
-            {
-              "type": "character",
-              "attributes": {},
-              "value": [null]
-            },
-            {
-              "type": "character",
-              "attributes": {},
-              "value": [null]
-            },
-            {
-              "type": "character",
-              "attributes": {},
-              "value": [null]
-            },
-            {
-              "type": "character",
-              "attributes": {},
-              "value": [null]
-            },
-            {
-              "type": "character",
-              "attributes": {},
-              "value": [null]
-            },
-            {
-              "type": "character",
-              "attributes": {},
-              "value": [null]
-            },
-            {
-              "type": "character",
-              "attributes": {},
-              "value": [null]
-            },
-            {
-              "type": "character",
-              "attributes": {},
-              "value": [null]
-            }
-          ]
-        },
-        {
-          "type": "character",
-          "attributes": {},
-          "value": [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null]
-        },
-        {
-          "type": "list",
-          "attributes": {},
-          "value": [
-            {
-              "type": "character",
-              "attributes": {},
-              "value": [null]
-            },
-            {
-              "type": "character",
-              "attributes": {},
-              "value": [null]
-            },
-            {
-              "type": "character",
-              "attributes": {},
-              "value": [null]
-            },
-            {
-              "type": "character",
-              "attributes": {},
-              "value": [null]
-            },
-            {
-              "type": "character",
-              "attributes": {},
-              "value": [null]
-            },
-            {
-              "type": "character",
-              "attributes": {},
-              "value": [null]
-            },
-            {
-              "type": "character",
-              "attributes": {},
-              "value": [null]
-            },
-            {
-              "type": "character",
-              "attributes": {},
-              "value": [null]
-            },
-            {
-              "type": "character",
-              "attributes": {},
-              "value": [null]
-            },
-            {
-              "type": "character",
-              "attributes": {},
-              "value": [null]
-            },
-            {
-              "type": "character",
-              "attributes": {},
-              "value": [null]
-            },
-            {
-              "type": "character",
-              "attributes": {},
-              "value": [null]
-            },
-            {
-              "type": "character",
-              "attributes": {},
-              "value": [null]
-            },
-            {
-              "type": "character",
-              "attributes": {},
-              "value": [null]
-            },
-            {
-              "type": "character",
-              "attributes": {},
-              "value": [null]
-            },
-            {
-              "type": "character",
-              "attributes": {},
-              "value": [null]
-            },
-            {
-              "type": "character",
-              "attributes": {},
-              "value": [null]
-            },
-            {
-              "type": "character",
-              "attributes": {},
-              "value": [null]
-            },
-            {
-              "type": "character",
-              "attributes": {},
-              "value": [null]
-            },
-            {
-              "type": "character",
-              "attributes": {},
-              "value": [null]
-            },
-            {
-              "type": "character",
-              "attributes": {},
-              "value": [null]
-            },
-            {
-              "type": "character",
-              "attributes": {},
-              "value": [null]
-            },
-            {
-              "type": "character",
-              "attributes": {},
-              "value": [null]
-            }
-          ]
+          "value": ["NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA"]
         }
       ]
     }
@@ -1144,7 +751,7 @@
         "names": {
           "type": "character",
           "attributes": {},
-          "value": ["source_file", "Individual_ID", "Latitude", "Group_Name", "Genetic_Sex"]
+          "value": ["source_file", "Poseidon_ID", "Genetic_Sex", "Group_Name", "Latitude"]
         },
         "row.names": {
           "type": "integer",
@@ -1169,9 +776,9 @@
           "value": ["XXX016", "XXX017", "XXX018", "XXX019", "XXX022", "XXX023", "XXX024", "XXX025", "XXX026", "XXX027", "XXX028", "XXX029", "XXX030", "XXX031", "XXX032", "XXX035", "XXX036", "XXX037", "XXX038", "XXX039", "XXX040", "XXX041", "XXX042"]
         },
         {
-          "type": "double",
+          "type": "character",
           "attributes": {},
-          "value": ["NA", 1000, "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA"]
+          "value": ["M", "M", "M", "M", "M", "M", "M", "M", "M", "M", "M", "M", "M", "M", "M", "M", "M", "M", "M", "M", "M", "M", "M"]
         },
         {
           "type": "list",
@@ -1295,9 +902,9 @@
           ]
         },
         {
-          "type": "character",
+          "type": "double",
           "attributes": {},
-          "value": ["M", "M", "M", "M", "M", "M", "M", "M", "M", "M", "M", "M", "M", "M", "M", "M", "M", "M", "M", "M", "M", "M", "M"]
+          "value": ["NA", 1000, "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA"]
         }
       ]
     }
@@ -1310,7 +917,7 @@
         "names": {
           "type": "character",
           "attributes": {},
-          "value": ["source_file", "Individual_ID", "Collection_ID", "Source_Tissue", "Country", "Location", "Site", "Latitude", "Longitude", "Date_C14_Labnr", "Date_C14_Uncal_BP", "Date_C14_Uncal_BP_Err", "Date_BC_AD_Median", "Date_BC_AD_Start", "Date_BC_AD_Stop", "Date_Type", "No_of_Libraries", "Data_Type", "Genotype_Ploidy", "Group_Name", "Genetic_Sex", "Nr_autosomal_SNPs", "Coverage_1240K", "MT_Haplogroup", "Y_Haplogroup", "Endogenous", "UDG", "Library_Built", "Damage", "Xcontam", "Xcontam_stderr", "mtContam", "mtContam_stderr", "Primary_Contact", "Publication_Status", "Note", "Keywords"]
+          "value": ["source_file", "Poseidon_ID", "Genetic_Sex", "Group_Name", "Alternative_IDs", "Relation_To", "Relation_Degree", "Relation_Type", "Relation_Note", "Collection_ID", "Country", "Location", "Site", "Latitude", "Longitude", "Date_Type", "Date_C14_Labnr", "Date_C14_Uncal_BP", "Date_C14_Uncal_BP_Err", "Date_BC_AD_Start", "Date_BC_AD_Median", "Date_BC_AD_Stop", "Date_Note", "MT_Haplogroup", "Y_Haplogroup", "Source_Tissue", "Nr_Libraries", "Capture_Type", "UDG", "Library_Built", "Genotype_Ploidy", "Data_Preparation_Pipeline_URL", "Endogenous", "Nr_SNPs", "Coverage_on_Target_SNPs", "Damage", "Contamination", "Contamination_Err", "Contamination_Meas", "Contamination_Note", "Genetic_Source_Accession_IDs", "Primary_Contact", "Publication", "Note", "Keywords"]
         },
         "row.names": {
           "type": "integer",
@@ -1337,167 +944,7 @@
         {
           "type": "character",
           "attributes": {},
-          "value": [null, null, null]
-        },
-        {
-          "type": "list",
-          "attributes": {},
-          "value": [
-            {
-              "type": "character",
-              "attributes": {},
-              "value": [null]
-            },
-            {
-              "type": "character",
-              "attributes": {},
-              "value": [null]
-            },
-            {
-              "type": "character",
-              "attributes": {},
-              "value": [null]
-            }
-          ]
-        },
-        {
-          "type": "character",
-          "attributes": {},
-          "value": [null, null, null]
-        },
-        {
-          "type": "character",
-          "attributes": {},
-          "value": [null, null, null]
-        },
-        {
-          "type": "character",
-          "attributes": {},
-          "value": [null, null, null]
-        },
-        {
-          "type": "double",
-          "attributes": {},
-          "value": ["NA", "NA", "NA"]
-        },
-        {
-          "type": "double",
-          "attributes": {},
-          "value": ["NA", "NA", "NA"]
-        },
-        {
-          "type": "list",
-          "attributes": {},
-          "value": [
-            {
-              "type": "character",
-              "attributes": {},
-              "value": [null]
-            },
-            {
-              "type": "character",
-              "attributes": {},
-              "value": [null]
-            },
-            {
-              "type": "character",
-              "attributes": {},
-              "value": [null]
-            }
-          ]
-        },
-        {
-          "type": "list",
-          "attributes": {},
-          "value": [
-            {
-              "type": "integer",
-              "attributes": {},
-              "value": ["NA"]
-            },
-            {
-              "type": "integer",
-              "attributes": {},
-              "value": ["NA"]
-            },
-            {
-              "type": "integer",
-              "attributes": {},
-              "value": ["NA"]
-            }
-          ]
-        },
-        {
-          "type": "list",
-          "attributes": {},
-          "value": [
-            {
-              "type": "integer",
-              "attributes": {},
-              "value": ["NA"]
-            },
-            {
-              "type": "integer",
-              "attributes": {},
-              "value": ["NA"]
-            },
-            {
-              "type": "integer",
-              "attributes": {},
-              "value": ["NA"]
-            }
-          ]
-        },
-        {
-          "type": "integer",
-          "attributes": {},
-          "value": ["NA", "NA", "NA"]
-        },
-        {
-          "type": "integer",
-          "attributes": {},
-          "value": ["NA", "NA", "NA"]
-        },
-        {
-          "type": "integer",
-          "attributes": {},
-          "value": ["NA", "NA", "NA"]
-        },
-        {
-          "type": "character",
-          "attributes": {},
-          "value": [null, null, null]
-        },
-        {
-          "type": "integer",
-          "attributes": {},
-          "value": ["NA", "NA", "NA"]
-        },
-        {
-          "type": "list",
-          "attributes": {},
-          "value": [
-            {
-              "type": "character",
-              "attributes": {},
-              "value": [null]
-            },
-            {
-              "type": "character",
-              "attributes": {},
-              "value": [null]
-            },
-            {
-              "type": "character",
-              "attributes": {},
-              "value": [null]
-            }
-          ]
-        },
-        {
-          "type": "character",
-          "attributes": {},
-          "value": [null, null, null]
+          "value": ["M", "F", "M"]
         },
         {
           "type": "list",
@@ -1521,9 +968,293 @@
           ]
         },
         {
+          "type": "list",
+          "attributes": {},
+          "value": [
+            {
+              "type": "character",
+              "attributes": {},
+              "value": [null]
+            },
+            {
+              "type": "character",
+              "attributes": {},
+              "value": [null]
+            },
+            {
+              "type": "character",
+              "attributes": {},
+              "value": [null]
+            }
+          ]
+        },
+        {
+          "type": "list",
+          "attributes": {},
+          "value": [
+            {
+              "type": "character",
+              "attributes": {},
+              "value": [null]
+            },
+            {
+              "type": "character",
+              "attributes": {},
+              "value": [null]
+            },
+            {
+              "type": "character",
+              "attributes": {},
+              "value": [null]
+            }
+          ]
+        },
+        {
+          "type": "list",
+          "attributes": {},
+          "value": [
+            {
+              "type": "character",
+              "attributes": {},
+              "value": [null]
+            },
+            {
+              "type": "character",
+              "attributes": {},
+              "value": [null]
+            },
+            {
+              "type": "character",
+              "attributes": {},
+              "value": [null]
+            }
+          ]
+        },
+        {
+          "type": "list",
+          "attributes": {},
+          "value": [
+            {
+              "type": "character",
+              "attributes": {},
+              "value": [null]
+            },
+            {
+              "type": "character",
+              "attributes": {},
+              "value": [null]
+            },
+            {
+              "type": "character",
+              "attributes": {},
+              "value": [null]
+            }
+          ]
+        },
+        {
           "type": "character",
           "attributes": {},
-          "value": ["M", "F", "M"]
+          "value": [null, null, null]
+        },
+        {
+          "type": "character",
+          "attributes": {},
+          "value": [null, null, null]
+        },
+        {
+          "type": "character",
+          "attributes": {},
+          "value": [null, null, null]
+        },
+        {
+          "type": "character",
+          "attributes": {},
+          "value": [null, null, null]
+        },
+        {
+          "type": "character",
+          "attributes": {},
+          "value": [null, null, null]
+        },
+        {
+          "type": "double",
+          "attributes": {},
+          "value": ["NA", "NA", "NA"]
+        },
+        {
+          "type": "double",
+          "attributes": {},
+          "value": ["NA", "NA", "NA"]
+        },
+        {
+          "type": "character",
+          "attributes": {},
+          "value": [null, null, null]
+        },
+        {
+          "type": "list",
+          "attributes": {},
+          "value": [
+            {
+              "type": "character",
+              "attributes": {},
+              "value": [null]
+            },
+            {
+              "type": "character",
+              "attributes": {},
+              "value": [null]
+            },
+            {
+              "type": "character",
+              "attributes": {},
+              "value": [null]
+            }
+          ]
+        },
+        {
+          "type": "list",
+          "attributes": {},
+          "value": [
+            {
+              "type": "integer",
+              "attributes": {},
+              "value": ["NA"]
+            },
+            {
+              "type": "integer",
+              "attributes": {},
+              "value": ["NA"]
+            },
+            {
+              "type": "integer",
+              "attributes": {},
+              "value": ["NA"]
+            }
+          ]
+        },
+        {
+          "type": "list",
+          "attributes": {},
+          "value": [
+            {
+              "type": "integer",
+              "attributes": {},
+              "value": ["NA"]
+            },
+            {
+              "type": "integer",
+              "attributes": {},
+              "value": ["NA"]
+            },
+            {
+              "type": "integer",
+              "attributes": {},
+              "value": ["NA"]
+            }
+          ]
+        },
+        {
+          "type": "integer",
+          "attributes": {},
+          "value": ["NA", "NA", "NA"]
+        },
+        {
+          "type": "integer",
+          "attributes": {},
+          "value": ["NA", "NA", "NA"]
+        },
+        {
+          "type": "integer",
+          "attributes": {},
+          "value": ["NA", "NA", "NA"]
+        },
+        {
+          "type": "character",
+          "attributes": {},
+          "value": [null, null, null]
+        },
+        {
+          "type": "character",
+          "attributes": {},
+          "value": [null, null, null]
+        },
+        {
+          "type": "character",
+          "attributes": {},
+          "value": [null, null, null]
+        },
+        {
+          "type": "list",
+          "attributes": {},
+          "value": [
+            {
+              "type": "character",
+              "attributes": {},
+              "value": [null]
+            },
+            {
+              "type": "character",
+              "attributes": {},
+              "value": [null]
+            },
+            {
+              "type": "character",
+              "attributes": {},
+              "value": [null]
+            }
+          ]
+        },
+        {
+          "type": "integer",
+          "attributes": {},
+          "value": ["NA", "NA", "NA"]
+        },
+        {
+          "type": "list",
+          "attributes": {},
+          "value": [
+            {
+              "type": "character",
+              "attributes": {},
+              "value": [null]
+            },
+            {
+              "type": "character",
+              "attributes": {},
+              "value": [null]
+            },
+            {
+              "type": "character",
+              "attributes": {},
+              "value": [null]
+            }
+          ]
+        },
+        {
+          "type": "character",
+          "attributes": {},
+          "value": [null, null, null]
+        },
+        {
+          "type": "character",
+          "attributes": {},
+          "value": [null, null, null]
+        },
+        {
+          "type": "character",
+          "attributes": {},
+          "value": [null, null, null]
+        },
+        {
+          "type": "character",
+          "attributes": {},
+          "value": [null, null, null]
+        },
+        {
+          "type": "double",
+          "attributes": {},
+          "value": ["NA", "NA", "NA"]
         },
         {
           "type": "integer",
@@ -1536,54 +1267,98 @@
           "value": ["NA", "NA", "NA"]
         },
         {
+          "type": "double",
+          "attributes": {},
+          "value": ["NA", "NA", "NA"]
+        },
+        {
+          "type": "list",
+          "attributes": {},
+          "value": [
+            {
+              "type": "character",
+              "attributes": {},
+              "value": [null]
+            },
+            {
+              "type": "character",
+              "attributes": {},
+              "value": [null]
+            },
+            {
+              "type": "character",
+              "attributes": {},
+              "value": [null]
+            }
+          ]
+        },
+        {
+          "type": "list",
+          "attributes": {},
+          "value": [
+            {
+              "type": "character",
+              "attributes": {},
+              "value": [null]
+            },
+            {
+              "type": "character",
+              "attributes": {},
+              "value": [null]
+            },
+            {
+              "type": "character",
+              "attributes": {},
+              "value": [null]
+            }
+          ]
+        },
+        {
+          "type": "list",
+          "attributes": {},
+          "value": [
+            {
+              "type": "character",
+              "attributes": {},
+              "value": [null]
+            },
+            {
+              "type": "character",
+              "attributes": {},
+              "value": [null]
+            },
+            {
+              "type": "character",
+              "attributes": {},
+              "value": [null]
+            }
+          ]
+        },
+        {
           "type": "character",
           "attributes": {},
           "value": [null, null, null]
         },
         {
-          "type": "character",
+          "type": "list",
           "attributes": {},
-          "value": [null, null, null]
-        },
-        {
-          "type": "double",
-          "attributes": {},
-          "value": ["NA", "NA", "NA"]
-        },
-        {
-          "type": "character",
-          "attributes": {},
-          "value": [null, null, null]
-        },
-        {
-          "type": "character",
-          "attributes": {},
-          "value": [null, null, null]
-        },
-        {
-          "type": "double",
-          "attributes": {},
-          "value": ["NA", "NA", "NA"]
-        },
-        {
-          "type": "double",
-          "attributes": {},
-          "value": ["NA", "NA", "NA"]
-        },
-        {
-          "type": "double",
-          "attributes": {},
-          "value": ["NA", "NA", "NA"]
-        },
-        {
-          "type": "double",
-          "attributes": {},
-          "value": ["NA", "NA", "NA"]
-        },
-        {
-          "type": "double",
-          "attributes": {},
-          "value": ["NA", "NA", "NA"]
+          "value": [
+            {
+              "type": "character",
+              "attributes": {},
+              "value": [null]
+            },
+            {
+              "type": "character",
+              "attributes": {},
+              "value": [null]
+            },
+            {
+              "type": "character",
+              "attributes": {},
+              "value": [null]
+            }
+          ]
         },
         {
           "type": "character",
@@ -1648,7 +1423,7 @@
         "names": {
           "type": "character",
           "attributes": {},
-          "value": ["source_file", "Individual_ID", "Group_Name", "Genetic_Sex"]
+          "value": ["source_file", "Poseidon_ID", "Genetic_Sex", "Group_Name"]
         },
         "row.names": {
           "type": "integer",
@@ -1673,6 +1448,11 @@
           "value": ["XXX011", "XXX012", "XXX013"]
         },
         {
+          "type": "character",
+          "attributes": {},
+          "value": ["M", "F", "M"]
+        },
+        {
           "type": "list",
           "attributes": {},
           "value": [
@@ -1692,11 +1472,6 @@
               "value": ["POP1"]
             }
           ]
-        },
-        {
-          "type": "character",
-          "attributes": {},
-          "value": ["M", "F", "M"]
         }
       ]
     }
@@ -1709,7 +1484,7 @@
         "names": {
           "type": "character",
           "attributes": {},
-          "value": ["source_file", "Individual_ID", "Group_Name", "Genetic_Sex", "Testcolumn1", "Testcolumn2"]
+          "value": ["source_file", "Poseidon_ID", "Genetic_Sex", "Group_Name", "Testcolumn1", "Tesctolumn2"]
         },
         "row.names": {
           "type": "integer",
@@ -1734,6 +1509,11 @@
           "value": ["XXX011", "XXX012", "XXX013"]
         },
         {
+          "type": "character",
+          "attributes": {},
+          "value": ["M", "F", "M"]
+        },
+        {
           "type": "list",
           "attributes": {},
           "value": [
@@ -1757,17 +1537,12 @@
         {
           "type": "character",
           "attributes": {},
-          "value": ["M", "F", "M"]
+          "value": ["Ich", "mag", "Birnen"]
         },
         {
           "type": "character",
           "attributes": {},
-          "value": ["13", null, "23"]
-        },
-        {
-          "type": "character",
-          "attributes": {},
-          "value": ["test1", null, "test3"]
+          "value": [null, null, "Wurst;Bananen"]
         }
       ]
     }
@@ -1780,7 +1555,7 @@
         "names": {
           "type": "character",
           "attributes": {},
-          "value": ["source_file", "Individual_ID", "Collection_ID", "Source_Tissue", "Country", "Location", "Site", "Latitude", "Longitude", "Date_C14_Labnr", "Date_C14_Uncal_BP", "Date_C14_Uncal_BP_Err", "Date_BC_AD_Median", "Date_BC_AD_Start", "Date_BC_AD_Stop", "Date_Type", "No_of_Libraries", "Data_Type", "Genotype_Ploidy", "Group_Name", "Genetic_Sex", "Nr_autosomal_SNPs", "Coverage_1240K", "MT_Haplogroup", "Y_Haplogroup", "Endogenous", "UDG", "Library_Built", "Damage", "Xcontam", "Xcontam_stderr", "mtContam", "mtContam_stderr", "Primary_Contact", "Publication_Status", "Note", "Keywords"]
+          "value": ["source_file", "Poseidon_ID", "Genetic_Sex", "Group_Name", "Alternative_IDs", "Relation_To", "Relation_Degree", "Relation_Type", "Relation_Note", "Collection_ID", "Country", "Location", "Site", "Latitude", "Longitude", "Date_Type", "Date_C14_Labnr", "Date_C14_Uncal_BP", "Date_C14_Uncal_BP_Err", "Date_BC_AD_Start", "Date_BC_AD_Median", "Date_BC_AD_Stop", "Date_Note", "MT_Haplogroup", "Y_Haplogroup", "Source_Tissue", "Nr_Libraries", "Capture_Type", "UDG", "Library_Built", "Genotype_Ploidy", "Data_Preparation_Pipeline_URL", "Endogenous", "Nr_SNPs", "Coverage_on_Target_SNPs", "Damage", "Contamination", "Contamination_Err", "Contamination_Meas", "Contamination_Note", "Genetic_Source_Accession_IDs", "Primary_Contact", "Publication", "Note", "Keywords"]
         },
         "row.names": {
           "type": "integer",
@@ -1807,7 +1582,7 @@
         {
           "type": "character",
           "attributes": {},
-          "value": [null, null, null]
+          "value": ["M", "F", "M"]
         },
         {
           "type": "list",
@@ -1816,19 +1591,113 @@
             {
               "type": "character",
               "attributes": {},
-              "value": ["xxx", "yyy"]
+              "value": ["POP1", "POP3"]
             },
             {
               "type": "character",
               "attributes": {},
-              "value": ["xxx"]
+              "value": ["POP2"]
             },
             {
               "type": "character",
               "attributes": {},
-              "value": ["xxx"]
+              "value": ["POP1"]
             }
           ]
+        },
+        {
+          "type": "list",
+          "attributes": {},
+          "value": [
+            {
+              "type": "character",
+              "attributes": {},
+              "value": ["Paul", "Peter"]
+            },
+            {
+              "type": "character",
+              "attributes": {},
+              "value": [null]
+            },
+            {
+              "type": "character",
+              "attributes": {},
+              "value": ["Skeleton Joe"]
+            }
+          ]
+        },
+        {
+          "type": "list",
+          "attributes": {},
+          "value": [
+            {
+              "type": "character",
+              "attributes": {},
+              "value": ["XXX012", "I1234"]
+            },
+            {
+              "type": "character",
+              "attributes": {},
+              "value": ["XXX011"]
+            },
+            {
+              "type": "character",
+              "attributes": {},
+              "value": ["XXX011"]
+            }
+          ]
+        },
+        {
+          "type": "list",
+          "attributes": {},
+          "value": [
+            {
+              "type": "character",
+              "attributes": {},
+              "value": ["first", "second"]
+            },
+            {
+              "type": "character",
+              "attributes": {},
+              "value": ["first"]
+            },
+            {
+              "type": "character",
+              "attributes": {},
+              "value": ["sixthToTenth"]
+            }
+          ]
+        },
+        {
+          "type": "list",
+          "attributes": {},
+          "value": [
+            {
+              "type": "character",
+              "attributes": {},
+              "value": ["father_of", "grandfather_of"]
+            },
+            {
+              "type": "character",
+              "attributes": {},
+              "value": ["daughter_of"]
+            },
+            {
+              "type": "character",
+              "attributes": {},
+              "value": [null]
+            }
+          ]
+        },
+        {
+          "type": "character",
+          "attributes": {},
+          "value": ["yyy", null, "xxx"]
+        },
+        {
+          "type": "character",
+          "attributes": {},
+          "value": [null, null, null]
         },
         {
           "type": "character",
@@ -1854,6 +1723,11 @@
           "type": "double",
           "attributes": {},
           "value": [0, -180, 180]
+        },
+        {
+          "type": "character",
+          "attributes": {},
+          "value": ["C14", "contextual", "modern"]
         },
         {
           "type": "list",
@@ -1921,12 +1795,12 @@
         {
           "type": "integer",
           "attributes": {},
-          "value": [-1000, -5000, 2000]
+          "value": [-1200, -5500, 2000]
         },
         {
           "type": "integer",
           "attributes": {},
-          "value": [-1200, -5500, 2000]
+          "value": [-1000, -5000, 2000]
         },
         {
           "type": "integer",
@@ -1936,7 +1810,38 @@
         {
           "type": "character",
           "attributes": {},
-          "value": ["C14", "contextual", "modern"]
+          "value": ["x x x", "yyy", null]
+        },
+        {
+          "type": "character",
+          "attributes": {},
+          "value": ["A", "B", "C"]
+        },
+        {
+          "type": "character",
+          "attributes": {},
+          "value": ["C", "B", "A"]
+        },
+        {
+          "type": "list",
+          "attributes": {},
+          "value": [
+            {
+              "type": "character",
+              "attributes": {},
+              "value": ["xxx", "yyy"]
+            },
+            {
+              "type": "character",
+              "attributes": {},
+              "value": ["xxx"]
+            },
+            {
+              "type": "character",
+              "attributes": {},
+              "value": ["xxx"]
+            }
+          ]
         },
         {
           "type": "integer",
@@ -1967,33 +1872,27 @@
         {
           "type": "character",
           "attributes": {},
-          "value": ["diploid", "haploid", "diploid"]
-        },
-        {
-          "type": "list",
-          "attributes": {},
-          "value": [
-            {
-              "type": "character",
-              "attributes": {},
-              "value": ["POP1", "POP3"]
-            },
-            {
-              "type": "character",
-              "attributes": {},
-              "value": ["POP2"]
-            },
-            {
-              "type": "character",
-              "attributes": {},
-              "value": ["POP1"]
-            }
-          ]
+          "value": ["minus", "half", "plus"]
         },
         {
           "type": "character",
           "attributes": {},
-          "value": ["M", "F", "M"]
+          "value": ["ds", "ss", "other"]
+        },
+        {
+          "type": "character",
+          "attributes": {},
+          "value": ["diploid", "haploid", "diploid"]
+        },
+        {
+          "type": "character",
+          "attributes": {},
+          "value": ["ftp://test.test", "https://www.google.de", "http://huhu.org/23&test"]
+        },
+        {
+          "type": "double",
+          "attributes": {},
+          "value": [0, 0, 0]
         },
         {
           "type": "integer",
@@ -2006,54 +1905,98 @@
           "value": [0, 0, 0]
         },
         {
-          "type": "character",
-          "attributes": {},
-          "value": ["A", "B", "C"]
-        },
-        {
-          "type": "character",
-          "attributes": {},
-          "value": ["C", "B", "A"]
-        },
-        {
-          "type": "double",
-          "attributes": {},
-          "value": [0, 0, 0]
-        },
-        {
-          "type": "character",
-          "attributes": {},
-          "value": ["minus", "half", "plus"]
-        },
-        {
-          "type": "character",
-          "attributes": {},
-          "value": ["ds", "ss", "other"]
-        },
-        {
           "type": "double",
           "attributes": {},
           "value": [0, 100, 50]
         },
         {
-          "type": "double",
+          "type": "list",
           "attributes": {},
-          "value": [0, 0, 0]
+          "value": [
+            {
+              "type": "character",
+              "attributes": {},
+              "value": ["10"]
+            },
+            {
+              "type": "character",
+              "attributes": {},
+              "value": ["20", "50", "70"]
+            },
+            {
+              "type": "character",
+              "attributes": {},
+              "value": [null]
+            }
+          ]
         },
         {
-          "type": "double",
+          "type": "list",
           "attributes": {},
-          "value": [0, 0, 0]
+          "value": [
+            {
+              "type": "character",
+              "attributes": {},
+              "value": ["1"]
+            },
+            {
+              "type": "character",
+              "attributes": {},
+              "value": ["2", "5", "7.4"]
+            },
+            {
+              "type": "character",
+              "attributes": {},
+              "value": [null]
+            }
+          ]
         },
         {
-          "type": "double",
+          "type": "list",
           "attributes": {},
-          "value": [0, 0, 0]
+          "value": [
+            {
+              "type": "character",
+              "attributes": {},
+              "value": ["ANGSD v.123"]
+            },
+            {
+              "type": "character",
+              "attributes": {},
+              "value": ["Schmutzi v145", "Zwiebel", "other"]
+            },
+            {
+              "type": "character",
+              "attributes": {},
+              "value": [null]
+            }
+          ]
         },
         {
-          "type": "double",
+          "type": "character",
           "attributes": {},
-          "value": [0, 0, 0]
+          "value": [null, "xxx", null]
+        },
+        {
+          "type": "list",
+          "attributes": {},
+          "value": [
+            {
+              "type": "character",
+              "attributes": {},
+              "value": ["Ich", "mag", "Kekse"]
+            },
+            {
+              "type": "character",
+              "attributes": {},
+              "value": ["aus"]
+            },
+            {
+              "type": "character",
+              "attributes": {},
+              "value": ["der Dose"]
+            }
+          ]
         },
         {
           "type": "character",
@@ -2118,7 +2061,7 @@
         "names": {
           "type": "character",
           "attributes": {},
-          "value": ["source_file", "Individual_ID", "Source_Tissue", "Country", "Location", "Site", "Latitude", "Longitude", "Date_C14_Labnr", "Date_C14_Uncal_BP", "Date_C14_Uncal_BP_Err", "Date_BC_AD_Median", "Date_BC_AD_Start", "Date_BC_AD_Stop", "Date_Type", "No_of_Libraries", "Data_Type", "Genotype_Ploidy", "Group_Name", "Genetic_Sex", "Nr_autosomal_SNPs", "Coverage_1240K", "MT_Haplogroup", "Y_Haplogroup", "Endogenous", "UDG", "Library_Built", "Damage", "Xcontam", "Xcontam_stderr", "mtContam", "mtContam_stderr", "Primary_Contact", "Publication_Status", "Note", "Keywords", "...37"]
+          "value": ["source_file", "Poseidon_ID", "Genetic_Sex", "Group_Name", "Alternative_IDs", "Relation_To", "Relation_Degree", "Relation_Type", "Relation_Note", "Country", "Location", "Site", "Latitude", "Longitude", "Date_Type", "Date_C14_Labnr", "Date_C14_Uncal_BP", "Date_C14_Uncal_BP_Err", "Date_BC_AD_Start", "Date_BC_AD_Median", "Date_BC_AD_Stop", "Date_Note", "MT_Haplogroup", "Y_Haplogroup", "Source_Tissue", "Nr_Libraries", "Capture_Type", "UDG", "Library_Built", "Genotype_Ploidy", "Data_Preparation_Pipeline_URL", "Endogenous", "Nr_SNPs", "Coverage_on_Target_SNPs", "Damage", "Contamination", "Contamination_Err", "Contamination_Meas", "Contamination_Note", "Genetic_Source_Accession_IDs", "Primary_Contact", "Publication", "Note", "Keywords", "...45"]
         },
         "row.names": {
           "type": "integer",
@@ -2143,25 +2086,119 @@
           "value": ["XXX011", "XXX012", "XXX013"]
         },
         {
+          "type": "character",
+          "attributes": {},
+          "value": ["M", "F", "M"]
+        },
+        {
           "type": "list",
           "attributes": {},
           "value": [
             {
               "type": "character",
               "attributes": {},
-              "value": ["xxx", "yyy"]
+              "value": ["POP1", "POP3"]
             },
             {
               "type": "character",
               "attributes": {},
-              "value": ["xxx"]
+              "value": ["POP2"]
             },
             {
               "type": "character",
               "attributes": {},
-              "value": ["xxx"]
+              "value": ["POP1"]
             }
           ]
+        },
+        {
+          "type": "list",
+          "attributes": {},
+          "value": [
+            {
+              "type": "character",
+              "attributes": {},
+              "value": ["Paul", "Peter"]
+            },
+            {
+              "type": "character",
+              "attributes": {},
+              "value": [null]
+            },
+            {
+              "type": "character",
+              "attributes": {},
+              "value": ["Skeleton Joe"]
+            }
+          ]
+        },
+        {
+          "type": "list",
+          "attributes": {},
+          "value": [
+            {
+              "type": "character",
+              "attributes": {},
+              "value": ["XXX012", "I1234"]
+            },
+            {
+              "type": "character",
+              "attributes": {},
+              "value": ["XXX011"]
+            },
+            {
+              "type": "character",
+              "attributes": {},
+              "value": ["XXX011"]
+            }
+          ]
+        },
+        {
+          "type": "list",
+          "attributes": {},
+          "value": [
+            {
+              "type": "character",
+              "attributes": {},
+              "value": ["first", "second"]
+            },
+            {
+              "type": "character",
+              "attributes": {},
+              "value": ["first"]
+            },
+            {
+              "type": "character",
+              "attributes": {},
+              "value": ["sixthToTenth"]
+            }
+          ]
+        },
+        {
+          "type": "list",
+          "attributes": {},
+          "value": [
+            {
+              "type": "character",
+              "attributes": {},
+              "value": ["father_of", "grandfather_of"]
+            },
+            {
+              "type": "character",
+              "attributes": {},
+              "value": ["daughter_of"]
+            },
+            {
+              "type": "character",
+              "attributes": {},
+              "value": [null]
+            }
+          ]
+        },
+        {
+          "type": "character",
+          "attributes": {},
+          "value": ["yyy", null, "xxx"]
         },
         {
           "type": "character",
@@ -2187,6 +2224,11 @@
           "type": "double",
           "attributes": {},
           "value": [0, -180, 180]
+        },
+        {
+          "type": "character",
+          "attributes": {},
+          "value": ["C14", "contextual", "modern"]
         },
         {
           "type": "list",
@@ -2254,12 +2296,12 @@
         {
           "type": "integer",
           "attributes": {},
-          "value": [-1000, -5000, 2000]
+          "value": [-1200, -5500, 2000]
         },
         {
           "type": "integer",
           "attributes": {},
-          "value": [-1200, -5500, 2000]
+          "value": [-1000, -5000, 2000]
         },
         {
           "type": "integer",
@@ -2269,7 +2311,38 @@
         {
           "type": "character",
           "attributes": {},
-          "value": ["C14", "contextual", "modern"]
+          "value": ["x x x", "yyy", null]
+        },
+        {
+          "type": "character",
+          "attributes": {},
+          "value": ["A", "B", "C"]
+        },
+        {
+          "type": "character",
+          "attributes": {},
+          "value": ["C", "B", "A"]
+        },
+        {
+          "type": "list",
+          "attributes": {},
+          "value": [
+            {
+              "type": "character",
+              "attributes": {},
+              "value": ["xxx", "yyy"]
+            },
+            {
+              "type": "character",
+              "attributes": {},
+              "value": ["xxx"]
+            },
+            {
+              "type": "character",
+              "attributes": {},
+              "value": ["xxx"]
+            }
+          ]
         },
         {
           "type": "integer",
@@ -2300,33 +2373,27 @@
         {
           "type": "character",
           "attributes": {},
-          "value": ["diploid", "haploid", "diploid"]
-        },
-        {
-          "type": "list",
-          "attributes": {},
-          "value": [
-            {
-              "type": "character",
-              "attributes": {},
-              "value": ["POP1", "POP3"]
-            },
-            {
-              "type": "character",
-              "attributes": {},
-              "value": ["POP2"]
-            },
-            {
-              "type": "character",
-              "attributes": {},
-              "value": ["POP1"]
-            }
-          ]
+          "value": ["minus", "half", "plus"]
         },
         {
           "type": "character",
           "attributes": {},
-          "value": ["M", "F", "M"]
+          "value": ["ds", "ss", "other"]
+        },
+        {
+          "type": "character",
+          "attributes": {},
+          "value": ["diploid", "haploid", "diploid"]
+        },
+        {
+          "type": "character",
+          "attributes": {},
+          "value": ["ftp://test.test", "https://www.google.de", "http://huhu.org/23&test"]
+        },
+        {
+          "type": "double",
+          "attributes": {},
+          "value": [0, 0, 0]
         },
         {
           "type": "integer",
@@ -2339,54 +2406,98 @@
           "value": [0, 0, 0]
         },
         {
-          "type": "character",
-          "attributes": {},
-          "value": ["A", "B", "C"]
-        },
-        {
-          "type": "character",
-          "attributes": {},
-          "value": ["C", "B", "A"]
-        },
-        {
-          "type": "double",
-          "attributes": {},
-          "value": [0, 0, 0]
-        },
-        {
-          "type": "character",
-          "attributes": {},
-          "value": ["minus", "half", "plus"]
-        },
-        {
-          "type": "character",
-          "attributes": {},
-          "value": ["ds", "ss", "other"]
-        },
-        {
           "type": "double",
           "attributes": {},
           "value": [0, 100, 50]
         },
         {
-          "type": "double",
+          "type": "list",
           "attributes": {},
-          "value": [0, 0, 0]
+          "value": [
+            {
+              "type": "character",
+              "attributes": {},
+              "value": ["10"]
+            },
+            {
+              "type": "character",
+              "attributes": {},
+              "value": ["20", "50", "70"]
+            },
+            {
+              "type": "character",
+              "attributes": {},
+              "value": [null]
+            }
+          ]
         },
         {
-          "type": "double",
+          "type": "list",
           "attributes": {},
-          "value": [0, 0, 0]
+          "value": [
+            {
+              "type": "character",
+              "attributes": {},
+              "value": ["1"]
+            },
+            {
+              "type": "character",
+              "attributes": {},
+              "value": ["2", "5", "7.4"]
+            },
+            {
+              "type": "character",
+              "attributes": {},
+              "value": [null]
+            }
+          ]
         },
         {
-          "type": "double",
+          "type": "list",
           "attributes": {},
-          "value": [0, 0, 0]
+          "value": [
+            {
+              "type": "character",
+              "attributes": {},
+              "value": ["ANGSD v.123"]
+            },
+            {
+              "type": "character",
+              "attributes": {},
+              "value": ["Schmutzi v145", "Zwiebel", "other"]
+            },
+            {
+              "type": "character",
+              "attributes": {},
+              "value": [null]
+            }
+          ]
         },
         {
-          "type": "double",
+          "type": "character",
           "attributes": {},
-          "value": [0, 0, 0]
+          "value": [null, "xxx", null]
+        },
+        {
+          "type": "list",
+          "attributes": {},
+          "value": [
+            {
+              "type": "character",
+              "attributes": {},
+              "value": ["Ich", "mag", "Kekse"]
+            },
+            {
+              "type": "character",
+              "attributes": {},
+              "value": ["aus"]
+            },
+            {
+              "type": "character",
+              "attributes": {},
+              "value": ["der Dose"]
+            }
+          ]
         },
         {
           "type": "character",

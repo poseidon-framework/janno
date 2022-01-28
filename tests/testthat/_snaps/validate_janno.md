@@ -1,4 +1,4 @@
-# validating broken_full.janno works
+# validating broken_full.janno works (list of issues)
 
     {
       "type": "list",
@@ -11,7 +11,7 @@
         "row.names": {
           "type": "integer",
           "attributes": {},
-          "value": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22]
+          "value": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18]
         },
         "class": {
           "type": "character",
@@ -23,32 +23,32 @@
         {
           "type": "character",
           "attributes": {},
-          "value": ["testJannoFiles/borked_full.janno", "testJannoFiles/borked_full.janno", "testJannoFiles/borked_full.janno", "testJannoFiles/borked_full.janno", "testJannoFiles/borked_full.janno", "testJannoFiles/borked_full.janno", "testJannoFiles/borked_full.janno", "testJannoFiles/borked_full.janno", "testJannoFiles/borked_full.janno", "testJannoFiles/borked_full.janno", "testJannoFiles/borked_full.janno", "testJannoFiles/borked_full.janno", "testJannoFiles/borked_full.janno", "testJannoFiles/borked_full.janno", "testJannoFiles/borked_full.janno", "testJannoFiles/borked_full.janno", "testJannoFiles/borked_full.janno", "testJannoFiles/borked_full.janno", "testJannoFiles/borked_full.janno", "testJannoFiles/borked_full.janno", "testJannoFiles/borked_full.janno", "testJannoFiles/borked_full.janno"]
+          "value": ["testJannoFiles/borked_full.janno", "testJannoFiles/borked_full.janno", "testJannoFiles/borked_full.janno", "testJannoFiles/borked_full.janno", "testJannoFiles/borked_full.janno", "testJannoFiles/borked_full.janno", "testJannoFiles/borked_full.janno", "testJannoFiles/borked_full.janno", "testJannoFiles/borked_full.janno", "testJannoFiles/borked_full.janno", "testJannoFiles/borked_full.janno", "testJannoFiles/borked_full.janno", "testJannoFiles/borked_full.janno", "testJannoFiles/borked_full.janno", "testJannoFiles/borked_full.janno", "testJannoFiles/borked_full.janno", "testJannoFiles/borked_full.janno", "testJannoFiles/borked_full.janno"]
         },
         {
           "type": "integer",
           "attributes": {},
-          "value": [1, 2, 3, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23]
+          "value": [1, 13, 12, 2, 3, 8, 6, 5, 7, 9, 10, 17, 18, 11, 16, 14, 15, 19]
         },
         {
           "type": "character",
           "attributes": {},
-          "value": ["Individual_ID", "Latitude", "Longitude", "Date_BC_AD_Median", "Date_BC_AD_Start", "Date_BC_AD_Stop", "Date_Type", "No_of_Libraries", "Data_Type", "Genotype_Ploidy", "Group_Name", "Genetic_Sex", "Nr_autosomal_SNPs", "Coverage_1240K", "Endogenous", "UDG", "Library_Built", "Damage", "Xcontam", "Xcontam_stderr", "mtContam", "mtContam_stderr"]
+          "value": ["Poseidon_ID", "Genetic_Sex", "Group_Name", "Latitude", "Longitude", "Date_Type", "Date_BC_AD_Start", "Date_BC_AD_Median", "Date_BC_AD_Stop", "Nr_Libraries", "Capture_Type", "UDG", "Library_Built", "Genotype_Ploidy", "Endogenous", "Nr_SNPs", "Coverage_on_Target_SNPs", "Damage"]
         },
         {
           "type": "character",
           "attributes": {},
-          "value": ["n/a", "1000", "-1000", "something", "something", "something", "something", "something", "something", "something", "n/a", "n/a", "something", "something", "something", "something", "something", "something", "something", "something", "something", "something"]
+          "value": ["n/a", "n/a", "n/a", "1000", "-1000", "something", "something", "something", "something", "something", "something", "something", "something", "something", "something", "something", "something", "something"]
         },
         {
           "type": "character",
           "attributes": {},
-          "value": ["n/a in a mandatory column", "One or multiple values not in range -90 to 90", "One or multiple values not in range -180 to 180", "One or multiple values are not valid integer numbers", "One or multiple values are not valid integer numbers", "One or multiple values are not valid integer numbers", "At least one value not in C14, contextual, modern", "One or multiple values are not valid integer numbers", "At least one value not in Shotgun, 1240K, OtherCapture, ReferenceGenome", "At least one value not in diploid, haploid", "n/a in a mandatory column", "n/a in a mandatory column", "One or multiple values are not valid integer numbers", "One or multiple values are not valid floating point numbers", "One or multiple values are not valid floating point numbers", "At least one value not in minus, half, plus, mixed", "At least one value not in ds, ss, other", "One or multiple values are not valid floating point numbers", "One or multiple values are not valid floating point numbers", "One or multiple values are not valid floating point numbers", "One or multiple values are not valid floating point numbers", "One or multiple values are not valid floating point numbers"]
+          "value": ["n/a in a mandatory column", "n/a in a mandatory column", "n/a in a mandatory column", "One or multiple values not in range -90 to 90", "One or multiple values not in range -180 to 180", "At least one value not in C14, contextual, modern", "One or multiple values are not valid integer numbers", "One or multiple values are not valid integer numbers", "One or multiple values are not valid integer numbers", "One or multiple values are not valid integer numbers", "At least one value not in Shotgun, 1240K, OtherCapture, ReferenceGenome", "At least one value not in minus, half, plus, mixed", "At least one value not in ds, ss, other", "At least one value not in diploid, haploid", "One or multiple values are not valid floating point numbers", "One or multiple values are not valid integer numbers", "One or multiple values are not valid floating point numbers", "One or multiple values are not valid floating point numbers"]
         }
       ]
     }
 
-# validating broken_partial.janno works
+# validating broken_partial.janno works (one issue)
 
     {
       "type": "list",
@@ -98,7 +98,7 @@
       ]
     }
 
-# validating minimal_full.janno works
+# validating minimal_full.janno works (no issues)
 
     {
       "type": "list",
@@ -148,7 +148,7 @@
       ]
     }
 
-# validating minimal_partial.janno works
+# validating minimal_partial.janno works (no issues)
 
     {
       "type": "list",
@@ -198,7 +198,7 @@
       ]
     }
 
-# validating minimal_partial_extra_columns.janno works
+# validating minimal_partial_extra_columns.janno works (no issues)
 
     {
       "type": "list",
@@ -248,7 +248,7 @@
       ]
     }
 
-# validating normal_full.janno works
+# validating normal_full.janno works (no issues)
 
     {
       "type": "list",
@@ -298,7 +298,7 @@
       ]
     }
 
-# validating normal_partial.janno works
+# validating normal_partial.janno works (no issues)
 
     {
       "type": "list",

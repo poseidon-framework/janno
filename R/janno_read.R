@@ -6,21 +6,9 @@ read_janno <- function(
   validate = TRUE
 ) {
   # input checks and search for janno files
-  janno_file_paths <- get_janno_file_paths(path)
+  if (validate) { informative_validation(path) }
   # read files
-  if (validate) {
-    validation_result <- validate_janno(janno_file_paths)
-    if (nrow(validation_result) > 0) {
-      print(validation_result)
-      message(paste0(
-        "Run this to get the table of issues: \nposeidonR::validate_janno(",
-        paste(utils::capture.output(dput(path)), collapse = ""),
-        ")\n"
-      ))
-    } else {
-      message("No issues with these .janno files")
-    }
-  }
+  janno_file_paths <- get_janno_file_paths(path)
   message("Reading .janno files...")
   lapply(janno_file_paths, read_one_janno, to_janno) %>% dplyr::bind_rows()
 }

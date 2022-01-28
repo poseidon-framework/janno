@@ -54,7 +54,7 @@ format.janno <- function(x, ...) {
   groups <- unique(sapply(x[["Group_Name"]], function(y) {y[1]}))
   sex <- table(x[["Genetic_Sex"]])
   out_str$first_row <- paste(
-    print_number_and_name(unique(x[["Individual_ID"]]), "individuals"),
+    print_number_and_name(unique(x[["Poseidon_ID"]]), "individuals"),
     "|",
     print_number_and_name(groups, "populations"),
     "|",
