@@ -45,7 +45,7 @@ upgrade_janno <- function(
     # run upgrade
     out_janno <- performUpgrade24to25(in_janno)
     # write result file
-    readr::write_tsv(out_janno, file = out_path, na = "n/a", quote = "needed")
+    readr::write_tsv(out_janno, file = out_path, na = "n/a")
   })
   # validate output .janno files
   if (validate) { informative_validation(out_paths_full) }
