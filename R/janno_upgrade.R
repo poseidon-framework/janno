@@ -138,6 +138,7 @@ fillMissingContamErrors <- function(x) {
   
   # loop through the contamination columns and replace missing errors with 0.1*estimate
   for (i in 1:nrow(x)) {
+    if (is_n_a(x$Contamination[i])) { next } # hacky!
     contam <- x$Contamination[i] %>% strsplit(";") %>% unlist %>% as.numeric()
     error_start <- x$Contamination_Err[i]
     error <- error_start %>% strsplit(";") %>% unlist
