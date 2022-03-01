@@ -74,7 +74,7 @@ isPoseidonNA <- function(x) { all(is_n_a(x)) }
 
 uniteContam <- function(x, y, toUniteFirst = x, toUniteSecond = y) {
   purrr::pmap_chr(
-    list(x, y, toUniteFirst, toUniteSecond), \(a, b, tF, tS) {
+    list(x, y, toUniteFirst, toUniteSecond), function(a, b, tF, tS) {
       if (isPoseidonNA(a) & isPoseidonNA(b)) {
         "n/a"
       } else if (isPoseidonNA(a) & !isPoseidonNA(b)) {
