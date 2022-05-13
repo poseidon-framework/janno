@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 - V 0.8.0: `process_age` now supports a simple start and stop date output, which can be useful for plotting
+=======
+- V 0.7.2: Turned off double escaping of quotes in `write_janno`
+>>>>>>> 89e89440d72b32cf5c2d4738a1217a1b01ccc8b9
 - V 0.7.1: Removed post-R-4.1.0 syntax to make the package compatible again with older R versions
 - V 0.7.0: Added a function `upgrade_janno` to update janno files from Poseidon v2.4.0 to v2.5.0
 - V 0.6.0: Adjusted the package to Poseidon v2.5.0
