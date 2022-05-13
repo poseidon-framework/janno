@@ -1,6 +1,6 @@
 Package: poseidonR
 Title: Poseidon data handling in R
-Version: 0.7.1
+Version: 0.8.0
 Authors@R: c(person(given = "Clemens", family = "Schmid", role =
         c("aut", "cre", "cph"), email = "clemens@nevrome.de", comment =
         c(ORCID = "0000-0003-3448-5715")), person(given = "Ayshin",
