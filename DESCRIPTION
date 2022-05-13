@@ -12,7 +12,7 @@ Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.2
-Imports: Bchron, stats, checkmate, dplyr, tidyr, hash, magrittr,
+Imports: Bchron, checkmate, dplyr, tidyr, hash, magrittr,
         progress, rlang, readr, tibble, utils, tidyselect, purrr
 Depends: R (>= 2.10)
 Suggests: testthat (>= 3.0.0)

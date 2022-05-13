@@ -15,7 +15,13 @@
 #' @export
 process_age <- function(
   x, 
-  choices = c("Date_BC_AD_Prob", "Date_BC_AD_Median_Derived", "Date_BC_AD_Sample"),
+  choices = c(
+    "Date_BC_AD_Prob",
+    "Date_BC_AD_Start_Derived",
+    "Date_BC_AD_Median_Derived",
+    "Date_BC_AD_Stop_Derived",
+    "Date_BC_AD_Sample"
+  ),
   n = 100, 
   ...
 ) {
@@ -25,7 +31,13 @@ process_age <- function(
 #' @export
 process_age.default <- function(
   x, 
-  choices = c("Date_BC_AD_Prob", "Date_BC_AD_Median_Derived", "Date_BC_AD_Sample"),
+  choices = c(
+    "Date_BC_AD_Prob",
+    "Date_BC_AD_Start_Derived",
+    "Date_BC_AD_Median_Derived",
+    "Date_BC_AD_Stop_Derived",
+    "Date_BC_AD_Sample"
+  ),
   n = 100, 
   ...
 ) {
@@ -35,7 +47,13 @@ process_age.default <- function(
 #' @export
 process_age.janno <- function(
   x, 
-  choices = c("Date_BC_AD_Prob", "Date_BC_AD_Median_Derived", "Date_BC_AD_Sample"),
+  choices = c(
+    "Date_BC_AD_Prob",
+    "Date_BC_AD_Start_Derived",
+    "Date_BC_AD_Median_Derived",
+    "Date_BC_AD_Stop_Derived",
+    "Date_BC_AD_Sample"
+  ),
   n = 100, 
   ...
 ) {
@@ -57,9 +75,17 @@ process_age.janno <- function(
       startbcad = x[["Date_BC_AD_Start"]], stopbcad = x[["Date_BC_AD_Stop"]]
     )
   }
-  
+
+  if ("Date_BC_AD_Prob" %in% choices && "Date_BC_AD_Start_Derived" %in% choices) {
+    x$Date_BC_AD_Start_Derived <- get_start_age(x$Date_BC_AD_Prob)
+  }
+    
   if ("Date_BC_AD_Prob" %in% choices && "Date_BC_AD_Median_Derived" %in% choices) {
     x$Date_BC_AD_Median_Derived <- get_center_age(x$Date_BC_AD_Prob)
+  }
+  
+  if ("Date_BC_AD_Prob" %in% choices && "Date_BC_AD_Stop_Derived" %in% choices) {
+    x$Date_BC_AD_Stop_Derived <- get_stop_age(x$Date_BC_AD_Prob)
   }
   
   if ("Date_BC_AD_Prob" %in% choices && "Date_BC_AD_Sample" %in% choices) {
@@ -70,27 +96,37 @@ process_age.janno <- function(
   
 }
 
+get_simple_ages <- function(prob, operation) {
+  sapply(prob, function(y) {
+      if (!is.data.frame(y) && is.na(y)) {
+        return(NA_integer_)
+      } else {
+        operation(y)
+      }
+    }
+  )
+}
+
+get_start_age <- function(prob) {
+  get_simple_ages(prob, function(y) { utils::head(y[["age"]][y[["two_sigma"]]], n = 1) })
+}
+
+get_stop_age <- function(prob) {
+  get_simple_ages(prob, function(y) { utils::tail(y[["age"]][y[["two_sigma"]]], n = 1) })
+}
+
+get_center_age <- function(prob) {
+  get_simple_ages(prob, function(y) { y[["age"]][y[["center"]]] })
+}
+
 get_random_ages <- function(prob, n) {
-  lapply(
-    prob, function(y, n) {
+  lapply(prob, function(y, n) {
       if (!is.data.frame(y) && is.na(y)) {
         return(NA_integer_)
       } else {
         sample(y[["age"]], n, y[["sum_dens"]], replace = T)
       }
     }, n = n
-  )
-}
-
-get_center_age <- function(prob) {
-  sapply(
-    prob, function(y) {
-      if (!is.data.frame(y) && is.na(y)) {
-        return(NA_integer_)
-      } else {
-        y[["age"]][y[["center"]]]
-      }
-    }
   )
 }
 
