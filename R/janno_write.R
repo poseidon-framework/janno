@@ -27,7 +27,9 @@ write_janno.janno <- function(
   readr::write_tsv(
     flatten_janno(x),
     file = path,
-    na = "n/a"
+    na = "n/a",
+    quote = "none",
+    escape = "none"
   )
 }
 

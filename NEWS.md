@@ -1,3 +1,4 @@
+- V 0.7.2: Turned off double escaping of quotes in `write_janno`
 - V 0.7.1: Removed post-R-4.1.0 syntax to make the package compatible again with older R versions
 - V 0.7.0: Added a function `upgrade_janno` to update janno files from Poseidon v2.4.0 to v2.5.0
 - V 0.6.0: Adjusted the package to Poseidon v2.5.0
