@@ -6,7 +6,7 @@
         "names": {
           "type": "character",
           "attributes": {},
-          "value": ["Date_BC_AD_Median", "Date_BC_AD_Start", "Date_BC_AD_Stop"]
+          "value": ["Date_BC_AD_Start_2Sigma", "Date_BC_AD_Start_1Sigma", "Date_BC_AD_Median", "Date_BC_AD_Stop_1Sigma", "Date_BC_AD_Stop_2Sigma"]
         },
         "class": {
           "type": "character",
@@ -23,17 +23,27 @@
         {
           "type": "integer",
           "attributes": {},
+          "value": [-44, -404]
+        },
+        {
+          "type": "integer",
+          "attributes": {},
+          "value": [-37, -402]
+        },
+        {
+          "type": "integer",
+          "attributes": {},
           "value": [11, -121]
         },
         {
           "type": "integer",
           "attributes": {},
-          "value": [-40, -397]
+          "value": [56, 64]
         },
         {
           "type": "integer",
           "attributes": {},
-          "value": [81, 67]
+          "value": [71, 103]
         }
       ]
     }
