@@ -9,6 +9,8 @@
 #' By default all possible columns are added.
 #' @param n integer. If "Date_BC_AD_Sample" is in \code{choices}, 
 #' then how many samples should be drawn?
+#' @param cal_curve String. Calibration curve to use for the (sum)calibration of
+#' radiocarbon dates (see \link[Bchron]{BchronCalibrate})
 #' @param ... further arguments passed to or from other methods
 #' 
 #' @rdname process_age
@@ -22,7 +24,8 @@ process_age <- function(
     "Date_BC_AD_Stop_Derived",
     "Date_BC_AD_Sample"
   ),
-  n = 100, 
+  n = 100,
+  cal_curve = "intcal20",
   ...
 ) {
   UseMethod("process_age")
@@ -38,7 +41,8 @@ process_age.default <- function(
     "Date_BC_AD_Stop_Derived",
     "Date_BC_AD_Sample"
   ),
-  n = 100, 
+  n = 100,
+  cal_curve = "intcal20",
   ...
 ) {
   stop("x is not an object of class janno")
@@ -54,7 +58,8 @@ process_age.janno <- function(
     "Date_BC_AD_Stop_Derived",
     "Date_BC_AD_Sample"
   ),
-  n = 100, 
+  n = 100,
+  cal_curve = "intcal20",
   ...
 ) {
   
@@ -72,7 +77,8 @@ process_age.janno <- function(
       poseidon_id = x[["Poseidon_ID"]],
       date_type = x[["Date_Type"]],
       c14bp = x[["Date_C14_Uncal_BP"]], c14std = x[["Date_C14_Uncal_BP_Err"]],
-      startbcad = x[["Date_BC_AD_Start"]], stopbcad = x[["Date_BC_AD_Stop"]]
+      startbcad = x[["Date_BC_AD_Start"]], stopbcad = x[["Date_BC_AD_Stop"]],
+      cal_curve = cal_curve
     )
   }
 
@@ -98,7 +104,7 @@ process_age.janno <- function(
 
 get_simple_ages <- function(prob, operation) {
   sapply(prob, function(y) {
-      if (!is.data.frame(y) && is.na(y)) {
+      if (!is.data.frame(y)) {
         return(NA_integer_)
       } else {
         operation(y)
@@ -121,7 +127,7 @@ get_center_age <- function(prob) {
 
 get_random_ages <- function(prob, n) {
   lapply(prob, function(y, n) {
-      if (!is.data.frame(y) && is.na(y)) {
+      if (!is.data.frame(y)) {
         return(NA_integer_)
       } else {
         sample(y[["age"]], n, y[["sum_dens"]], replace = T)
@@ -130,7 +136,7 @@ get_random_ages <- function(prob, n) {
   )
 }
 
-age_probability_master <- function(poseidon_id, date_type, c14bp, c14std, startbcad, stopbcad) {
+age_probability_master <- function(poseidon_id, date_type, c14bp, c14std, startbcad, stopbcad, cal_curve) {
   
   res_list <- lapply(seq_along(date_type), function(i) {NA})
   
@@ -142,7 +148,8 @@ age_probability_master <- function(poseidon_id, date_type, c14bp, c14std, startb
   res_list[is_c14] <- sumcal_list_of_multiple_dates(
     poseidon_id_list = poseidon_id[is_c14],
     age_list = c14bp[is_c14], 
-    err_list = c14std[is_c14]
+    err_list = c14std[is_c14],
+    cal_curve = cal_curve
   )
   
   is_contextual <- !is.na(date_type) & 
@@ -173,10 +180,7 @@ contextual_date_uniform <- function(startbcad, stopbcad) {
   
 }
 
-sumcal_list_of_multiple_dates <- function(poseidon_id_list, age_list, err_list) {
-  
-  bol <- 1950 # c14 reference zero
-  threshold <- (1 - 0.9545) / 2 # 2sigma range probability threshold
+sumcal_list_of_multiple_dates <- function(poseidon_id_list, age_list, err_list, cal_curve) {
   
   pb <- progress::progress_bar$new(total = length(age_list))
   
@@ -184,69 +188,15 @@ sumcal_list_of_multiple_dates <- function(poseidon_id_list, age_list, err_list) 
   Map(function(poseidon_id, cur_xs, cur_errs) {
     
     pb$tick()
+    #message(poseidon_id)
     
-    # if (all(is.na(cur_xs)) | all(is.na(cur_errs))) {
-    #   # return(
-    #   #   tibble::tibble(
-    #   #     age = rlang::na_int,
-    #   #     sum_dens = rlang::na_dbl,
-    #   #     two_sigma = rlang::na_lgl,
-    #   #     center = rlang::na_lgl
-    #   #   )
-    #   # )
-    #   return(NA)
-    # }
-    
-    cur_raw_calibration_output <- tryCatch(
-      Bchron::BchronCalibrate(
-        ages      = cur_xs,
-        ageSds    = cur_errs,
-        calCurves = rep("intcal20", length(cur_xs))
-      ),
+    result_table <- tryCatch(
+      sumcal(cur_xs, cur_errs, rep(cal_curve, length(cur_xs))),
       error = function(e){
         message("\nAn error occurred when calibrating C14 age for individual ", poseidon_id, " - ", e)
       }
     )
      
-    if (is.null(cur_raw_calibration_output)) {
-      return(NA)
-    }
-
-    density_tables <- lapply(
-      cur_raw_calibration_output,
-      function(y) { 
-        tibble::tibble(
-          age = as.integer(-y$ageGrid + bol),
-          densities = y$densities
-        )
-      }
-    )
-    
-    sum_density_table <- dplyr::bind_rows(density_tables) %>%
-      dplyr::group_by(.data[["age"]]) %>%
-      dplyr::summarise(
-        sum_dens = sum(.data[["densities"]])/length(density_tables),
-        .groups = "drop"
-      ) %>%
-      dplyr::right_join(
-        .,
-        data.frame(age = min(.[["age"]]):max(.[["age"]])),
-        by = "age"
-      ) %>%
-      dplyr::mutate(
-        sum_dens = tidyr::replace_na(.data[["sum_dens"]], 0)
-      )
-    
-    a <- cumsum(sum_density_table$sum_dens) # cumulated density
-    bottom <- sum_density_table$age[max(which(a <= threshold))]
-    top <- sum_density_table$age[min(which(a > 1 - threshold))]
-    center <- sum_density_table$age[which.min(abs(a - 0.5))]
-    
-    result_table <- sum_density_table %>% dplyr::mutate(
-      two_sigma = .data[["age"]] >= bottom & .data[["age"]] <= top,
-      center = .data[["age"]] == center
-    )
-    
     return(result_table)
     
   }, poseidon_id_list, age_list, err_list)

@@ -9,6 +9,7 @@ process_age(
   choices = c("Date_BC_AD_Prob", "Date_BC_AD_Start_Derived",
     "Date_BC_AD_Median_Derived", "Date_BC_AD_Stop_Derived", "Date_BC_AD_Sample"),
   n = 100,
+  cal_curve = "intcal20",
   ...
 )
 }
@@ -20,6 +21,9 @@ By default all possible columns are added.}
 
 \item{n}{integer. If "Date_BC_AD_Sample" is in \code{choices},
 then how many samples should be drawn?}
+
+\item{cal_curve}{String. Calibration curve to use for the (sum)calibration of
+radiocarbon dates (see \link[Bchron]{BchronCalibrate})}
 
 \item{...}{further arguments passed to or from other methods}
 }

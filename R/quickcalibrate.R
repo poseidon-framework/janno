@@ -36,9 +36,11 @@ quickcalibrate <- function(ages, sds, cal_curves = rep("intcal20", length(ages))
   # prepare output table
   result_table <- lapply(sumcul_res_list, function(x) {
     data.frame(
+      Date_BC_AD_Start_2Sigma = utils::head(x[["age"]][x[["two_sigma"]]], 1),
+      Date_BC_AD_Start_1Sigma = utils::head(x[["age"]][x[["one_sigma"]]], 1),
       Date_BC_AD_Median = x[["age"]][x[["center"]]],
-      Date_BC_AD_Start = utils::head(x[["age"]][x[["two_sigma"]]], 1),
-      Date_BC_AD_Stop = utils::tail(x[["age"]][x[["two_sigma"]]], 1)
+      Date_BC_AD_Stop_1Sigma = utils::tail(x[["age"]][x[["one_sigma"]]], 1),
+      Date_BC_AD_Stop_2Sigma = utils::tail(x[["age"]][x[["two_sigma"]]], 1)
     )
   }) %>% dplyr::bind_rows()
   # return output
@@ -53,14 +55,14 @@ sumcal <- function(xs, errs, cal_curve, ...) {
         age = NA,
         sum_dens = NA,
         center = NA,
+        one_sigma = NA,
         two_sigma = NA
       )
     )
   }
   
-  bol <- 1950
-  threshold <- 0.025
-  
+  bol <- 1950 # c14 reference zero
+
   raw_calibration_output <- Bchron::BchronCalibrate(
     ages      = xs,
     ageSds    = errs,
@@ -78,7 +80,7 @@ sumcal <- function(xs, errs, cal_curve, ...) {
     }
   )
   
-  sum_density_table <- dplyr::bind_rows(density_tables) %>%
+  sum_density_table_by_year <- dplyr::bind_rows(density_tables) %>%
     dplyr::group_by(.data[["age"]]) %>%
     dplyr::summarise(
       sum_dens = sum(.data[["densities"]])/length(density_tables),
@@ -93,15 +95,29 @@ sumcal <- function(xs, errs, cal_curve, ...) {
       sum_dens = tidyr::replace_na(.data[["sum_dens"]], 0)
     )
   
-  a <- cumsum(sum_density_table$sum_dens) # cumulated density
-  bottom <- sum_density_table$age[max(which(a <= threshold))]
-  top <- sum_density_table$age[min(which(a > 1 - threshold))]
-  center <- sum_density_table$age[which.min(abs(a - 0.5))]
+  cum_dens_by_year <- cumsum(sum_density_table_by_year$sum_dens)
+  center_year <- sum_density_table_by_year$age[which.min(abs(cum_dens_by_year - 0.5))]
   
-  result_table <- sum_density_table %>% dplyr::mutate(
-    two_sigma = .data[["age"]] >= bottom & .data[["age"]] <= top,
-    center = .data[["age"]] == center
-  )
+  sum_density_table_by_dens <- sum_density_table_by_year %>%
+    dplyr::arrange(dplyr::desc(.[["sum_dens"]]))
+  cum_dens_by_dens <- cumsum(sum_density_table_by_dens$sum_dens)
+  one_sigma_years <- sum_density_table_by_dens$age[cum_dens_by_dens <= 0.683]
+  two_sigma_years <- sum_density_table_by_dens$age[cum_dens_by_dens <= 0.954]
+  
+  result_table <- sum_density_table_by_year %>%
+    dplyr::left_join(
+      data.frame(age = center_year, center = TRUE),
+      by = "age"
+    ) %>%
+    dplyr::left_join(
+      data.frame(age = one_sigma_years, one_sigma = TRUE),
+      by = "age"
+    ) %>%
+    dplyr::left_join(
+      data.frame(age = two_sigma_years, two_sigma = TRUE),
+      by = "age"
+    ) %>%
+    base::replace(is.na(.), FALSE)
   
   return(result_table)
 }

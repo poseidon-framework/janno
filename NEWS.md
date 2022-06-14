@@ -1,3 +1,4 @@
+- V 0.9.0: Fixed (changed to a better algorithm) the HDR determination for the radiocarbon calibration, which effects the "Start" and "Stop" output of both `process_age` and `quickcalibrate`
 - V 0.8.0: `process_age` now supports a simple start and stop date output, which can be useful for plotting
 - V 0.7.2: Turned off double escaping of quotes in `write_janno`
 - V 0.7.1: Removed post-R-4.1.0 syntax to make the package compatible again with older R versions
