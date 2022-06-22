@@ -93,7 +93,8 @@ sumcal <- function(xs, errs, cal_curve, ...) {
     ) %>%
     dplyr::mutate(
       sum_dens = tidyr::replace_na(.data[["sum_dens"]], 0)
-    )
+    ) %>%
+    dplyr::arrange(.data[["age"]])
   
   cum_dens_by_year <- cumsum(sum_density_table_by_year$sum_dens)
   center_year <- sum_density_table_by_year$age[which.min(abs(cum_dens_by_year - 0.5))]
