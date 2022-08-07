@@ -9,7 +9,7 @@ ancient_with_spatiotemporal_postion <- published_data %>% dplyr::filter(
 )
 
 ancient_with_spatiotemporal_postion %>% dplyr::mutate(
-  year_of_publication = readr::parse_number(Publication_Status)
+  year_of_publication = Publication %>% purrr::map_int(function(x) {as.integer(min(readr::parse_number(x)))})
 ) %>%
   dplyr::mutate(
     dplyr::across(
