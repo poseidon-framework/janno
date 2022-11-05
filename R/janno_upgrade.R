@@ -9,10 +9,8 @@
 #' if directories are listed in \code{in_paths}. With 
 #' \code{poseidonR:::get_janno_file_paths(in_paths)} the output paths will match the
 #' input paths, which will cause overwriting!
-#' @param in_version character vector. Poseidon schema version number of the input files. 
-#' Currently only supports "2.4"
 #' @param out_version character vector. Poseidon schema version number of the output files. 
-#' Currently only supports "2.5"
+#' Currently only supports "2.5.0" and "2.6.0"
 #' @param validate logical. Run the file validation after the transformation
 #' 
 #' @return No output - writes files
@@ -20,7 +18,7 @@
 upgrade_janno <- function(
   in_paths,
   out_paths,
-  in_version = "2.4", 
+  in_version = "2.4",
   out_version = "2.5",
   validate = TRUE
 ) {
@@ -49,6 +47,10 @@ upgrade_janno <- function(
   })
   # validate output .janno files
   if (validate) { informative_validation(out_paths_full) }
+}
+
+performUpgrade25to26 <- function(x) {
+  # no relevant changes to the .janno file
 }
 
 performUpgrade24to25 <- function(x) {

@@ -6,8 +6,8 @@
 \usage{
 process_age(
   x,
-  choices = c("Date_BC_AD_Prob", "Date_BC_AD_Start_Derived",
-    "Date_BC_AD_Median_Derived", "Date_BC_AD_Stop_Derived", "Date_BC_AD_Sample"),
+  choices = c("Date_BC_AD_Prob", "Date_BC_AD_Start_Derived", "Date_BC_AD_Median_Derived",
+    "Date_BC_AD_Stop_Derived", "Date_BC_AD_Sample"),
   n = 100,
   cal_curve = "intcal20",
   ...
