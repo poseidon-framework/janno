@@ -7,8 +7,8 @@
 upgrade_janno(
   in_paths,
   out_paths,
-  in_version = "2.4",
-  out_version = "2.5",
+  in_version = "2.4.0",
+  out_version = "2.6.0",
   validate = TRUE
 )
 }
@@ -22,11 +22,9 @@ if directories are listed in \code{in_paths}. With
 \code{poseidonR:::get_janno_file_paths(in_paths)} the output paths will match the
 input paths, which will cause overwriting!}
 
-\item{in_version}{character vector. Poseidon schema version number of the input files.
-Currently only supports "2.4"}
+\item{in_version}{character vector. Poseidon schema version number of the input files. Currently only supports "2.4.0"}
 
-\item{out_version}{character vector. Poseidon schema version number of the output files.
-Currently only supports "2.5"}
+\item{out_version}{character vector. Poseidon schema version number of the output files. Currently only supports "2.5.0" and "2.6.0"}
 
 \item{validate}{logical. Run the file validation after the transformation}
 }

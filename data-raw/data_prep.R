@@ -1,5 +1,5 @@
 janno_columns <- readr::read_tsv(
-  "https://raw.githubusercontent.com/poseidon-framework/poseidon2-schema/master/janno_columns.tsv"
+  "https://raw.githubusercontent.com/poseidon-framework/poseidon2-schema/poseidon26/janno_columns.tsv"
 )
 
 # column names
