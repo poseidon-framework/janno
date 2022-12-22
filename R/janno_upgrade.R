@@ -9,10 +9,8 @@
 #' if directories are listed in \code{in_paths}. With 
 #' \code{poseidonR:::get_janno_file_paths(in_paths)} the output paths will match the
 #' input paths, which will cause overwriting!
-#' @param in_version character vector. Poseidon schema version number of the input files. 
-#' Currently only supports "2.4"
-#' @param out_version character vector. Poseidon schema version number of the output files. 
-#' Currently only supports "2.5"
+#' @param in_version character vector. Poseidon schema version number of the input files. Currently only supports "2.4.0"
+#' @param out_version character vector. Poseidon schema version number of the output files. Currently only supports "2.5.0" and "2.6.0"
 #' @param validate logical. Run the file validation after the transformation
 #' 
 #' @return No output - writes files
@@ -20,8 +18,8 @@
 upgrade_janno <- function(
   in_paths,
   out_paths,
-  in_version = "2.4", 
-  out_version = "2.5",
+  in_version = "2.4.0",
+  out_version = "2.6.0",
   validate = TRUE
 ) {
   # search for janno files
@@ -29,8 +27,8 @@ upgrade_janno <- function(
   out_paths_full <- out_paths
   # check input
   checkmate::assert_true(length(in_paths_full) == length(out_paths_full))
-  checkmate::assert_subset(in_version, choices = c("2.4"))
-  checkmate::assert_subset(out_version, choices = c("2.5"))
+  checkmate::assert_subset(in_version, choices = c("2.4.0"))
+  checkmate::assert_subset(out_version, choices = c("2.5.0", "2.6.0"))
   # run transformation
   purrr::pwalk(list(
       in_paths_full, 
@@ -49,6 +47,10 @@ upgrade_janno <- function(
   })
   # validate output .janno files
   if (validate) { informative_validation(out_paths_full) }
+}
+
+performUpgrade25to26 <- function(x) {
+  # no relevant changes to the .janno file
 }
 
 performUpgrade24to25 <- function(x) {
