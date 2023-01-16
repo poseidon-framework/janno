@@ -60,15 +60,11 @@ flatten_janno.janno <- function(x) {
 }
 
 flatten_vector_list_column <- function(x) {
-  if (is.vector(x[[1]])) {
-    purrr::map_chr(x, function(y) { 
-      if (all(is.na(y))) {
-        "n/a"
-      } else {
-        paste(y, collapse = ";")
-      }
-    })
-  } else {
-    rep("n/a", length(x))
-  }
+  purrr::map_chr(x, function(y) { 
+    if (is.null(y) || all(is.na(y))) {
+      "n/a"
+    } else {
+      paste(y, collapse = ";")
+    }
+  })
 }
