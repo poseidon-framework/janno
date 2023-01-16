@@ -3,10 +3,10 @@ enforce_types <- function(x, suppress_na_introduced_warnings = TRUE) {
   defined_janno_columns <- x %>% dplyr::select(tidyselect::any_of(janno_column_names))
   undefined_janno_columns <- x %>% dplyr::select(-tidyselect::any_of(janno_column_names))
   
-  defined_janno_columns_typed <- Map(
-    apply_col_types,
+  defined_janno_columns_typed <- purrr::map2(
     as.list(defined_janno_columns), 
     names(defined_janno_columns), 
+    apply_col_types,
     suppress_na_introduced_warnings = suppress_na_introduced_warnings
   )
   defined_janno_columns_typed <- tibble::as_tibble(defined_janno_columns_typed)
@@ -30,17 +30,27 @@ apply_col_types <- function(col_data, col_name, suppress_na_introduced_warnings)
   already_list_column <- is.list(res)
   if (multi && !already_list_column) {
     res <- strsplit(res, ";")
+    # for debugging: if (col_name == "Date_C14_Labnr") { print(res) }
+    # turn empty list column entries to NULL instead of NA
+    res <- purrr::map(res, function(x) {if (all(is.na(x))) { NULL } else { x }} )
   }
   # transform variable, if trans function is available
   # assumes multi == TRUE and multi == FALSE is handled below
   if (!is.null(col_trans_function)) {
+    
     if (suppress_na_introduced_warnings) {
       withCallingHandlers({
-        res <- lapply(res, function(y) { col_trans_function(y) })
+        res <- purrr::map(res, function(y) { 
+          if (is.null(y)) { y } else { col_trans_function(y) }
+        })
       }, warning = na_introduced_warning_handler
       )
-    } else 
-      res <- lapply(res, function(y) { col_trans_function(y) })
+    } else {
+        res <- purrr::map(res, function(y) { 
+          if (is.null(y)) { y } else { col_trans_function(y) }
+        })
+    }
+    
   }
   # unlist if not multi
   if (!multi && !already_list_column) {
