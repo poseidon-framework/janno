@@ -1761,7 +1761,7 @@
         "names": {
           "type": "character",
           "attributes": {},
-          "value": ["source_file", "Poseidon_ID", "Genetic_Sex", "Group_Name", "Alternative_IDs", "Relation_To", "Relation_Degree", "Relation_Type", "Relation_Note", "Country", "Location", "Site", "Latitude", "Longitude", "Date_Type", "Date_C14_Labnr", "Date_C14_Uncal_BP", "Date_C14_Uncal_BP_Err", "Date_BC_AD_Start", "Date_BC_AD_Median", "Date_BC_AD_Stop", "Date_Note", "MT_Haplogroup", "Y_Haplogroup", "Source_Tissue", "Nr_Libraries", "Capture_Type", "UDG", "Library_Built", "Genotype_Ploidy", "Data_Preparation_Pipeline_URL", "Endogenous", "Nr_SNPs", "Coverage_on_Target_SNPs", "Damage", "Contamination", "Contamination_Err", "Contamination_Meas", "Contamination_Note", "Genetic_Source_Accession_IDs", "Primary_Contact", "Publication", "Note", "Keywords", "...45"]
+          "value": ["source_file", "Poseidon_ID", "Genetic_Sex", "Group_Name", "Alternative_IDs", "Relation_To", "Relation_Degree", "Relation_Type", "Relation_Note", "Country", "Location", "Site", "Latitude", "Longitude", "Date_Type", "Date_C14_Labnr", "Date_C14_Uncal_BP", "Date_C14_Uncal_BP_Err", "Date_BC_AD_Start", "Date_BC_AD_Median", "Date_BC_AD_Stop", "Date_Note", "MT_Haplogroup", "Y_Haplogroup", "Source_Tissue", "Nr_Libraries", "Capture_Type", "UDG", "Library_Built", "Genotype_Ploidy", "Data_Preparation_Pipeline_URL", "Endogenous", "Nr_SNPs", "Coverage_on_Target_SNPs", "Damage", "Contamination", "Contamination_Err", "Contamination_Meas", "Contamination_Note", "Genetic_Source_Accession_IDs", "Primary_Contact", "Publication", "Note", "Keywords"]
         },
         "row.names": {
           "type": "integer",
@@ -2226,11 +2226,6 @@
               "value": ["A", "B", "C"]
             }
           ]
-        },
-        {
-          "type": "character",
-          "attributes": {},
-          "value": [null, null, null]
         }
       ]
     }
