@@ -1,3 +1,4 @@
+- V 0.10.0: Changed the representation of empty list column values. So far when all values in a string list column in a package were empty, then the resulting janno object (after reading) had only entries of type NULL. If some values were non-empty, though, then the empty values were vectors with one element of type NA. Now empty string list entries are always represented by NULL.
 - V 0.9.1: Small adjustments in `upgrade_janno` and update of the source data for Poseidon v2.6.0
 - V 0.9.0: Fixed (changed to a better algorithm) the HDR determination for the radiocarbon calibration, which effects the "Start" and "Stop" output of both `process_age` and `quickcalibrate`
 - V 0.8.0: `process_age` now supports a simple start and stop date output, which can be useful for plotting
