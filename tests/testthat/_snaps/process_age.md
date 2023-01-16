@@ -66,9 +66,7 @@
               "value": ["Paul", "Peter"]
             },
             {
-              "type": "character",
-              "attributes": {},
-              "value": [null]
+              "type": "NULL"
             },
             {
               "type": "character",
@@ -134,9 +132,7 @@
               "value": ["daughter_of"]
             },
             {
-              "type": "character",
-              "attributes": {},
-              "value": [null]
+              "type": "NULL"
             }
           ]
         },
@@ -190,14 +186,10 @@
               "value": ["A-1", "A-2", "A-3"]
             },
             {
-              "type": "character",
-              "attributes": {},
-              "value": [null]
+              "type": "NULL"
             },
             {
-              "type": "character",
-              "attributes": {},
-              "value": [null]
+              "type": "NULL"
             }
           ]
         },
@@ -211,14 +203,10 @@
               "value": [3000, 3100, 2900]
             },
             {
-              "type": "integer",
-              "attributes": {},
-              "value": ["NA"]
+              "type": "NULL"
             },
             {
-              "type": "integer",
-              "attributes": {},
-              "value": ["NA"]
+              "type": "NULL"
             }
           ]
         },
@@ -232,14 +220,10 @@
               "value": [30, 40, 20]
             },
             {
-              "type": "integer",
-              "attributes": {},
-              "value": ["NA"]
+              "type": "NULL"
             },
             {
-              "type": "integer",
-              "attributes": {},
-              "value": ["NA"]
+              "type": "NULL"
             }
           ]
         },
@@ -375,9 +359,7 @@
               "value": ["20", "50", "70"]
             },
             {
-              "type": "character",
-              "attributes": {},
-              "value": [null]
+              "type": "NULL"
             }
           ]
         },
@@ -396,9 +378,7 @@
               "value": ["2", "5", "7.4"]
             },
             {
-              "type": "character",
-              "attributes": {},
-              "value": [null]
+              "type": "NULL"
             }
           ]
         },
@@ -417,9 +397,7 @@
               "value": ["Schmutzi v145", "Zwiebel", "other"]
             },
             {
-              "type": "character",
-              "attributes": {},
-              "value": [null]
+              "type": "NULL"
             }
           ]
         },
@@ -490,9 +468,7 @@
               "value": ["Hutschnur"]
             },
             {
-              "type": "character",
-              "attributes": {},
-              "value": [null]
+              "type": "NULL"
             },
             {
               "type": "character",
