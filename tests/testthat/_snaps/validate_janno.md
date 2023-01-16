@@ -211,7 +211,7 @@
         "row.names": {
           "type": "integer",
           "attributes": {},
-          "value": []
+          "value": [1, 2]
         },
         "class": {
           "type": "character",
@@ -223,27 +223,27 @@
         {
           "type": "character",
           "attributes": {},
-          "value": []
+          "value": ["testJannoFiles/minimal_partial_extra_columns.janno", "testJannoFiles/minimal_partial_extra_columns.janno"]
         },
         {
-          "type": "integer",
+          "type": "logical",
           "attributes": {},
-          "value": []
-        },
-        {
-          "type": "character",
-          "attributes": {},
-          "value": []
+          "value": [null, null]
         },
         {
           "type": "character",
           "attributes": {},
-          "value": []
+          "value": ["Testcolumn1", "Tesctolumn2"]
+        },
+        {
+          "type": "logical",
+          "attributes": {},
+          "value": [null, null]
         },
         {
           "type": "character",
           "attributes": {},
-          "value": []
+          "value": ["This column is not defined in the Poseidon schema implemented in this package. It will be read as a character column. Maybe you mistyped the column name  Relation_To?", "This column is not defined in the Poseidon schema implemented in this package. It will be read as a character column. Maybe you mistyped the column name  Genetic_Sex?"]
         }
       ]
     }
