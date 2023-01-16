@@ -52,21 +52,17 @@ validate_one_janno <- function(path) {
   undefined_janno_columns <- raw_janno %>% 
     dplyr::select(-tidyselect::any_of(janno_column_names)) %>%
     colnames()
-  if (length(undefined_janno_columns) > 0) {
+  for (cur_col in undefined_janno_columns) {
     # search for possible column name suggestions
-    string_comparison_indizes <- apply(
-      utils::adist(undefined_janno_columns, janno_column_names), 
-      1, 
-      which.min
-    )
-    closest_colnames <- janno_column_names[string_comparison_indizes]
-    message(
-      "[", path, "] ",
-      "There are undefined columns in this janno file: ",
-      paste(undefined_janno_columns, collapse = ", "), ". ",
-      "They are read as character columns. ",
-      "Maybe you mean: ",
-      paste(closest_colnames, collapse = ", ")
+    string_comparison_index <- utils::adist(cur_col, janno_column_names) %>% which.min
+    closest_colname <- janno_column_names[string_comparison_index]
+    issues <- issues %>% append_issue(
+      column = cur_col,
+      issue = paste(
+        "This column is not defined in the Poseidon schema implemented in this package.",
+        "It will be read as a character column.",
+        "Maybe you mistyped the column name ", paste0(closest_colname, "?")
+      )
     )
   }
   # keep all valid columns for further inspection
