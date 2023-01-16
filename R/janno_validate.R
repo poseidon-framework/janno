@@ -19,7 +19,7 @@ validate_janno <- function(path) {
   # input checks and search for janno files
   janno_file_paths <- get_janno_file_paths(path)
   # validate files
-  lapply(janno_file_paths, validate_one_janno) %>% dplyr::bind_rows()
+  purrr::map_dfr(janno_file_paths, validate_one_janno)
 }
 
 validate_one_janno <- function(path) {
@@ -39,7 +39,13 @@ validate_one_janno <- function(path) {
     stop("Input file is not a valid tab separated file: ", path)
   }
   # read file
-  raw_janno <- readr::read_tsv(path, col_types = readr::cols(.default = readr::col_character()))
+  raw_janno <- readr::read_tsv(
+    path,
+    col_types = readr::cols(.default = readr::col_character()),
+    name_repair = "unique_quiet"
+  ) %>%
+    # remove columns without a header
+    dplyr::select(!tidyselect::starts_with("..."))
   # are the necessary columns present?
   check_if_all_mandatory_columns_present(raw_janno)
   # report undefined columns
