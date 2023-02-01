@@ -30,9 +30,17 @@ apply_col_types <- function(col_data, col_name, suppress_na_introduced_warnings)
   already_list_column <- is.list(res)
   if (multi && !already_list_column) {
     res <- strsplit(res, ";")
-    # for debugging: if (col_name == "Date_C14_Labnr") { print(res) }
+  }
+  if (multi) {
     # turn empty list column entries to NULL instead of NA
-    res <- purrr::map(res, function(x) {if (all(is.na(x))) { NULL } else { x }} )
+    res <- purrr::map(res, function(x) {
+      if (all(is.na(x))) {
+        NULL
+      } else {
+        # remove leading or trailing whitespaces from individual values in list columns
+        trimws(x)
+      }
+    })
   }
   # transform variable, if trans function is available
   # assumes multi == TRUE and multi == FALSE is handled below
@@ -41,13 +49,13 @@ apply_col_types <- function(col_data, col_name, suppress_na_introduced_warnings)
     if (suppress_na_introduced_warnings) {
       withCallingHandlers({
         res <- purrr::map(res, function(y) { 
-          if (is.null(y)) { y } else { col_trans_function(y) }
+          if (is.null(y)) { y } else { y %>% trimws() %>% col_trans_function() }
         })
       }, warning = na_introduced_warning_handler
       )
     } else {
         res <- purrr::map(res, function(y) { 
-          if (is.null(y)) { y } else { col_trans_function(y) }
+          if (is.null(y)) { y } else { y %>% trimws() %>% col_trans_function() }
         })
     }
     
@@ -76,20 +84,4 @@ na_introduced_warning_handler <- function(x) {
   )) {
     invokeRestart("muffleWarning")
   }
-}
-
-as_string_list_column <- function(x) {
-  as_list_column(x)
-}
-
-as_integer_list_column <- function(x) {
-  lapply(as_list_column(x), as.integer)
-}
-
-as_list_column <- function(x) {
-  as.list(ifelse(
-    grepl(";", x),
-    strsplit(x, split = ";"),
-    x
-  ))
 }
