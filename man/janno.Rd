@@ -10,7 +10,7 @@
 \alias{validate_janno}
 \alias{write_janno}
 \alias{flatten_janno}
-\title{The janno class}
+\title{janno S3 data type}
 \usage{
 as.janno(x, source_janno_file = NA_character_, ...)
 
