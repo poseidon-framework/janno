@@ -14,6 +14,7 @@ informative_validation <- function(paths) {
 #' @export
 validate_janno <- function(path) {
   message("Validating .janno files...")
+  message("This validation only checks individual column types, no cross-column integrity")
   # input checks and search for janno files
   janno_file_paths <- get_janno_file_paths(path)
   # validate files
