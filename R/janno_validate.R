@@ -3,7 +3,7 @@ informative_validation <- function(paths) {
   if (nrow(validation_result) > 0) {
     print(validation_result)
     message(paste0(
-      "Run this to get the table of issues: \nposeidonR::validate_janno(",
+      "Run this to get the table of issues: \njanno::validate_janno(",
       paste(utils::capture.output(dput(unique(validation_result$source_file))), collapse = ""),
       ")\n"
     ))

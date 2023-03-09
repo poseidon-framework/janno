@@ -19,7 +19,7 @@ or directories that should be recursively searched for .janno files}
 \item{out_paths}{character vector. Must have an identical length to
 \code{in_paths}, also considering the recursive search for .janno files
 if directories are listed in \code{in_paths}. With
-\code{poseidonR:::get_janno_file_paths(in_paths)} the output paths will match the
+\code{janno:::get_janno_file_paths(in_paths)} the output paths will match the
 input paths, which will cause overwriting!}
 
 \item{in_version}{character vector. Poseidon schema version number of the input files. Currently only supports "2.4.0"}

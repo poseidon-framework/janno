@@ -7,7 +7,7 @@
 #' @param out_paths character vector. Must have an identical length to 
 #' \code{in_paths}, also considering the recursive search for .janno files 
 #' if directories are listed in \code{in_paths}. With 
-#' \code{poseidonR:::get_janno_file_paths(in_paths)} the output paths will match the
+#' \code{janno:::get_janno_file_paths(in_paths)} the output paths will match the
 #' input paths, which will cause overwriting!
 #' @param in_version character vector. Poseidon schema version number of the input files. Currently only supports "2.4.0"
 #' @param out_version character vector. Poseidon schema version number of the output files. Currently only supports "2.5.0" and "2.6.0"
