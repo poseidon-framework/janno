@@ -6,7 +6,4 @@ path_janno_minimal_partial_extra_columns <- "poseidon_test_data/testJannoFiles/m
 path_janno_normal_full <- "poseidon_test_data/testJannoFiles/normal_full.janno"
 path_janno_normal_partial <- "poseidon_test_data/testJannoFiles/normal_partial.janno"
 
-path_janno_borked_wrong_name <- "poseidon_test_data/testJannoFiles/borked/borked_wrong_name.janno"
-path_janno_borked_dating <- "poseidon_test_data/testJannoFiles/borked/borked_dating.janno"
-path_janno_borked_relations <- "poseidon_test_data/testJannoFiles/borked/borked_relations.janno"
-path_janno_borked_contamination <- "poseidon_test_data/testJannoFiles/borked/borked_contamination.janno"
+path_janno_borked_wrong_name <- "poseidon_test_data/testJannoFiles/specificallyBorked/borked_wrong_name.janno"
