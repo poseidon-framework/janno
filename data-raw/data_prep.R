@@ -1,5 +1,6 @@
+poseidon_version <- "2.6.0"
 janno_columns <- readr::read_tsv(
-  "https://raw.githubusercontent.com/poseidon-framework/poseidon2-schema/poseidon26/janno_columns.tsv"
+  "https://raw.githubusercontent.com/poseidon-framework/poseidon2-schema/v2.6.0/janno_columns.tsv"
 )
 
 # column names
@@ -34,6 +35,7 @@ janno_column_name_range_lower <- hash::hash(janno_range_columns, lower_ranges)
 janno_column_name_range_upper <- hash::hash(janno_range_columns, upper_ranges)
 
 usethis::use_data(
+  poseidon_version,
   janno_column_names,
   janno_column_name_data_type,
   janno_multi_value_columns,

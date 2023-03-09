@@ -7,3 +7,14 @@ globalVariables(".")
 #'@importFrom rlang .data 
 #'
 NULL
+
+startupmsg <- function() {
+  paste0("janno was build for Poseidon v", poseidon_version)
+}
+
+# package startup message
+.onAttach <- function(lib, pkg) {
+  if ( interactive() ) { packageStartupMessage(startupmsg()) }
+  invisible()
+}
+
