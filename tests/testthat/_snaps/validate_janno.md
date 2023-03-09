@@ -243,7 +243,7 @@
         {
           "type": "character",
           "attributes": {},
-          "value": ["This column is not defined in the Poseidon schema implemented in this package. It will be read as a character column. Maybe you mistyped the column name  Relation_To?", "This column is not defined in the Poseidon schema implemented in this package. It will be read as a character column. Maybe you mistyped the column name  Genetic_Sex?"]
+          "value": ["Column not defined in the Poseidon schema. It will be read as a character column. Maybe you mistyped Relation_To?", "Column not defined in the Poseidon schema. It will be read as a character column. Maybe you mistyped Genetic_Sex?"]
         }
       ]
     }
