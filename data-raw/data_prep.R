@@ -1,6 +1,7 @@
-poseidon_version <- "2.6.0"
+poseidon_version <- "2.7.0"
 janno_columns <- readr::read_tsv(
-  "https://raw.githubusercontent.com/poseidon-framework/poseidon2-schema/v2.6.0/janno_columns.tsv"
+  #"https://raw.githubusercontent.com/poseidon-framework/poseidon2-schema/v2.7.0/janno_columns.tsv"
+  "https://raw.githubusercontent.com/poseidon-framework/poseidon2-schema/6133bcd6976ad778683afb6d19af9b2443444899/janno_columns.tsv"
 )
 
 # column names
