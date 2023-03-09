@@ -1,3 +1,10 @@
+- V 1.0.0: Multiple changes that justify a new major version number
+  - switched to a new schema version Poseidon v2.7.0
+  - changed the package name from poseidonR to just janno
+  - removed the `upgrade_janno` function
+  - simplified the validation issue reporting in `read_janno`
+  - added a start-up message that highlights that the janno package only supports one Poseidon version
+  - other minor changes, e.g. to the phrasing of error messages
 - V 0.11.1: Unspecified .janno columns are now reported as an issue in the `validate_janno` output table, and not just with a message on the command line.
 - V 0.11.0: Turned off reading .janno columns with an empty header.
 - V 0.10.1: The change in v0.10.0 broke `write_janno`, which could not handle the NULL values properly. This should be fixed now.
