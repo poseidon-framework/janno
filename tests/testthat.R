@@ -1,4 +1,4 @@
 library(testthat)
-library(poseidonR)
+library(janno)
 
-test_check("poseidonR")
+test_check("janno")

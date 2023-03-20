@@ -1,7 +1,7 @@
 library(magrittr)
 library(ggplot2)
 
-published_data <- poseidonR::read_janno("~/agora/published_data", validate = F)
+published_data <- janno::read_janno("~/agora/published_data", validate = F)
 
 ancient_with_spatiotemporal_postion <- published_data %>% dplyr::filter(
   Date_Type %in% c("C14", "contextual"),
@@ -21,7 +21,7 @@ ancient_with_spatiotemporal_postion %>% dplyr::mutate(
   
 
 ancient_data_filtered <- ancient_with_spatiotemporal_postion %>% 
-  poseidonR::process_age() %>%
+  janno::janno() %>%
   dplyr::filter(
     !is.na(Date_BC_AD_Median_Derived)
   )

@@ -1279,7 +1279,7 @@
         "names": {
           "type": "character",
           "attributes": {},
-          "value": ["source_file", "Poseidon_ID", "Genetic_Sex", "Group_Name", "Alternative_IDs", "Relation_To", "Relation_Degree", "Relation_Type", "Relation_Note", "Collection_ID", "Country", "Location", "Site", "Latitude", "Longitude", "Date_Type", "Date_C14_Labnr", "Date_C14_Uncal_BP", "Date_C14_Uncal_BP_Err", "Date_BC_AD_Start", "Date_BC_AD_Median", "Date_BC_AD_Stop", "Date_Note", "MT_Haplogroup", "Y_Haplogroup", "Source_Tissue", "Nr_Libraries", "Capture_Type", "UDG", "Library_Built", "Genotype_Ploidy", "Data_Preparation_Pipeline_URL", "Endogenous", "Nr_SNPs", "Coverage_on_Target_SNPs", "Damage", "Contamination", "Contamination_Err", "Contamination_Meas", "Contamination_Note", "Genetic_Source_Accession_IDs", "Primary_Contact", "Publication", "Note", "Keywords"]
+          "value": ["source_file", "Poseidon_ID", "Genetic_Sex", "Group_Name", "Alternative_IDs", "Relation_To", "Relation_Degree", "Relation_Type", "Relation_Note", "Collection_ID", "Country", "Country_ISO", "Location", "Site", "Latitude", "Longitude", "Date_Type", "Date_C14_Labnr", "Date_C14_Uncal_BP", "Date_C14_Uncal_BP_Err", "Date_BC_AD_Start", "Date_BC_AD_Median", "Date_BC_AD_Stop", "Date_Note", "MT_Haplogroup", "Y_Haplogroup", "Source_Tissue", "Nr_Libraries", "Library_Names", "Capture_Type", "UDG", "Library_Built", "Genotype_Ploidy", "Data_Preparation_Pipeline_URL", "Endogenous", "Nr_SNPs", "Coverage_on_Target_SNPs", "Damage", "Contamination", "Contamination_Err", "Contamination_Meas", "Contamination_Note", "Genetic_Source_Accession_IDs", "Primary_Contact", "Publication", "Note", "Keywords", "AdditionalColumn1", "AdditionalColumn2"]
         },
         "row.names": {
           "type": "integer",
@@ -1427,6 +1427,11 @@
         {
           "type": "character",
           "attributes": {},
+          "value": ["DE", "FR", "EG"]
+        },
+        {
+          "type": "character",
+          "attributes": {},
           "value": ["xxx", "xxx", "xxx"]
         },
         {
@@ -1554,7 +1559,26 @@
         {
           "type": "integer",
           "attributes": {},
-          "value": [0, 0, 0]
+          "value": [2, 0, 0]
+        },
+        {
+          "type": "list",
+          "attributes": {},
+          "value": [
+            {
+              "type": "character",
+              "attributes": {},
+              "value": ["Lib1", "Lib2"]
+            },
+            {
+              "type": "character",
+              "attributes": {},
+              "value": ["Lib3"]
+            },
+            {
+              "type": "NULL"
+            }
+          ]
         },
         {
           "type": "list",
@@ -1585,7 +1609,7 @@
         {
           "type": "character",
           "attributes": {},
-          "value": ["ds", "ss", "other"]
+          "value": ["ds", "ss", "mixed"]
         },
         {
           "type": "character",
@@ -1749,6 +1773,16 @@
               "value": ["A", "B", "C"]
             }
           ]
+        },
+        {
+          "type": "character",
+          "attributes": {},
+          "value": ["test1", "test3", "test5"]
+        },
+        {
+          "type": "character",
+          "attributes": {},
+          "value": ["test2", "test4", "test6"]
         }
       ]
     }
@@ -1761,7 +1795,7 @@
         "names": {
           "type": "character",
           "attributes": {},
-          "value": ["source_file", "Poseidon_ID", "Genetic_Sex", "Group_Name", "Alternative_IDs", "Relation_To", "Relation_Degree", "Relation_Type", "Relation_Note", "Country", "Location", "Site", "Latitude", "Longitude", "Date_Type", "Date_C14_Labnr", "Date_C14_Uncal_BP", "Date_C14_Uncal_BP_Err", "Date_BC_AD_Start", "Date_BC_AD_Median", "Date_BC_AD_Stop", "Date_Note", "MT_Haplogroup", "Y_Haplogroup", "Source_Tissue", "Nr_Libraries", "Capture_Type", "UDG", "Library_Built", "Genotype_Ploidy", "Data_Preparation_Pipeline_URL", "Endogenous", "Nr_SNPs", "Coverage_on_Target_SNPs", "Damage", "Contamination", "Contamination_Err", "Contamination_Meas", "Contamination_Note", "Genetic_Source_Accession_IDs", "Primary_Contact", "Publication", "Note", "Keywords"]
+          "value": ["source_file", "Poseidon_ID", "Genetic_Sex", "Group_Name", "Alternative_IDs", "Relation_To", "Relation_Degree", "Relation_Type", "Relation_Note", "Country", "Country_ISO", "Location", "Site", "Latitude", "Longitude", "Date_Type", "Date_C14_Labnr", "Date_C14_Uncal_BP", "Date_C14_Uncal_BP_Err", "Date_BC_AD_Start", "Date_BC_AD_Median", "Date_BC_AD_Stop", "Date_Note", "MT_Haplogroup", "Y_Haplogroup", "Source_Tissue", "Nr_Libraries", "Library_Names", "Capture_Type", "UDG", "Library_Built", "Genotype_Ploidy", "Data_Preparation_Pipeline_URL", "Endogenous", "Nr_SNPs", "Coverage_on_Target_SNPs", "Damage", "Contamination", "Contamination_Err", "Contamination_Meas", "Contamination_Note", "Genetic_Source_Accession_IDs", "Primary_Contact", "Publication", "Note", "Keywords", "AdditionalColumn2", "AdditionalColumn1"]
         },
         "row.names": {
           "type": "integer",
@@ -1904,6 +1938,11 @@
         {
           "type": "character",
           "attributes": {},
+          "value": ["DE", "FR", "EG"]
+        },
+        {
+          "type": "character",
+          "attributes": {},
           "value": ["xxx", "xxx", "xxx"]
         },
         {
@@ -2031,7 +2070,26 @@
         {
           "type": "integer",
           "attributes": {},
-          "value": [0, 0, 0]
+          "value": [2, 0, 0]
+        },
+        {
+          "type": "list",
+          "attributes": {},
+          "value": [
+            {
+              "type": "character",
+              "attributes": {},
+              "value": ["Lib1", "Lib2"]
+            },
+            {
+              "type": "character",
+              "attributes": {},
+              "value": ["Lib3"]
+            },
+            {
+              "type": "NULL"
+            }
+          ]
         },
         {
           "type": "list",
@@ -2062,7 +2120,7 @@
         {
           "type": "character",
           "attributes": {},
-          "value": ["ds", "ss", "other"]
+          "value": ["ds", "ss", "mixed"]
         },
         {
           "type": "character",
@@ -2226,6 +2284,16 @@
               "value": ["A", "B", "C"]
             }
           ]
+        },
+        {
+          "type": "character",
+          "attributes": {},
+          "value": ["test2", "test4", "test6"]
+        },
+        {
+          "type": "character",
+          "attributes": {},
+          "value": ["test1", "test3", "test5"]
         }
       ]
     }

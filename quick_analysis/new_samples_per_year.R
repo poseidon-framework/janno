@@ -1,7 +1,7 @@
 library(magrittr)
 library(ggplot2)
 
-published_data <- poseidonR::read_janno("~/agora/published_data", validate = F)
+published_data <- janno::read_janno("~/agora/published_data", validate = F)
 
 published_data  %>% dplyr::filter(
   Date_Type %in% c("C14", "contextual")

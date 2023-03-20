@@ -23,7 +23,6 @@ See the argument \code{calCurves} for \link[Bchron]{BchronCalibrate}}
 Get values for the .janno file columns Date_BC_AD_Median,
 Date_BC_AD_Start and Date_BC_AD_Stop from radiocarbon ages with mean
 and sd. Uses \link[Bchron]{Bchron} for the calibration.
-Look here for more information: \url{https://poseidon-framework.github.io/#/poseidonR}
 }
 \examples{
 quickcalibrate(

@@ -1,17 +1,16 @@
-Package: poseidonR
-Title: Poseidon data handling in R
-Version: 0.11.1
+Package: janno
+Title: Poseidon .janno file handling in R
+Version: 1.0.0
 Authors@R: c(person(given = "Clemens", family = "Schmid", role =
         c("aut", "cre", "cph"), email = "clemens@nevrome.de", comment =
         c(ORCID = "0000-0003-3448-5715")), person(given = "Ayshin",
         family = "Ghalichi", role = "ctb"))
-Description: Interaction with Poseidon packages in R, mostly focused on
-        .janno files.
+Description: Reading and manipulating Poseidon .janno files with a dedicated S3 data structure.
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.2.1
+RoxygenNote: 7.2.3
 Imports: Bchron, checkmate, dplyr, tidyr, hash, magrittr,
         progress, rlang, readr, tibble, utils, tidyselect, purrr
 Depends: R (>= 2.10)

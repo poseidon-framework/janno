@@ -29,5 +29,4 @@ radiocarbon dates (see \link[Bchron]{BchronCalibrate})}
 }
 \description{
 Process all valid dates in a \strong{janno} table.
-Look here for more information: \url{https://poseidon-framework.github.io/#/poseidonR}
 }

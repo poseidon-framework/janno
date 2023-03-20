@@ -1,12 +1,10 @@
 informative_validation <- function(paths) {
   validation_result <- validate_janno(paths)
   if (nrow(validation_result) > 0) {
-    print(validation_result)
-    message(paste0(
-      "Run this to get the table of issues: \nposeidonR::validate_janno(",
-      paste(utils::capture.output(dput(unique(validation_result$source_file))), collapse = ""),
-      ")\n"
-    ))
+    message("The following types of issues were detected:")
+    unique_issues <- unique(validation_result$issue)
+    purrr::iwalk(unique_issues, function(x, i) { message(paste0(i, ": ", x)) })
+    message("Run validate_janno() to get the full table of issues.")
   } else {
     message("No issues with these .janno files")
   }
@@ -16,6 +14,7 @@ informative_validation <- function(paths) {
 #' @export
 validate_janno <- function(path) {
   message("Validating .janno files...")
+  message("This validation only checks individual column types, no cross-column integrity")
   # input checks and search for janno files
   janno_file_paths <- get_janno_file_paths(path)
   # validate files
@@ -59,9 +58,9 @@ validate_one_janno <- function(path) {
     issues <- issues %>% append_issue(
       column = cur_col,
       issue = paste(
-        "This column is not defined in the Poseidon schema implemented in this package.",
+        "Column not defined in the Poseidon schema.",
         "It will be read as a character column.",
-        "Maybe you mistyped the column name ", paste0(closest_colname, "?")
+        "Maybe you mistyped", paste0(closest_colname, "?")
       )
     )
   }
