@@ -9,7 +9,11 @@ globalVariables(".")
 NULL
 
 startupmsg <- function() {
-  paste0("janno was build for Poseidon v", poseidon_version)
+  paste(
+    paste0("This janno version was build for Poseidon v", poseidon_version),
+    paste0("Reading and validation will strictly follow this schema version."),
+    sep = "\n"
+  )
 }
 
 # package startup message
