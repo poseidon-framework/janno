@@ -1,5 +1,12 @@
 # janno NEWS
 
+## janno 1.1.0
+
+- Switched to a new schema version: Poseidon v3.0.0.
+- Implemented special handling of `_Note` columns, as they are no longer individually defined in the schema, but should still be treated as "defined" columns.
+- Clarified and simplified various info-, warning-, and validation messages.
+- Avoided sorting for the "defined" columns in the reading process.
+
 ## janno 1.0.0
 
 - Switched to a new schema version: Poseidon v2.7.0.
