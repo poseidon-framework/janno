@@ -3,7 +3,7 @@ informative_validation <- function(paths) {
   nr_issues <- nrow(validation_result)
   if (nr_issues > 0) {
     message("Issues detected: ", nr_issues)
-    message("Run validate_janno() to get the list.")
+    message("Run validate_janno(...) to get the list.")
   } else {
     message("No issues with these .janno files")
   }

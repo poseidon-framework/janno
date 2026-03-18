@@ -1,7 +1,9 @@
 enforce_types <- function(x, suppress_na_introduced_warnings = TRUE) {
   
-  defined_janno_columns <- x %>% dplyr::select(tidyselect::any_of(janno_column_names))
-  undefined_janno_columns <- x %>% dplyr::select(-tidyselect::any_of(janno_column_names))
+  defined_janno_columns <- x %>%
+    dplyr::select(tidyselect::any_of(janno_column_names) | tidyselect::ends_with("_Note"))
+  undefined_janno_columns <- x %>%
+    dplyr::select(-tidyselect::any_of(colnames(defined_janno_columns)))
   
   defined_janno_columns_typed <- purrr::map2(
     as.list(defined_janno_columns), 
@@ -21,8 +23,14 @@ enforce_types <- function(x, suppress_na_introduced_warnings = TRUE) {
 
 apply_col_types <- function(col_data, col_name, suppress_na_introduced_warnings) {
   res <- col_data
-  # lookup context for variable in hashes
-  expected_type <- hash::values(janno_column_name_data_type, col_name)
+  # determine context from column name
+  expected_type <- if (endsWith(col_name, "_Note")) {
+    # special treatment for _Note columns
+    "String"
+  } else {
+    # lookup context for column name in hash map
+    hash::values(janno_column_name_data_type, col_name)
+  }
   # get trans function
   col_trans_function <- string_to_as(expected_type)
   # split to multi if necessary
