@@ -56,14 +56,15 @@ validate_one_janno <- function(path) {
     colnames()
   for (cur_col in undefined_janno_columns) {
     # search for possible column name suggestions
-    string_comparison_index <- utils::adist(cur_col, janno_column_names) %>% which.min
-    closest_colname <- janno_column_names[string_comparison_index]
+    #string_comparison_index <- utils::adist(cur_col, janno_column_names) %>% which.min
+    #closest_colname <- janno_column_names[string_comparison_index]
     issues <- issues %>% append_issue(
       column = cur_col,
       issue = paste(
         "Column not defined in the Poseidon schema.",
         "It will be read as a character column.",
-        "Maybe you mistyped", paste0(closest_colname, "?")
+        "Maybe you mistyped?"
+        #"Maybe you mistyped", paste0(closest_colname, "?")
       )
     )
   }

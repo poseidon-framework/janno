@@ -243,7 +243,7 @@
         {
           "type": "character",
           "attributes": {},
-          "value": ["Column not defined in the Poseidon schema. It will be read as a character column. Maybe you mistyped Relation_To?", "Column not defined in the Poseidon schema. It will be read as a character column. Maybe you mistyped Genetic_Sex?"]
+          "value": ["Column not defined in the Poseidon schema. It will be read as a character column. Maybe you mistyped?", "Column not defined in the Poseidon schema. It will be read as a character column. Maybe you mistyped?"]
         }
       ]
     }
@@ -293,7 +293,7 @@
         {
           "type": "character",
           "attributes": {},
-          "value": ["Column not defined in the Poseidon schema. It will be read as a character column. Maybe you mistyped Individual_ID?", "Column not defined in the Poseidon schema. It will be read as a character column. Maybe you mistyped Individual_ID?", "At least one value not in Shotgun, 1240K, ArborComplete, ArborPrimePlus, ArborAncestralPlus, TwistAncientDNA, WISC2013, OtherCapture", "One or multiple values not in range 0 to 1", "One or multiple values not in range 0 to 1"]
+          "value": ["Column not defined in the Poseidon schema. It will be read as a character column. Maybe you mistyped?", "Column not defined in the Poseidon schema. It will be read as a character column. Maybe you mistyped?", "At least one value not in Shotgun, 1240K, ArborComplete, ArborPrimePlus, ArborAncestralPlus, TwistAncientDNA, WISC2013, OtherCapture", "One or multiple values not in range 0 to 1", "One or multiple values not in range 0 to 1"]
         }
       ]
     }
@@ -343,7 +343,7 @@
         {
           "type": "character",
           "attributes": {},
-          "value": ["Column not defined in the Poseidon schema. It will be read as a character column. Maybe you mistyped Individual_ID?", "Column not defined in the Poseidon schema. It will be read as a character column. Maybe you mistyped Individual_ID?", "At least one value not in Shotgun, 1240K, ArborComplete, ArborPrimePlus, ArborAncestralPlus, TwistAncientDNA, WISC2013, OtherCapture", "One or multiple values not in range 0 to 1", "One or multiple values not in range 0 to 1"]
+          "value": ["Column not defined in the Poseidon schema. It will be read as a character column. Maybe you mistyped?", "Column not defined in the Poseidon schema. It will be read as a character column. Maybe you mistyped?", "At least one value not in Shotgun, 1240K, ArborComplete, ArborPrimePlus, ArborAncestralPlus, TwistAncientDNA, WISC2013, OtherCapture", "One or multiple values not in range 0 to 1", "One or multiple values not in range 0 to 1"]
         }
       ]
     }
