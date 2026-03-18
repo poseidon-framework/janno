@@ -49,7 +49,11 @@ validate_one_janno <- function(path) {
   check_if_all_mandatory_columns_present(raw_janno)
   # report undefined columns
   undefined_janno_columns <- raw_janno %>% 
+    # remove known columns
     dplyr::select(-tidyselect::any_of(janno_column_names)) %>%
+    # remove _Note columns
+    dplyr::select(-tidyselect::ends_with("_Note")) %>%
+    # show remaining columns
     colnames()
   for (cur_col in undefined_janno_columns) {
     # search for possible column name suggestions
