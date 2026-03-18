@@ -1,10 +1,9 @@
 informative_validation <- function(paths) {
   validation_result <- validate_janno(paths)
-  if (nrow(validation_result) > 0) {
-    message("The following types of issues were detected:")
-    unique_issues <- unique(validation_result$issue)
-    purrr::iwalk(unique_issues, function(x, i) { message(paste0(i, ": ", x)) })
-    message("Run validate_janno() to get the full table of issues.")
+  nr_issues <- nrow(validation_result)
+  if (nr_issues > 0) {
+    message("Issues detected: ", nr_issues)
+    message("Run validate_janno() to get the list.")
   } else {
     message("No issues with these .janno files")
   }
@@ -13,7 +12,7 @@ informative_validation <- function(paths) {
 #' @rdname janno
 #' @export
 validate_janno <- function(path) {
-  message("Validating .janno files...")
+  message("Validating .janno files against Poseidon v", poseidon_version, "...")
   message("This validation only checks individual column types, no cross-column integrity")
   # input checks and search for janno files
   janno_file_paths <- get_janno_file_paths(path)
