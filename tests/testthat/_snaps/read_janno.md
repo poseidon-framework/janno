@@ -6,7 +6,7 @@
         "names": {
           "type": "character",
           "attributes": {},
-          "value": ["source_file", "Poseidon_ID", "Genetic_Sex", "Group_Name", "Latitude", "Longitude", "Date_Type", "Date_C14_Labnr", "Date_C14_Uncal_BP", "Date_C14_Uncal_BP_Err", "Date_BC_AD_Start", "Date_BC_AD_Median", "Date_BC_AD_Stop", "Nr_Libraries", "Capture_Type", "UDG", "Library_Built", "Genotype_Ploidy", "Data_Preparation_Pipeline_URL", "Endogenous", "Nr_SNPs", "Coverage_on_Target_SNPs", "Damage"]
+          "value": ["source_file", "Poseidon_ID", "Latitude", "Longitude", "Date_C14_Labnr", "Date_C14_Uncal_BP", "Date_C14_Uncal_BP_Err", "Date_BC_AD_Median", "Date_BC_AD_Start", "Date_BC_AD_Stop", "Date_Type", "Nr_Libraries", "Capture_Type", "Genotype_Ploidy", "Group_Name", "Genetic_Sex", "Nr_SNPs", "Coverage_on_Target_SNPs", "Endogenous", "UDG", "Library_Built", "Damage", "Data_Preparation_Pipeline_URL"]
         },
         "row.names": {
           "type": "integer",
@@ -31,135 +31,6 @@
           "value": [null, "XXX017", "XXX018", "XXX019", "XXX022", "XXX023", "XXX024", "XXX025", "XXX026", "XXX027", "XXX028", "XXX029", "XXX030", "XXX031", "XXX032", "XXX035", "XXX036", "XXX037", "XXX038", "XXX039", "XXX040", "XXX041", "XXX042", "XXX044"]
         },
         {
-          "type": "character",
-          "attributes": {},
-          "value": ["M", "M", "M", "M", "M", "M", "M", "M", "M", "M", "M", "M", null, "M", "M", "M", "M", "M", "M", "M", "M", "M", "M", "M"]
-        },
-        {
-          "type": "list",
-          "attributes": {},
-          "value": [
-            {
-              "type": "character",
-              "attributes": {},
-              "value": ["POP1"]
-            },
-            {
-              "type": "character",
-              "attributes": {},
-              "value": ["POP5"]
-            },
-            {
-              "type": "character",
-              "attributes": {},
-              "value": ["POP6"]
-            },
-            {
-              "type": "character",
-              "attributes": {},
-              "value": ["POP7"]
-            },
-            {
-              "type": "character",
-              "attributes": {},
-              "value": ["POP10"]
-            },
-            {
-              "type": "character",
-              "attributes": {},
-              "value": ["POP11"]
-            },
-            {
-              "type": "character",
-              "attributes": {},
-              "value": ["POP12"]
-            },
-            {
-              "type": "character",
-              "attributes": {},
-              "value": ["POP13"]
-            },
-            {
-              "type": "character",
-              "attributes": {},
-              "value": ["POP14"]
-            },
-            {
-              "type": "character",
-              "attributes": {},
-              "value": ["POP15"]
-            },
-            {
-              "type": "character",
-              "attributes": {},
-              "value": ["POP16"]
-            },
-            {
-              "type": "NULL"
-            },
-            {
-              "type": "character",
-              "attributes": {},
-              "value": ["POP18"]
-            },
-            {
-              "type": "character",
-              "attributes": {},
-              "value": ["POP19"]
-            },
-            {
-              "type": "character",
-              "attributes": {},
-              "value": ["POP20"]
-            },
-            {
-              "type": "character",
-              "attributes": {},
-              "value": ["POP23"]
-            },
-            {
-              "type": "character",
-              "attributes": {},
-              "value": ["POP24"]
-            },
-            {
-              "type": "character",
-              "attributes": {},
-              "value": ["POP25"]
-            },
-            {
-              "type": "character",
-              "attributes": {},
-              "value": ["POP26"]
-            },
-            {
-              "type": "character",
-              "attributes": {},
-              "value": ["POP27"]
-            },
-            {
-              "type": "character",
-              "attributes": {},
-              "value": ["POP28"]
-            },
-            {
-              "type": "character",
-              "attributes": {},
-              "value": ["POP29"]
-            },
-            {
-              "type": "character",
-              "attributes": {},
-              "value": ["POP30"]
-            },
-            {
-              "type": "character",
-              "attributes": {},
-              "value": ["POP32"]
-            }
-          ]
-        },
-        {
           "type": "double",
           "attributes": {},
           "value": ["NA", 1000, "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA"]
@@ -168,11 +39,6 @@
           "type": "double",
           "attributes": {},
           "value": ["NA", "NA", -1000, "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA"]
-        },
-        {
-          "type": "character",
-          "attributes": {},
-          "value": [null, null, null, null, null, null, null, "something", null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null]
         },
         {
           "type": "list",
@@ -430,6 +296,11 @@
           "value": ["NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA"]
         },
         {
+          "type": "character",
+          "attributes": {},
+          "value": [null, null, null, null, null, null, null, "something", null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null]
+        },
+        {
           "type": "integer",
           "attributes": {},
           "value": ["NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA"]
@@ -517,27 +388,136 @@
         {
           "type": "character",
           "attributes": {},
-          "value": [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, "something", null, null, null, null, null, null, null]
-        },
-        {
-          "type": "character",
-          "attributes": {},
-          "value": [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, "something", null, null, null, null, null, null]
-        },
-        {
-          "type": "character",
-          "attributes": {},
           "value": [null, null, null, null, null, null, null, null, null, null, "something", null, null, null, null, null, null, null, null, null, null, null, null, null]
         },
         {
-          "type": "character",
+          "type": "list",
           "attributes": {},
-          "value": [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, "something"]
+          "value": [
+            {
+              "type": "character",
+              "attributes": {},
+              "value": ["POP1"]
+            },
+            {
+              "type": "character",
+              "attributes": {},
+              "value": ["POP5"]
+            },
+            {
+              "type": "character",
+              "attributes": {},
+              "value": ["POP6"]
+            },
+            {
+              "type": "character",
+              "attributes": {},
+              "value": ["POP7"]
+            },
+            {
+              "type": "character",
+              "attributes": {},
+              "value": ["POP10"]
+            },
+            {
+              "type": "character",
+              "attributes": {},
+              "value": ["POP11"]
+            },
+            {
+              "type": "character",
+              "attributes": {},
+              "value": ["POP12"]
+            },
+            {
+              "type": "character",
+              "attributes": {},
+              "value": ["POP13"]
+            },
+            {
+              "type": "character",
+              "attributes": {},
+              "value": ["POP14"]
+            },
+            {
+              "type": "character",
+              "attributes": {},
+              "value": ["POP15"]
+            },
+            {
+              "type": "character",
+              "attributes": {},
+              "value": ["POP16"]
+            },
+            {
+              "type": "NULL"
+            },
+            {
+              "type": "character",
+              "attributes": {},
+              "value": ["POP18"]
+            },
+            {
+              "type": "character",
+              "attributes": {},
+              "value": ["POP19"]
+            },
+            {
+              "type": "character",
+              "attributes": {},
+              "value": ["POP20"]
+            },
+            {
+              "type": "character",
+              "attributes": {},
+              "value": ["POP23"]
+            },
+            {
+              "type": "character",
+              "attributes": {},
+              "value": ["POP24"]
+            },
+            {
+              "type": "character",
+              "attributes": {},
+              "value": ["POP25"]
+            },
+            {
+              "type": "character",
+              "attributes": {},
+              "value": ["POP26"]
+            },
+            {
+              "type": "character",
+              "attributes": {},
+              "value": ["POP27"]
+            },
+            {
+              "type": "character",
+              "attributes": {},
+              "value": ["POP28"]
+            },
+            {
+              "type": "character",
+              "attributes": {},
+              "value": ["POP29"]
+            },
+            {
+              "type": "character",
+              "attributes": {},
+              "value": ["POP30"]
+            },
+            {
+              "type": "character",
+              "attributes": {},
+              "value": ["POP32"]
+            }
+          ]
         },
         {
-          "type": "double",
+          "type": "character",
           "attributes": {},
-          "value": ["NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA"]
+          "value": ["M", "M", "M", "M", "M", "M", "M", "M", "M", "M", "M", "M", null, "M", "M", "M", "M", "M", "M", "M", "M", "M", "M", "M"]
         },
         {
           "type": "integer",
@@ -553,6 +533,101 @@
           "type": "double",
           "attributes": {},
           "value": ["NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA"]
+        },
+        {
+          "type": "character",
+          "attributes": {},
+          "value": [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, "something", null, null, null, null, null, null, null]
+        },
+        {
+          "type": "character",
+          "attributes": {},
+          "value": [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, "something", null, null, null, null, null, null]
+        },
+        {
+          "type": "list",
+          "attributes": {},
+          "value": [
+            {
+              "type": "NULL"
+            },
+            {
+              "type": "NULL"
+            },
+            {
+              "type": "NULL"
+            },
+            {
+              "type": "NULL"
+            },
+            {
+              "type": "NULL"
+            },
+            {
+              "type": "NULL"
+            },
+            {
+              "type": "NULL"
+            },
+            {
+              "type": "NULL"
+            },
+            {
+              "type": "NULL"
+            },
+            {
+              "type": "NULL"
+            },
+            {
+              "type": "NULL"
+            },
+            {
+              "type": "NULL"
+            },
+            {
+              "type": "NULL"
+            },
+            {
+              "type": "NULL"
+            },
+            {
+              "type": "NULL"
+            },
+            {
+              "type": "NULL"
+            },
+            {
+              "type": "NULL"
+            },
+            {
+              "type": "NULL"
+            },
+            {
+              "type": "double",
+              "attributes": {},
+              "value": ["NA"]
+            },
+            {
+              "type": "NULL"
+            },
+            {
+              "type": "NULL"
+            },
+            {
+              "type": "NULL"
+            },
+            {
+              "type": "NULL"
+            },
+            {
+              "type": "NULL"
+            }
+          ]
+        },
+        {
+          "type": "character",
+          "attributes": {},
+          "value": [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, "something"]
         }
       ]
     }
@@ -565,7 +640,7 @@
         "names": {
           "type": "character",
           "attributes": {},
-          "value": ["source_file", "Poseidon_ID", "Genetic_Sex", "Group_Name", "Latitude"]
+          "value": ["source_file", "Poseidon_ID", "Latitude", "Group_Name", "Genetic_Sex"]
         },
         "row.names": {
           "type": "integer",
@@ -590,9 +665,9 @@
           "value": ["XXX016", "XXX017", "XXX018", "XXX019", "XXX022", "XXX023", "XXX024", "XXX025", "XXX026", "XXX027", "XXX028", "XXX029", "XXX030", "XXX031", "XXX032", "XXX035", "XXX036", "XXX037", "XXX038", "XXX039", "XXX040", "XXX041", "XXX042"]
         },
         {
-          "type": "character",
+          "type": "double",
           "attributes": {},
-          "value": ["M", "M", "M", "M", "M", "M", "M", "M", "M", "M", "M", "M", "M", "M", "M", "M", "M", "M", "M", "M", "M", "M", "M"]
+          "value": ["NA", 1000, "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA"]
         },
         {
           "type": "list",
@@ -716,9 +791,9 @@
           ]
         },
         {
-          "type": "double",
+          "type": "character",
           "attributes": {},
-          "value": ["NA", 1000, "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA"]
+          "value": ["M", "M", "M", "M", "M", "M", "M", "M", "M", "M", "M", "M", "M", "M", "M", "M", "M", "M", "M", "M", "M", "M", "M"]
         }
       ]
     }
@@ -731,7 +806,7 @@
         "names": {
           "type": "character",
           "attributes": {},
-          "value": ["source_file", "Poseidon_ID", "Genetic_Sex", "Group_Name", "Alternative_IDs", "Relation_To", "Relation_Degree", "Relation_Type", "Relation_Note", "Collection_ID", "Country", "Location", "Site", "Latitude", "Longitude", "Date_Type", "Date_C14_Labnr", "Date_C14_Uncal_BP", "Date_C14_Uncal_BP_Err", "Date_BC_AD_Start", "Date_BC_AD_Median", "Date_BC_AD_Stop", "Date_Note", "MT_Haplogroup", "Y_Haplogroup", "Source_Tissue", "Nr_Libraries", "Capture_Type", "UDG", "Library_Built", "Genotype_Ploidy", "Data_Preparation_Pipeline_URL", "Endogenous", "Nr_SNPs", "Coverage_on_Target_SNPs", "Damage", "Contamination", "Contamination_Err", "Contamination_Meas", "Contamination_Note", "Genetic_Source_Accession_IDs", "Primary_Contact", "Publication", "Note", "Keywords"]
+          "value": ["source_file", "Poseidon_ID", "Genetic_Sex", "Group_Name", "Alternative_IDs", "Relation_To", "Relation_Degree", "Relation_Type", "Relation_Note", "Collection_ID", "Country", "Location", "Site", "Latitude", "Longitude", "Date_Type", "Date_C14_Labnr", "Date_C14_Uncal_BP", "Date_C14_Uncal_BP_Err", "Date_BC_AD_Median", "Date_BC_AD_Start", "Date_BC_AD_Stop", "Date_Note", "MT_Haplogroup", "Y_Haplogroup", "Source_Material", "Nr_Libraries", "Capture_Type", "UDG", "Library_Built", "Genotype_Ploidy", "Data_Preparation_Pipeline_URL", "Endogenous", "Nr_SNPs", "Coverage_on_Target_SNPs", "Damage", "Contamination", "Contamination_Err", "Contamination_Meas", "Contamination_Note", "Genetic_Source_Accession_IDs", "Primary_Contact", "Publication", "Note", "Keywords"]
         },
         "row.names": {
           "type": "integer",
@@ -847,9 +922,19 @@
           "value": [null, null, null]
         },
         {
-          "type": "character",
+          "type": "list",
           "attributes": {},
-          "value": [null, null, null]
+          "value": [
+            {
+              "type": "NULL"
+            },
+            {
+              "type": "NULL"
+            },
+            {
+              "type": "NULL"
+            }
+          ]
         },
         {
           "type": "character",
@@ -1027,9 +1112,19 @@
           "value": ["NA", "NA", "NA"]
         },
         {
-          "type": "double",
+          "type": "list",
           "attributes": {},
-          "value": ["NA", "NA", "NA"]
+          "value": [
+            {
+              "type": "NULL"
+            },
+            {
+              "type": "NULL"
+            },
+            {
+              "type": "NULL"
+            }
+          ]
         },
         {
           "type": "list",
@@ -1147,7 +1242,7 @@
         "names": {
           "type": "character",
           "attributes": {},
-          "value": ["source_file", "Poseidon_ID", "Genetic_Sex", "Group_Name"]
+          "value": ["source_file", "Poseidon_ID", "Group_Name", "Genetic_Sex"]
         },
         "row.names": {
           "type": "integer",
@@ -1172,11 +1267,6 @@
           "value": ["XXX011", "XXX012", "XXX013"]
         },
         {
-          "type": "character",
-          "attributes": {},
-          "value": ["M", "F", "M"]
-        },
-        {
           "type": "list",
           "attributes": {},
           "value": [
@@ -1196,6 +1286,11 @@
               "value": ["POP1"]
             }
           ]
+        },
+        {
+          "type": "character",
+          "attributes": {},
+          "value": ["M", "F", "M"]
         }
       ]
     }
@@ -1208,7 +1303,7 @@
         "names": {
           "type": "character",
           "attributes": {},
-          "value": ["source_file", "Poseidon_ID", "Genetic_Sex", "Group_Name", "Testcolumn1", "Tesctolumn2"]
+          "value": ["source_file", "Poseidon_ID", "Group_Name", "Genetic_Sex", "Testcolumn1", "Tesctolumn2"]
         },
         "row.names": {
           "type": "integer",
@@ -1233,11 +1328,6 @@
           "value": ["XXX011", "XXX012", "XXX013"]
         },
         {
-          "type": "character",
-          "attributes": {},
-          "value": ["M", "F", "M"]
-        },
-        {
           "type": "list",
           "attributes": {},
           "value": [
@@ -1261,6 +1351,11 @@
         {
           "type": "character",
           "attributes": {},
+          "value": ["M", "F", "M"]
+        },
+        {
+          "type": "character",
+          "attributes": {},
           "value": ["Ich", "mag", "Birnen"]
         },
         {
@@ -1279,7 +1374,7 @@
         "names": {
           "type": "character",
           "attributes": {},
-          "value": ["source_file", "Poseidon_ID", "Genetic_Sex", "Group_Name", "Alternative_IDs", "Relation_To", "Relation_Degree", "Relation_Type", "Relation_Note", "Collection_ID", "Country", "Country_ISO", "Location", "Site", "Latitude", "Longitude", "Date_Type", "Date_C14_Labnr", "Date_C14_Uncal_BP", "Date_C14_Uncal_BP_Err", "Date_BC_AD_Start", "Date_BC_AD_Median", "Date_BC_AD_Stop", "Date_Note", "MT_Haplogroup", "Y_Haplogroup", "Source_Tissue", "Nr_Libraries", "Library_Names", "Capture_Type", "UDG", "Library_Built", "Genotype_Ploidy", "Data_Preparation_Pipeline_URL", "Endogenous", "Nr_SNPs", "Coverage_on_Target_SNPs", "Damage", "Contamination", "Contamination_Err", "Contamination_Meas", "Contamination_Note", "Genetic_Source_Accession_IDs", "Primary_Contact", "Publication", "Note", "Keywords", "AdditionalColumn1", "AdditionalColumn2"]
+          "value": ["source_file", "Poseidon_ID", "Genetic_Sex", "Group_Name", "Alternative_IDs", "Relation_To", "Relation_Degree", "Relation_Type", "Relation_Note", "Collection_ID", "Country", "Country_ISO", "Location", "Site", "Latitude", "Longitude", "Date_Type", "Date_C14_Labnr", "Date_C14_Uncal_BP", "Date_C14_Uncal_BP_Err", "Date_BC_AD_Start", "Date_BC_AD_Median", "Date_BC_AD_Stop", "Date_Note", "MT_Haplogroup", "Y_Haplogroup", "Source_Material", "Nr_Libraries", "Library_Names", "Capture_Type", "UDG", "Library_Built", "Genotype_Ploidy", "Data_Preparation_Pipeline_URL", "Endogenous", "Nr_SNPs", "Coverage_on_Target_SNPs", "Damage", "Contamination", "Contamination_Err", "Contamination_Meas", "Contamination_Note", "Genetic_Source_Accession_IDs", "Primary_Contact", "Publication", "Note", "Keywords", "AdditionalColumn1", "AdditionalColumn2"]
         },
         "row.names": {
           "type": "integer",
@@ -1415,9 +1510,19 @@
           "value": ["yyy", null, "xxx"]
         },
         {
-          "type": "character",
+          "type": "list",
           "attributes": {},
-          "value": [null, null, null]
+          "value": [
+            {
+              "type": "NULL"
+            },
+            {
+              "type": "NULL"
+            },
+            {
+              "type": "NULL"
+            }
+          ]
         },
         {
           "type": "character",
@@ -1542,17 +1647,17 @@
             {
               "type": "character",
               "attributes": {},
-              "value": ["xxx", "yyy"]
+              "value": ["petrous", "bone"]
             },
             {
               "type": "character",
               "attributes": {},
-              "value": ["xxx"]
+              "value": ["soft"]
             },
             {
               "type": "character",
               "attributes": {},
-              "value": ["xxx"]
+              "value": ["other"]
             }
           ]
         },
@@ -1637,9 +1742,25 @@
           "value": [0, 0, 0]
         },
         {
-          "type": "double",
+          "type": "list",
           "attributes": {},
-          "value": [0, 100, 50]
+          "value": [
+            {
+              "type": "double",
+              "attributes": {},
+              "value": [0]
+            },
+            {
+              "type": "double",
+              "attributes": {},
+              "value": [100]
+            },
+            {
+              "type": "double",
+              "attributes": {},
+              "value": [50]
+            }
+          ]
         },
         {
           "type": "list",
@@ -1795,7 +1916,7 @@
         "names": {
           "type": "character",
           "attributes": {},
-          "value": ["source_file", "Poseidon_ID", "Genetic_Sex", "Group_Name", "Alternative_IDs", "Relation_To", "Relation_Degree", "Relation_Type", "Relation_Note", "Country", "Country_ISO", "Location", "Site", "Latitude", "Longitude", "Date_Type", "Date_C14_Labnr", "Date_C14_Uncal_BP", "Date_C14_Uncal_BP_Err", "Date_BC_AD_Start", "Date_BC_AD_Median", "Date_BC_AD_Stop", "Date_Note", "MT_Haplogroup", "Y_Haplogroup", "Source_Tissue", "Nr_Libraries", "Library_Names", "Capture_Type", "UDG", "Library_Built", "Genotype_Ploidy", "Data_Preparation_Pipeline_URL", "Endogenous", "Nr_SNPs", "Coverage_on_Target_SNPs", "Damage", "Contamination", "Contamination_Err", "Contamination_Meas", "Contamination_Note", "Genetic_Source_Accession_IDs", "Primary_Contact", "Publication", "Note", "Keywords", "AdditionalColumn2", "AdditionalColumn1"]
+          "value": ["source_file", "Poseidon_ID", "Genetic_Sex", "Group_Name", "Alternative_IDs", "Relation_To", "Relation_Degree", "Relation_Type", "Relation_Note", "Country", "Country_ISO", "Location", "Site", "Latitude", "Longitude", "Date_Type", "Date_C14_Labnr", "Date_C14_Uncal_BP", "Date_C14_Uncal_BP_Err", "Date_BC_AD_Start", "Date_BC_AD_Median", "Date_BC_AD_Stop", "Date_Note", "MT_Haplogroup", "Y_Haplogroup", "Source_Material", "Nr_Libraries", "Library_Names", "Capture_Type", "UDG", "Library_Built", "Genotype_Ploidy", "Data_Preparation_Pipeline_URL", "Endogenous", "Nr_SNPs", "Coverage_on_Target_SNPs", "Damage", "Contamination", "Contamination_Err", "Contamination_Meas", "Contamination_Note", "Genetic_Source_Accession_IDs", "Primary_Contact", "Publication", "Note", "Keywords", "AdditionalColumn2", "AdditionalColumn1"]
         },
         "row.names": {
           "type": "integer",
@@ -2053,17 +2174,17 @@
             {
               "type": "character",
               "attributes": {},
-              "value": ["xxx", "yyy"]
+              "value": ["petrous", "bone"]
             },
             {
               "type": "character",
               "attributes": {},
-              "value": ["xxx"]
+              "value": ["soft"]
             },
             {
               "type": "character",
               "attributes": {},
-              "value": ["xxx"]
+              "value": ["other"]
             }
           ]
         },
@@ -2148,9 +2269,25 @@
           "value": [0, 0, 0]
         },
         {
-          "type": "double",
+          "type": "list",
           "attributes": {},
-          "value": [0, 100, 50]
+          "value": [
+            {
+              "type": "double",
+              "attributes": {},
+              "value": [0]
+            },
+            {
+              "type": "double",
+              "attributes": {},
+              "value": [100]
+            },
+            {
+              "type": "double",
+              "attributes": {},
+              "value": [50]
+            }
+          ]
         },
         {
           "type": "list",
