@@ -1,7 +1,7 @@
 enforce_types <- function(x, suppress_na_introduced_warnings = TRUE) {
   
-  defined_janno_columns <- x %>%
-    dplyr::select(tidyselect::any_of(janno_column_names) | tidyselect::ends_with("_Note"))
+  keep_cols <- names(x) %in% janno_column_names | endsWith(names(x), "_Note")
+  defined_janno_columns <- x %>% dplyr::select(which(keep_cols))
   undefined_janno_columns <- x %>%
     dplyr::select(-tidyselect::any_of(colnames(defined_janno_columns)))
   
