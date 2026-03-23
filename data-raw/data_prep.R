@@ -1,8 +1,10 @@
-poseidon_version <- "2.7.0"
 janno_columns <- readr::read_tsv(
   #"https://raw.githubusercontent.com/poseidon-framework/poseidon2-schema/v2.7.0/janno_columns.tsv"
-  "https://raw.githubusercontent.com/poseidon-framework/poseidon2-schema/6133bcd6976ad778683afb6d19af9b2443444899/janno_columns.tsv"
+  #"https://raw.githubusercontent.com/poseidon-framework/poseidon2-schema/6133bcd6976ad778683afb6d19af9b2443444899/janno_columns.tsv"
+  # dev version of v3.0.0
+  "https://raw.githubusercontent.com/poseidon-framework/poseidon-schema/991cfa17aae5476d390b6bd53a33fd6a8655a6d1/janno_columns.tsv"
 )
+poseidon_version <- "3.0.0"
 
 # column names
 janno_column_names <- janno_columns$janno_column_name

@@ -1,22 +1,81 @@
-- V 1.0.0: Multiple changes that justify a new major version number
-  - switched to a new schema version Poseidon v2.7.0
-  - changed the package name from poseidonR to just janno
-  - removed the `upgrade_janno` function
-  - simplified the validation issue reporting in `read_janno`
-  - added a start-up message that highlights that the janno package only supports one Poseidon version
-  - other minor changes, e.g. to the phrasing of error messages
-- V 0.11.1: Unspecified .janno columns are now reported as an issue in the `validate_janno` output table, and not just with a message on the command line.
-- V 0.11.0: Turned off reading .janno columns with an empty header.
-- V 0.10.1: The change in v0.10.0 broke `write_janno`, which could not handle the NULL values properly. This should be fixed now.
-- V 0.10.0: Changed the representation of empty list column values (in `as_janno`). So far when all values in a string list column in a package were empty, then the resulting janno object (after reading) had only entries of type NULL. If some values were non-empty, though, then the empty values were vectors with one element of type NA. Now empty string list entries are always represented by NULL.
-- V 0.9.1: Small adjustments in `upgrade_janno` and update of the source data for Poseidon v2.6.0
-- V 0.9.0: Fixed (changed to a better algorithm) the HDR determination for the radiocarbon calibration, which effects the "Start" and "Stop" output of both `process_age` and `quickcalibrate`
-- V 0.8.0: `process_age` now supports a simple start and stop date output, which can be useful for plotting
-- V 0.7.2: Turned off double escaping of quotes in `write_janno`
-- V 0.7.1: Removed post-R-4.1.0 syntax to make the package compatible again with older R versions
-- V 0.7.0: Added a function `upgrade_janno` to update janno files from Poseidon v2.4.0 to v2.5.0
-- V 0.6.0: Adjusted the package to Poseidon v2.5.0
-- V 0.5.0: Added support for additional arguments to be passed to Bchron in `quickcalibrate`
-- V 0.4.2: Fixed link in documentation
-- V 0.4.1: Improved the message for additional columns in `validate_janno` with a suggestion mechanism
-- V 0.4.0: Introduced a function to easily write janno objects back to .janno files: `write_janno`
+# janno NEWS
+
+## janno 1.1.0
+
+- Switched to a new schema version: Poseidon v3.0.0.
+- Implemented special handling of `_Note` columns, as they are no longer individually defined in the schema, but should still be treated as "defined" columns.
+- Clarified and simplified various info-, warning-, and validation messages.
+- Avoided sorting for the "defined" columns in the reading process.
+
+## janno 1.0.0
+
+- Switched to a new schema version: Poseidon v2.7.0.
+- Changed the package name from poseidonR to janno.
+- Removed the `upgrade_janno()` function.
+- Simplified validation issue reporting in `read_janno()`.
+- Added a start-up message highlighting that janno supports only a single Poseidon version.
+- Various minor improvements, including clearer error message phrasing.
+
+## janno 0.11.1
+
+- Unspecified `.janno` columns are now reported as issues in the `validate_janno()` output table, rather than only via command-line messages.
+
+## janno 0.11.0
+
+- Disabled reading of `.janno` columns with empty headers.
+
+## janno 0.10.1
+
+- Fixed a regression introduced in v0.10.0 where `write_janno()` could not properly handle `NULL` values.
+
+## janno 0.10.0
+
+- Changed the representation of empty string list column values in `as_janno()`.
+  - Previously, columns with mixed empty and non-empty values produced `NA` entries.
+  - Empty string list entries are now consistently represented as `NULL`.
+
+## janno 0.9.1
+
+- Minor adjustments to `upgrade_janno()`.
+- Updated source data for Poseidon v2.6.0.
+
+## janno 0.9.0
+
+- Improved the algorithm for HDR determination in radiocarbon calibration.
+- This affects the `"Start"` and `"Stop"` outputs of both `process_age()` and `quickcalibrate()`.
+
+## janno 0.8.0
+
+- `process_age()` now supports simple start and stop date outputs, useful for plotting.
+
+## janno 0.7.2
+
+- Disabled double escaping of quotes in `write_janno()`.
+
+## janno 0.7.1
+
+- Removed post–R 4.1.0 syntax to restore compatibility with older R versions.
+
+## janno 0.7.0
+
+- Added `upgrade_janno()` to update janno files from Poseidon v2.4.0 to v2.5.0.
+
+## janno 0.6.0
+
+- Updated the package to support Poseidon v2.5.0.
+
+## janno 0.5.0
+
+- Added support for passing additional arguments to **Bchron** in `quickcalibrate()`.
+
+## janno 0.4.2
+
+- Fixed a broken documentation link.
+
+## janno 0.4.1
+
+- Improved messaging for additional columns in `validate_janno()` with a suggestion mechanism.
+
+## janno 0.4.0
+
+- Introduced `write_janno()` to write janno objects back to `.janno` files.

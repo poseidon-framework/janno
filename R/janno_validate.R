@@ -1,10 +1,9 @@
 informative_validation <- function(paths) {
   validation_result <- validate_janno(paths)
-  if (nrow(validation_result) > 0) {
-    message("The following types of issues were detected:")
-    unique_issues <- unique(validation_result$issue)
-    purrr::iwalk(unique_issues, function(x, i) { message(paste0(i, ": ", x)) })
-    message("Run validate_janno() to get the full table of issues.")
+  nr_issues <- nrow(validation_result)
+  if (nr_issues > 0) {
+    message("Issues detected: ", nr_issues)
+    message("Run validate_janno(...) to get the list.")
   } else {
     message("No issues with these .janno files")
   }
@@ -13,7 +12,7 @@ informative_validation <- function(paths) {
 #' @rdname janno
 #' @export
 validate_janno <- function(path) {
-  message("Validating .janno files...")
+  message("Validating .janno files against Poseidon v", poseidon_version, "...")
   message("This validation only checks individual column types, no cross-column integrity")
   # input checks and search for janno files
   janno_file_paths <- get_janno_file_paths(path)
@@ -49,18 +48,23 @@ validate_one_janno <- function(path) {
   check_if_all_mandatory_columns_present(raw_janno)
   # report undefined columns
   undefined_janno_columns <- raw_janno %>% 
+    # remove known columns
     dplyr::select(-tidyselect::any_of(janno_column_names)) %>%
+    # remove _Note columns
+    dplyr::select(-tidyselect::ends_with("_Note")) %>%
+    # show remaining columns
     colnames()
   for (cur_col in undefined_janno_columns) {
     # search for possible column name suggestions
-    string_comparison_index <- utils::adist(cur_col, janno_column_names) %>% which.min
-    closest_colname <- janno_column_names[string_comparison_index]
+    #string_comparison_index <- utils::adist(cur_col, janno_column_names) %>% which.min
+    #closest_colname <- janno_column_names[string_comparison_index]
     issues <- issues %>% append_issue(
       column = cur_col,
       issue = paste(
         "Column not defined in the Poseidon schema.",
         "It will be read as a character column.",
-        "Maybe you mistyped", paste0(closest_colname, "?")
+        "Maybe you mistyped?"
+        #"Maybe you mistyped", paste0(closest_colname, "?")
       )
     )
   }

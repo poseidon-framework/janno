@@ -43,7 +43,7 @@
         {
           "type": "character",
           "attributes": {},
-          "value": ["n/a in a mandatory column", "n/a in a mandatory column", "n/a in a mandatory column", "One or multiple values not in range -90 to 90", "One or multiple values not in range -180 to 180", "At least one value not in C14, contextual, modern", "One or multiple values are not valid integer numbers", "One or multiple values are not valid integer numbers", "One or multiple values are not valid integer numbers", "One or multiple values are not valid integer numbers", "At least one value not in Shotgun, 1240K, ArborComplete, ArborPrimePlus, ArborAncestralPlus, TwistAncientDNA, OtherCapture, ReferenceGenome", "At least one value not in minus, half, plus, mixed", "At least one value not in ds, ss, mixed", "At least one value not in diploid, haploid", "One or multiple values are not valid floating point numbers", "One or multiple values are not valid integer numbers", "One or multiple values are not valid floating point numbers", "One or multiple values are not valid floating point numbers"]
+          "value": ["n/a in a mandatory column", "n/a in a mandatory column", "n/a in a mandatory column", "One or multiple values not in range -90 to 90", "One or multiple values not in range -180 to 180", "At least one value not in C14, contextual, modern", "One or multiple values are not valid integer numbers", "One or multiple values are not valid integer numbers", "One or multiple values are not valid integer numbers", "One or multiple values are not valid integer numbers", "At least one value not in Shotgun, 1240K, ArborComplete, ArborPrimePlus, ArborAncestralPlus, TwistAncientDNA, WISC2013, OtherCapture", "At least one value not in minus, half, plus, mixed", "At least one value not in ds, ss, mixed", "At least one value not in diploid, haploid", "One or multiple values are not valid floating point numbers", "One or multiple values are not valid integer numbers", "One or multiple values are not valid floating point numbers", "One or multiple values are not valid floating point numbers"]
         }
       ]
     }
@@ -243,7 +243,7 @@
         {
           "type": "character",
           "attributes": {},
-          "value": ["Column not defined in the Poseidon schema. It will be read as a character column. Maybe you mistyped Relation_To?", "Column not defined in the Poseidon schema. It will be read as a character column. Maybe you mistyped Genetic_Sex?"]
+          "value": ["Column not defined in the Poseidon schema. It will be read as a character column. Maybe you mistyped?", "Column not defined in the Poseidon schema. It will be read as a character column. Maybe you mistyped?"]
         }
       ]
     }
@@ -261,7 +261,7 @@
         "row.names": {
           "type": "integer",
           "attributes": {},
-          "value": [1, 2]
+          "value": [1, 2, 3, 4, 5]
         },
         "class": {
           "type": "character",
@@ -273,27 +273,27 @@
         {
           "type": "character",
           "attributes": {},
-          "value": ["testJannoFiles/normal_full.janno", "testJannoFiles/normal_full.janno"]
+          "value": ["testJannoFiles/normal_full.janno", "testJannoFiles/normal_full.janno", "testJannoFiles/normal_full.janno", "testJannoFiles/normal_full.janno", "testJannoFiles/normal_full.janno"]
         },
         {
-          "type": "logical",
+          "type": "integer",
           "attributes": {},
-          "value": [null, null]
-        },
-        {
-          "type": "character",
-          "attributes": {},
-          "value": ["AdditionalColumn1", "AdditionalColumn2"]
-        },
-        {
-          "type": "logical",
-          "attributes": {},
-          "value": [null, null]
+          "value": ["NA", "NA", 3, 2, 3]
         },
         {
           "type": "character",
           "attributes": {},
-          "value": ["Column not defined in the Poseidon schema. It will be read as a character column. Maybe you mistyped Relation_To?", "Column not defined in the Poseidon schema. It will be read as a character column. Maybe you mistyped Relation_To?"]
+          "value": ["AdditionalColumn1", "AdditionalColumn2", "Capture_Type", "Damage", "Damage"]
+        },
+        {
+          "type": "character",
+          "attributes": {},
+          "value": [null, null, "ReferenceGenome", "100", "50"]
+        },
+        {
+          "type": "character",
+          "attributes": {},
+          "value": ["Column not defined in the Poseidon schema. It will be read as a character column. Maybe you mistyped?", "Column not defined in the Poseidon schema. It will be read as a character column. Maybe you mistyped?", "At least one value not in Shotgun, 1240K, ArborComplete, ArborPrimePlus, ArborAncestralPlus, TwistAncientDNA, WISC2013, OtherCapture", "One or multiple values not in range 0 to 1", "One or multiple values not in range 0 to 1"]
         }
       ]
     }
@@ -311,7 +311,7 @@
         "row.names": {
           "type": "integer",
           "attributes": {},
-          "value": [1, 2]
+          "value": [1, 2, 3, 4, 5]
         },
         "class": {
           "type": "character",
@@ -323,27 +323,27 @@
         {
           "type": "character",
           "attributes": {},
-          "value": ["testJannoFiles/normal_partial.janno", "testJannoFiles/normal_partial.janno"]
+          "value": ["testJannoFiles/normal_partial.janno", "testJannoFiles/normal_partial.janno", "testJannoFiles/normal_partial.janno", "testJannoFiles/normal_partial.janno", "testJannoFiles/normal_partial.janno"]
         },
         {
-          "type": "logical",
+          "type": "integer",
           "attributes": {},
-          "value": [null, null]
-        },
-        {
-          "type": "character",
-          "attributes": {},
-          "value": ["AdditionalColumn2", "AdditionalColumn1"]
-        },
-        {
-          "type": "logical",
-          "attributes": {},
-          "value": [null, null]
+          "value": ["NA", "NA", 3, 2, 3]
         },
         {
           "type": "character",
           "attributes": {},
-          "value": ["Column not defined in the Poseidon schema. It will be read as a character column. Maybe you mistyped Relation_To?", "Column not defined in the Poseidon schema. It will be read as a character column. Maybe you mistyped Relation_To?"]
+          "value": ["AdditionalColumn2", "AdditionalColumn1", "Capture_Type", "Damage", "Damage"]
+        },
+        {
+          "type": "character",
+          "attributes": {},
+          "value": [null, null, "ReferenceGenome", "100", "50"]
+        },
+        {
+          "type": "character",
+          "attributes": {},
+          "value": ["Column not defined in the Poseidon schema. It will be read as a character column. Maybe you mistyped?", "Column not defined in the Poseidon schema. It will be read as a character column. Maybe you mistyped?", "At least one value not in Shotgun, 1240K, ArborComplete, ArborPrimePlus, ArborAncestralPlus, TwistAncientDNA, WISC2013, OtherCapture", "One or multiple values not in range 0 to 1", "One or multiple values not in range 0 to 1"]
         }
       ]
     }
